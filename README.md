@@ -1,4 +1,4 @@
-# Avery2.github.io
+# Personal Website
 
 Visit it [here](https://avery2.github.io/).
 
