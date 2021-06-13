@@ -1,6 +1,8 @@
 # Avery2.github.io
 
-My personal website. Made with [jekyll](https://jekyllrb.com/).
+My personal website. Visit it here: https://avery2.github.io/
+
+Made with [jekyll](https://jekyllrb.com/).
 
 ## Development
 
