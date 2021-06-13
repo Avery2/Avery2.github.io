@@ -13,3 +13,5 @@ Locally develop
 [Modify theming](https://jekyllrb.com/docs/themes/#overriding-theme-defaults)
 
 `bundle info --path minima`
+
+[comments](https://utteranc.es/)

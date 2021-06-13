@@ -32,8 +32,6 @@ header_pages:
   # - pages/showcase.md
   - pages/posts.md
 show_excerpts: true
-disqus:
-  shortname: https-avery2-github-io
 
 # Build settings
 theme: minima
