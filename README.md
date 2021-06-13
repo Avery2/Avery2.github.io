@@ -14,7 +14,7 @@ Locally develop
 
 `bundle info --path minima`
 
-[comments](https://utteranc.es/)
+[Comment system](https://utteranc.es/)
 
 ## Notes
 
