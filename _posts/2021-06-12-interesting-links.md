@@ -8,10 +8,29 @@ comments: true
 
 It's just a bunch of links.
 
+## Web Dev Links
+
+[[Thing for building UI components in isolation]](https://storybook.js.org/)
+[[Express docs]](https://expressjs.com/en/guide/routing.html)
+[[Node.js Docs]](https://nodejs.dev/learn)
+[[Ruby on Rails Docs]](https://guides.rubyonrails.org/)
+[[Node with Docker]](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/)
+[[Docker Docs]](https://docs.docker.com/get-started/overview/)
+
+## Dev Links
+
+[[Electron, which is for making desktop apps from Node.js]](https://www.electronjs.org/)
+[[git introduction]](https://guides.github.com/introduction/git-handbook/)
+[[jekyll git tutorial]](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll)
+[[About GitHub]](https://git-scm.com/about)
+[[R textbook]](https://r4ds.had.co.nz/introduction.html)
+[[Ranked Programming Languages]](https://www.tiobe.com/tiobe-index/)
+
+## Other
+
 [[180 websites in 180 days]](https://jenniferdewalt.com/)
 [[AI research at UW]](https://ai.cs.wisc.edu/index.html#/projects)
 [[Moonshot (X) from Google]](https://x.company/)
-[[About GitHub]](https://git-scm.com/about)
 [[Nicky Case]](https://ncase.me/)
 [[Nicky Case Blog Post about Books]](https://blog.ncase.me/the-most-meaningful-books-i-read-in-2018/)
 [[Ben Eater Boids]](https://eater.net/boids)
@@ -23,9 +42,8 @@ It's just a bunch of links.
 [[Yoga]](https://en.wikipedia.org/wiki/Yoga#Philosophy)
 [[Flowchart maker]](http://sankeymatic.com/build/)
 [[GANs that do cool art shit]](https://www.artbreeder.com/)
-[[R textbook]](https://r4ds.had.co.nz/introduction.html)
+[[Figma]](https://www.figma.com/files/recent?fuid=976540299732909879)
 [[Placeholder]](https://loremipsum.io/ultimate-list-of-lorem-ipsum-generators/)
-[[Ranked Programming Languages]](https://www.tiobe.com/tiobe-index/)
 [[A notion API exists]](https://github.com/jamalex/notion-py)
 [[Hacker News]](https://news.ycombinator.com/)
 [[LaTeX intro]](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#putting-it-all-together-writing-your-report-in-r-markdown)
@@ -85,11 +103,4 @@ It's just a bunch of links.
 [[80k summary]](https://80000hours.org/key-ideas/)
 [[Library of babel]](https://libraryofbabel.info/)
 [[domain name checker]](iwantmyname.com)
-[[domain name checker 2]](instantdomainsearch.com)
-[[git introduction]](https://guides.github.com/introduction/git-handbook/)
-
-<!-- Jekyll requires blog post files to be named according to the following format:
-
-`YEAR-MONTH-DAY-title.MARKUP`
-
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works. -->
+[[domain name checker2]](instantdomainsearch.com)
