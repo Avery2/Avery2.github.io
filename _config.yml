@@ -29,8 +29,8 @@ author: Avery Chan
 # twitter_username:
 linkedin_username: Avery2
 header_pages:
-  - showcase.md
-  - posts.md
+  # - pages/showcase.md
+  - pages/posts.md
 
 # Build settings
 theme: minima
