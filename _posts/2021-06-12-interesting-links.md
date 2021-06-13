@@ -3,13 +3,10 @@ layout: post
 title: "Interesting Links"
 date: 2021-06-12 18:28:24 -0400
 categories: jekyll update
+comments: true
 ---
 
-<!-- Jekyll requires blog post files to be named according to the following format:
-
-`YEAR-MONTH-DAY-title.MARKUP`
-
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works. -->
+It's just a bunch of links.
 
 [[180 websites in 180 days]](https://jenniferdewalt.com/)
 [[AI research at UW]](https://ai.cs.wisc.edu/index.html#/projects)
@@ -90,3 +87,9 @@ Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit number
 [[domain name checker]](iwantmyname.com)
 [[domain name checker 2]](instantdomainsearch.com)
 [[git introduction]](https://guides.github.com/introduction/git-handbook/)
+
+<!-- Jekyll requires blog post files to be named according to the following format:
+
+`YEAR-MONTH-DAY-title.MARKUP`
+
+Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works. -->

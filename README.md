@@ -9,3 +9,7 @@ Locally develop
 `bundle exec jekyll serve --livereload`
 
 `jekyll serve --livereload`
+
+[Modify theming](https://jekyllrb.com/docs/themes/#overriding-theme-defaults)
+
+`bundle info --path minima`
