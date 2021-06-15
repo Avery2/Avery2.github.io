@@ -23,7 +23,7 @@ email: justinaverychan@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Thanks for visiting my website! Checkout my GitHub, LinkedIn, or email me.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://avery2.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+url: http://averychan.site/ # "https://avery2.github.io/"
 github_username: Avery2
 author: Avery Chan
 # twitter_username:
