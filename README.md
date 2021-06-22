@@ -4,8 +4,6 @@ My personal website.
 
 Visit it here: https://avery2.github.io/ or here: https://www.averychan.site/
 
-Made with [jekyll](https://jekyllrb.com/).
-
 ## Development
 
 Locally develop
@@ -19,6 +17,8 @@ Locally develop
 `bundle info --path minima`
 
 [Comment system](https://utteranc.es/)
+
+Made with [jekyll](https://jekyllrb.com/)
 
 ## Notes
 
