@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Project Graveyard"
+title: "Interesting Links"
 date: 2021-06-12 18:28:24 -0400
 categories: jekyll update
 comments: true
