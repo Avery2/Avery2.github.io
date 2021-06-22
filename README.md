@@ -1,6 +1,6 @@
 # Avery2.github.io
 
-My personal website. Visit it here: https://avery2.github.io/ or here https://www.averychan.site/
+My personal website. Visit it here: https://avery2.github.io/ or here: https://www.averychan.site/
 
 Made with [jekyll](https://jekyllrb.com/).
 
