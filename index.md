@@ -9,6 +9,6 @@ Hi, I'm Avery (I go by my middle name). I'm currently a computer science (and da
 
 _(This website is a work in progress.)_
 
-[Resume](/assets/Resume-2021-Feb-11.pdf)
+[Resume](/assets/Resume-2021-July-10.pdf)
 
 ---
