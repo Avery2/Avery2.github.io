@@ -2,7 +2,7 @@
 
 My personal website. 
 
-Visit it here: https://avery2.github.io/ or here: https://www.averychan.site/
+Visit it here: https://avery2.github.io or here: https://www.averychan.site
 
 ## Development
 
