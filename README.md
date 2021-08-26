@@ -16,9 +16,9 @@ Locally develop
 
 `jekyll serve --livereload`
 
-[Modify theming](https://jekyllrb.com/docs/themes/#overriding-theme-defaults)
+~~[Modify theming](https://jekyllrb.com/docs/themes/#overriding-theme-defaults)~~
 
-`bundle info --path minima`
+~~`bundle info --path minima`~~
 
 ~~[Comment system](https://utteranc.es/)~~
 
