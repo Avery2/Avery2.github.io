@@ -30,10 +30,10 @@ I’m currently a computer science and data science double major at the Universi
     <a href="https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf"><img alt="Resume" src="https://img.shields.io/badge/Resume_(last_updated)-Jul_2021-green"/></a>
 </div> -->
 
-<div class="row">
+<!-- <div class="row">
 {% include about/skills.html title="Programming Interests" source=site.data.programming-skills %}
 {% include about/skills.html title="Other Interests" source=site.data.other-skills %}
-</div>
+</div> -->
 
 <div class="row">
 {% include about/timeline.html %}
