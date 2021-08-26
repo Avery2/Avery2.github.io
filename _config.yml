@@ -24,16 +24,16 @@ nav_exclude:
 ### Author Info ###
 author:
   name              : Justin "Avery" Chan
-  image             : https://i.imgur.com/uyDNQnn.jpg
+  image             : ./assets/face.jpg
 # behance           : your_username
 # dribbble          : your_username
-  email             : username@domain.com
+  email             : justinaverychan@gmail.com
 # facebook          : your_username
-  github            : your_username
+  github            : Avery2
 # gitlab            : your_username
 # instagram         : your_username
 # kaggle            : your_username
-  linkedin          : your_username
+  linkedin          : avery2
 # medium            : your_username
 # soundcloud        : your_username
 # spotify           : your_username
