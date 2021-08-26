@@ -4,7 +4,7 @@ description         : >-
                       🚧 One description placeholder. 🚧
 baseurl             : ""
 repository          : Avery2/Avery2.github.io
-remote_theme        : YoussefRaafatNasry/portfolYOU
+remote_theme        : Avery2/portfolYOU
 
 
 ### Plugins ###
