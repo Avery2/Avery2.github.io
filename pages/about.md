@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 weight: 3
 ---
-# Hi, I’m Avery :wave: <sub><sup>_(full name: Justin "Avery" Chan)_</sup></sub>
+# Hi, I’m Avery 👋 <sub><sup>_(full name: Justin "Avery" Chan)_</sup></sub>
 
 I’m currently a computer science and data science double major at the University of Wisconsin-Madison. This summer I am working as a developer intern at Halo Science.
 
