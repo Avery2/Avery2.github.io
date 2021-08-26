@@ -2,7 +2,7 @@
 title               : Avery
 description         : >-
                       🚧 One description placeholder. 🚧
-baseurl             : "/portfolYOU"                     # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
+baseurl             : ""
 repository          : Avery2/Avery2.github.io
 remote_theme        : YoussefRaafatNasry/portfolYOU
 
