@@ -1,5 +1,9 @@
 # Avery2.github.io
 
+<div align="center">
+  <a href="https://github.com/Avery2/Avery2.github.io/actions/workflows/jekyll.yml"><img src="https://github.com/Avery2/Avery2.github.io/actions/workflows/jekyll.yml/badge.svg"/></a>
+</div>
+
 My personal website. 
 
 Visit it here: https://avery2.github.io or here: https://www.averychan.site
