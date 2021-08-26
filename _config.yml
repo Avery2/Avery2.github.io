@@ -1,7 +1,7 @@
 ### Site Settings ###
 title               : Avery
 description         : >-
-                      🚧 One description placeholder. 🚧
+                      🚧 One line description placeholder. 🚧
 baseurl             : ""
 repository          : Avery2/Avery2.github.io
 remote_theme        : Avery2/portfolYOU
