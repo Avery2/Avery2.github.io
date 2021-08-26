@@ -16,7 +16,7 @@ Locally develop
 
 `bundle info --path minima`
 
-[Comment system](https://utteranc.es/)
+~~[Comment system](https://utteranc.es/)~~
 
 Made with [jekyll](https://jekyllrb.com/)
 
