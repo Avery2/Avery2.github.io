@@ -17,6 +17,7 @@ nav_exclude:
   - pages/tags.html
   - pages/404.html
   - pages/index.md
+  - pages/blog.html # remove posts for now until I write something
 
 
 ### Author Info ###
