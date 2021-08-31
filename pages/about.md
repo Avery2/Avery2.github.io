@@ -18,7 +18,7 @@ I’m currently a computer science and data science double major at the Universi
     &nbsp;
     <a href="mailto:justinaverychan@gmail.com"><i class="fas fa-envelope"></i> Email</a>
     &nbsp;
-    <a href="https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf"><i class="fas fa-file"></i> Resume</a>
+    <a href="https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf#view=FitH"><i class="fas fa-file"></i> Resume</a>
 </div></h1>
 
 <!-- Badges -->
