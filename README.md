@@ -1,4 +1,4 @@
-# Avery2.github.io
+# Personal Website
 
 <div align="center">
   <a href="https://github.com/Avery2/Avery2.github.io/actions/workflows/jekyll.yml"><img src="https://github.com/Avery2/Avery2.github.io/actions/workflows/jekyll.yml/badge.svg"/></a>
@@ -8,12 +8,12 @@
 
 My personal website. 
 
-Visit it at https://avery2.github.io or https://www.averychan.site
+Visit it at https://avery2.github.io or https://www.averychan.site.
+
+Made with [jekyll](https://jekyllrb.com/) and ([my fork of](https://github.com/Avery2/portfolYOU)) [portfoYOU](https://github.com/YoussefRaafatNasry/portfolYOU).
 
 ## Development
 
 `bundle exec jekyll serve --livereload`
 
 `jekyll serve --livereload`
-
-Made with [jekyll](https://jekyllrb.com/) and [portfoYOU](https://github.com/YoussefRaafatNasry/portfolYOU).

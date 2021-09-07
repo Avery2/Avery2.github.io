@@ -6,7 +6,7 @@ weight: 3
 ---
 # Hi, I’m Avery 👋 <sub><sup>_(full name: Justin "Avery" Chan)_</sup></sub>
 
-I’m currently a computer science and data science double major at the University of Wisconsin-Madison. This summer I am working as a developer intern at Halo Science.
+I’m currently a computer science and data science double major at the University of Wisconsin-Madison. This summer I worked as a developer intern at Halo Science.
 
 <!-- ## Info: **[GitHub](https://github.com/Avery2) | [LinkedIn](https://www.linkedin.com/in/avery2) | [Email](mailto:justinaverychan@gmail.com) | [Resume](https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf)** -->
 
