@@ -16,4 +16,4 @@ Visit it at https://avery2.github.io or https://www.averychan.site
 
 `jekyll serve --livereload`
 
-Made with [jekyll](https://jekyllrb.com/) and [portfoYOU](https://github.com/YoussefRaafatNasry/portfolYOU).
+Made with [jekyll](https://jekyllrb.com/) and ([my fork of](https://github.com/Avery2/portfolYOU)) [portfoYOU](https://github.com/YoussefRaafatNasry/portfolYOU).
