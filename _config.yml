@@ -75,11 +75,17 @@ defaults:
       type: "projects"
     values:
       layout: "page"
+      open_new_tab: true
   - scope:
       path: ""
       type: "posts"
     values:
       comments: false                                   # Set to true to enable disqus comments
+      open_new_tab: false
+  - scope:
+      path: "pages"
+    values:
+      open_new_tab: false
 
 ### Exclude from processing ###
 exclude:
