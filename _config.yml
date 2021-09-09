@@ -1,7 +1,6 @@
 ### Site Settings ###
 title               : Avery
-description         : >-
-                      Smart at some things, dumb at others.
+description         : ""
 baseurl             : ""
 repository          : Avery2/Avery2.github.io
 remote_theme        : Avery2/portfolYOU
@@ -17,6 +16,7 @@ nav_exclude:
   - pages/tags.html
   - pages/404.html
   - pages/index.md
+  - pages/index.html
   - pages/blog.html # remove posts for now until I write something
 
 
