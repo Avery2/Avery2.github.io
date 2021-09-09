@@ -18,6 +18,9 @@ nav_exclude:
   - pages/index.md
   - pages/index.html
   - pages/blog.html # remove posts for now until I write something
+  - pages/about.md # remove for short single scroll
+  - pages/projects.md # remove for short single scrol
+  - pages/resume.md # remove for short single scrol
 
 
 ### Author Info ###
