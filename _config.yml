@@ -78,7 +78,7 @@ defaults:
       type: "projects"
     values:
       layout: "page"
-      open_new_tab: true
+      open_new_tab: false
   - scope:
       path: ""
       type: "posts"
