@@ -81,6 +81,9 @@ Track time.
 - Alarmed
 - Countdowns
 - Qbserve
+- Alfred
+- Vimium
+- Workona
 
 ### Otter.ai
 
