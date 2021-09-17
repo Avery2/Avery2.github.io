@@ -2,7 +2,7 @@
 name: Clubs
 tools: [CFG Website, FoodShed, UW-FOSS]
 image: assets/club.jpeg
-description: Coding I did for school clubs.
+description: Coding I did for school clubs
 ---
 
 # Clubs
