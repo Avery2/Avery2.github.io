@@ -1,0 +1,6 @@
+[submodule "_posts"]
+	path = _posts
+	url = https://github.com/Avery2/_posts.git
+[submodule "_projects"]
+	path = _projects
+	url = https://github.com/Avery2/_projects.git
