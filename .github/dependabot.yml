@@ -8,3 +8,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+      
+  # Maintain dependencies for bundler (Gemfile)
+  - package-ecosystem: "bundler"
+    directory: "/"
+    schedule:
+      interval: "daily"
