@@ -6,12 +6,6 @@
   <a href="https://avery2.github.io"><img alt="Website" src="https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=avery2.github.io&up_color=green&up_message=online&url=https%3A%2F%2Favery2.github.io"/></a>
 </div><br/>
 
-My personal website. Visit it at https://avery2.github.io or https://www.averychan.site.
-
-Made with [jekyll](https://jekyllrb.com/) and ([my fork of](https://github.com/Avery2/portfolYOU)) [portfoYOU](https://github.com/YoussefRaafatNasry/portfolYOU).
-
-## Local Development
-
-`bundle exec jekyll serve --livereload`
-
-`jekyll serve --livereload`
+- Visit the website at https://www.averychan.site.
+- Made with [jekyll](https://jekyllrb.com/) and ([my fork of](https://github.com/Avery2/portfolYOU)) [portfoYOU](https://github.com/YoussefRaafatNasry/portfolYOU).
+- To run locally use `bundle exec jekyll serve --livereload` or `jekyll serve --livereload`.
