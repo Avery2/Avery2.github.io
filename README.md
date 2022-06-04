@@ -9,3 +9,4 @@
 - Visit the website at https://www.averychan.site.
 - Made with [jekyll](https://jekyllrb.com/) and ([my fork of](https://github.com/Avery2/portfolYOU)) [portfoYOU](https://github.com/YoussefRaafatNasry/portfolYOU).
 - To run locally use `bundle exec jekyll serve --livereload` or `jekyll serve --livereload`.
+- Update projects in [pages/index.html](https://github.com/Avery2/Avery2.github.io/blob/main/pages/index.html)
