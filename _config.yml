@@ -8,7 +8,7 @@ remote_theme        : Avery2/portfolYOU
 
 ### Plugins ###
 plugins:
-  - jemoji
+  # - jemoji
 
 
 ### Navbar Settings ###
