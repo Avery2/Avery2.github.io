@@ -1,6 +1,11 @@
 # Get Icons  from : https://fontawesome.com/icons
 # Get Colors from : https://brandcolors.net/
 
+resume:
+  # url:
+  icon: fas fa-file
+  color: 007bff
+
 behance:
   url   : https://www.behance.net/
   icon  : fab fa-behance
@@ -35,7 +40,7 @@ instagram:
   url   : https://www.instagram.com/
   icon  : fab fa-instagram
   color : 405de6
-  
+
 kaggle:
   url   : https://www.kaggle.com/
   icon  : fab fa-kaggle

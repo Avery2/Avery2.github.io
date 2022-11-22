@@ -5,6 +5,8 @@ baseurl               : ""
 repository            : Avery2/Avery2.github.io
 remote_theme          : Avery2/portfolYOU
 show_all_remote_repos : false
+social_in_header      : true
+resume_in_timeline    : false
 
 
 ### Plugins ###
@@ -47,6 +49,7 @@ author:
 # vimeo             : your_username
 # youtube           : your_channel_name
 # keybase           : your_username
+  resume            : https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf#view=FitH
 
 
 ### Posts ###
