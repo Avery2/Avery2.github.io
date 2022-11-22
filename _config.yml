@@ -1,9 +1,10 @@
 ### Site Settings ###
-title               : Avery
-description         : ""
-baseurl             : ""
-repository          : Avery2/Avery2.github.io
-remote_theme        : Avery2/portfolYOU
+title                 : Avery
+description           : ""
+baseurl               : ""
+repository            : Avery2/Avery2.github.io
+remote_theme          : Avery2/portfolYOU
+show_all_remote_repos : false
 
 
 ### Plugins ###
