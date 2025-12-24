@@ -1,0 +1,78 @@
+metadata:
+  generated_at: '2025-12-24T09:58:08.487645+00:00'
+  source: resume
+  total_tiles: 4
+tiles:
+- id: experience-amplitude
+  type: experience
+  name: Amplitude
+  title: Amplitude
+  description: Intern → Product Engineer II
+  url: ./writing/experience/amplitude.html
+  tags:
+  - experience
+  - professional
+  meta:
+    company: Amplitude
+    title: Intern → Product Engineer II
+    location: San Francisco, CA
+    dates: May 2022 – Present
+  priority: 100
+  featured: true
+  span_columns: 1
+  span_rows: 1
+- id: experience-halo-science
+  type: experience
+  name: Halo Science
+  title: Halo Science
+  description: Developer Intern
+  url: ./writing/experience/halo-science.html
+  tags:
+  - experience
+  - professional
+  meta:
+    company: Halo Science
+    title: Developer Intern
+    location: Chicago, IL (remote)
+    dates: May 2021 – August 2021
+  priority: 10
+  featured: true
+  span_columns: 1
+  span_rows: 1
+- id: experience-materials-simulation-toolkit-machine-learning-mast-ml
+  type: experience
+  name: MAterials Simulation Toolkit Machine Learning (MAST-ML)
+  title: MAterials Simulation Toolkit Machine Learning (MAST-ML)
+  description: Member
+  url: ./writing/experience/materials-simulation-toolkit-machine-learning-mast-ml.html
+  tags:
+  - experience
+  - professional
+  meta:
+    company: MAterials Simulation Toolkit Machine Learning (MAST-ML)
+    title: Member
+    location: Madison, WI
+    dates: June 2020 – December 2021
+  priority: 5
+  featured: true
+  span_columns: 1
+  span_rows: 1
+- id: education-university-of-wisconsin-madison
+  type: education
+  name: University of Wisconsin-Madison
+  title: University of Wisconsin-Madison
+  description: B.S. Major in Computer Science | B.S. Major in Data Science
+  url: ./writing/education/university-of-wisconsin-madison.html
+  tags:
+  - education
+  - academic
+  meta:
+    school: University of Wisconsin-Madison
+    degree: B.S. Major in Computer Science | B.S. Major in Data Science
+    location: Madison, WI
+    dates: August 2019 – May 2022
+    gpa: 'Major GPA: 3.95 | Cumulative GPA: 3.75 | Dean''s List 3 semesters'
+  priority: 95
+  featured: true
+  span_columns: 1
+  span_rows: 1

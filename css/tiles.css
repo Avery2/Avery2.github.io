@@ -209,9 +209,7 @@
   box-shadow: 0 4px 8px var(--shadow-color);
 }
 
-.tile[data-featured="true"] .tile-title {
-  color: var(--accent-primary);
-}
+/* Keep title text default color - don't color it */
 
 /* Brand-colored icons */
 /* LinkedIn */

@@ -67,7 +67,26 @@ curated_repos:
   - awesome-project-1
   - awesome-project-2
   # Add more repos here
+
+# Manually mark repos as featured (orange border)
+featured_repos:
+  - your-username.github.io
+  - awesome-project-1
+
+# Optional: Auto-extract experience/education from resume HTML
+# Set to 'DISABLED' or remove to disable this feature
+resume_source_url: "https://github.com/your-username/your-resume-repo/blob/main/resume.html"
 ```
+
+**Resume Integration (Optional):**
+
+The `resume_source_url` field enables automatic extraction of experience and education from a public resume HTML file:
+
+- Script fetches the HTML and parses `<section class="experience">` and `<section class="education">`
+- Generates tiles for each job and degree that appear on your main page
+- Creates individual detail pages at `/writing/experience/{company}.html` and `/writing/education/{school}.html`
+- To disable: set `resume_source_url: 'DISABLED'` or remove the field entirely
+- See `.github/scripts/fetch-resume-data.py` for parsing details
 
 ### 3. Add Your Images
 

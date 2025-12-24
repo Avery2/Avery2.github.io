@@ -190,14 +190,12 @@ def transform_repo_to_tile(repo: Dict[str, Any], featured_repos: List[str] = Non
     # Get topics
     topics = repo.get('topics', [])
 
-    # Featured: check manual override list first, otherwise use stars > 5
+    # Featured: ONLY from manual override list
     if featured_repos and repo_name in featured_repos:
         featured = True
         print(f"  Marked as featured (manual override)")
     else:
-        featured = repo.get('stargazers_count', 0) > 5
-        if featured:
-            print(f"  Marked as featured (stars > 5)")
+        featured = False
 
     # Get image if exists
     image = get_image_for_repo(repo_name)

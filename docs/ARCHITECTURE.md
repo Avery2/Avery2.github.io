@@ -21,7 +21,9 @@ Everything on the site is a **tile** - a modular, reusable component displayed i
 **Tile Types:**
 
 - `project` - Auto-generated from GitHub API (repositories)
-- `link` - Manual tile linking to external resource (e.g., resume)
+- `experience` - Auto-generated from resume HTML (job experience)
+- `education` - Auto-generated from resume HTML (education history)
+- `link` - Manual tile linking to external resource (e.g., resume PDF)
 - `content` - Rich markdown content tile
 - `widget` - Interactive component (future: analytics dashboard)
 
@@ -41,22 +43,28 @@ topics: [topic1, topic2]
 ### 2. Data Flow
 
 ```
-GitHub API
-    ↓
-Python Script (.github/scripts/fetch-github-data.py)
-    ↓
-data/github-projects.yml (auto-generated)
-    +
-data/manual-tiles.yml (user-configured)
+GitHub API                          Resume HTML (optional)
+    ↓                                      ↓
+fetch-github-data.py             fetch-resume-data.py
+    ↓                                      ↓
+github-projects.yml              resume-tiles.yml
+    +                                      +
+manual-tiles.yml  ←────────────────────────┘
     ↓
 JavaScript (data-loader.js)
     ↓
-Merged Tile Data
+Merged Tile Data (sorted by priority)
     ↓
 tile-renderer.js
     ↓
 DOM (masonry grid)
 ```
+
+**Resume Integration:**
+- Fetches HTML from `resume_source_url` in site-config.yml
+- Parses `<section class="experience">` and `<section class="education">`
+- Generates tiles + detail pages for each job/degree
+- Gracefully degrades if disabled or fetch fails
 
 ### 3. File Structure
 

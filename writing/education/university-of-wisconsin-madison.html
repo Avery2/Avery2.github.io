@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University of Wisconsin-Madison - Avery</title>
+  <meta name="description" content="B.S. Major in Computer Science | B.S. Major in Data Science">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .writing-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .writing-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .writing-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .writing-meta { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+    .meta-item { display: flex; align-items: center; gap: 0.75rem; font-size: 1rem; color: var(--text-secondary); }
+    .meta-item i { color: var(--text-tertiary); width: 20px; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .education-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; }
+    .education-content p { margin-bottom: 1.25rem; }
+    .education-content ul { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .education-content li { margin-bottom: 0.75rem; }
+    .education-content h2, .education-content h3, .education-content h4 { margin-top: 2rem; margin-bottom: 1rem; color: var(--text-primary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="writing-container">
+    <a href="../../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="writing-header">
+      <h1 class="writing-title">University of Wisconsin-Madison</h1>
+      <div class="writing-meta">
+        <div class="meta-item"><i class="fas fa-graduation-cap"></i><strong>B.S. Major in Computer Science | B.S. Major in Data Science</strong></div>
+        <div class="meta-item"><i class="fas fa-map-marker-alt"></i>Madison, WI</div>
+        <div class="meta-item"><i class="fas fa-calendar"></i>August 2019 – May 2022</div>
+        <div class="meta-item"><i class="fas fa-star"></i>Major GPA: 3.95 | Cumulative GPA: 3.75 | Dean's List 3 semesters</div>
+      </div>
+    </div>
+    <div class="education-content"></div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

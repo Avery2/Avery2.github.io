@@ -20,24 +20,26 @@ async function init() {
 
   try {
     // Load all data files in parallel
-    const [siteConfig, githubProjects, manualTiles, filterGroups] = await Promise.all([
+    const [siteConfig, githubProjects, manualTiles, resumeTiles, filterGroups] = await Promise.all([
       loadData('data/site-config.yml'),
       loadData('data/github-projects.yml'),
       loadData('data/manual-tiles.yml'),
+      loadData('data/resume-tiles.yml').catch(() => ({ tiles: [] })), // Graceful fallback
       loadData('data/filter-groups.yml')
     ]);
 
     console.log('Data loaded successfully:', {
       siteConfig,
       githubProjects: githubProjects.projects?.length || 0,
-      manualTiles: manualTiles.tiles?.length || 0
+      manualTiles: manualTiles.tiles?.length || 0,
+      resumeTiles: resumeTiles.tiles?.length || 0
     });
 
     // Populate social links
     await populateSocialLinks(siteConfig);
 
-    // Merge manual tiles with auto-generated projects
-    const allTiles = mergeData(githubProjects.projects, manualTiles.tiles);
+    // Merge manual tiles with auto-generated projects and resume tiles
+    const allTiles = mergeData(githubProjects.projects, manualTiles.tiles, resumeTiles.tiles);
 
     console.log(`Total tiles: ${allTiles.length}`);
 

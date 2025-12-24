@@ -73,3 +73,9 @@ curated_repos:
 featured_repos:
   - normal-resume
   - Avery2.github.io
+
+# Resume data source (optional)
+# URL to your resume HTML file (should be publicly accessible)
+# Set to 'DISABLED' or remove to disable automatic resume data extraction
+# Example: "https://github.com/username/resume-repo/blob/main/resume.html"
+resume_source_url: "https://github.com/Avery2/normal-resume/blob/main/Justin_Avery_Chan_Resume.html"

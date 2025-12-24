@@ -8,6 +8,8 @@
  */
 const TileRenderers = {
   project: renderProjectTile,
+  experience: renderProjectTile,  // Use same renderer as project
+  education: renderProjectTile,    // Use same renderer as project
   link: renderLinkTile,
   content: renderContentTile,
   widget: renderWidgetTile,
@@ -206,14 +208,17 @@ function applyCommonTileAttributes(element, tileData) {
     element.dataset.topics = JSON.stringify(tileData.topics);
   }
 
-  // Apply custom styling
+  // Apply orange border for experience/education tiles
+  if (tileData.type === 'experience' || tileData.type === 'education') {
+    element.style.borderColor = '#DA7422';  // Orange color
+  }
+
+  // Apply custom styling - only background and border colors, NEVER text color
   if (tileData.style) {
     if (tileData.style.background_color) {
       element.style.backgroundColor = tileData.style.background_color;
     }
-    if (tileData.style.text_color) {
-      element.style.color = tileData.style.text_color;
-    }
+    // Skip text_color - always use default
     if (tileData.style.border_color) {
       element.style.borderColor = tileData.style.border_color;
     }
@@ -238,14 +243,25 @@ function renderProjectTile(data) {
     ? `<p class="tile-description">${data.description}</p>`
     : '';
 
-  // Format created date as "Mon YYYY"
-  let createdDateHTML = '';
-  if (data.created_at) {
+  // Format date - either created_at for projects or dates for experience/education
+  let dateHTML = '';
+
+  // For experience/education tiles, use the dates from meta
+  if (data.type === 'experience' || data.type === 'education') {
+    if (data.meta && data.meta.dates) {
+      dateHTML = `
+        <span class="tile-created">
+          ${data.meta.dates}
+        </span>
+      `;
+    }
+  } else if (data.created_at) {
+    // For projects, format created_at as "Mon YYYY"
     try {
       const date = new Date(data.created_at);
       const month = date.toLocaleDateString('en-US', { month: 'short' });
       const year = date.getFullYear();
-      createdDateHTML = `
+      dateHTML = `
         <span class="tile-created">
           ${month} ${year}
         </span>
@@ -255,12 +271,22 @@ function renderProjectTile(data) {
     }
   }
 
+  // For experience/education tiles, show type label instead of language
+  let languageLabel = '';
+  if (data.type === 'experience') {
+    languageLabel = 'Experience';
+  } else if (data.type === 'education') {
+    languageLabel = 'Education';
+  } else if (data.language) {
+    languageLabel = data.language;
+  }
+
   // Build metadata HTML
   const metaHTML = `
     <div class="tile-meta">
-      ${data.language ? `
+      ${languageLabel ? `
         <span class="tile-language">
-          ${data.language}
+          ${languageLabel}
         </span>
       ` : ''}
       ${data.stars ? `
@@ -273,13 +299,14 @@ function renderProjectTile(data) {
           <i class="fas fa-eye"></i> ${data.traffic.unique_visitors_14d}
         </span>
       ` : ''}
-      ${createdDateHTML}
+      ${dateHTML}
     </div>
   `;
 
   // Build topics HTML - use tags (which include topics + language)
+  // Don't show tags for experience/education tiles
   const allTags = [...new Set([...(data.tags || []), ...(data.topics || [])])];
-  const topicsHTML = allTags.length > 0
+  const topicsHTML = (allTags.length > 0 && data.type !== 'experience' && data.type !== 'education')
     ? `<div class="tile-topics">
          ${allTags.map(topic => `<span class="tile-topic">${topic}</span>`).join('')}
        </div>`

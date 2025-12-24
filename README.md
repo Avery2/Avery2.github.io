@@ -1,13 +1,38 @@
 <h1 align="center">Personal Website</h1>
 
 <div align="center">
-  <a href="https://github.com/Avery2/Avery2.github.io/actions/workflows/jekyll.yml"><img src="https://github.com/Avery2/Avery2.github.io/actions/workflows/jekyll.yml/badge.svg"/></a>
   <a href="https://www.averychan.site"><img alt="Website" src="https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=averychan.site&up_color=green&up_message=online&url=https%3A%2F%2Fwww.averychan.site"/></a>
   <a href="https://avery2.github.io"><img alt="Website" src="https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=avery2.github.io&up_color=green&up_message=online&url=https%3A%2F%2Favery2.github.io"/></a>
 </div><br/>
 
-- Visit the website at https://www.averychan.site.
-- Made with [jekyll](https://jekyllrb.com/) and ([my fork of](https://github.com/Avery2/portfolYOU)) [portfoYOU](https://github.com/YoussefRaafatNasry/portfolYOU).
-- Instructions
-  - To run locally use `bundle exec jekyll serve --livereload` or `jekyll serve --livereload`.
-  - Update remote projects in [pages/index.html](https://github.com/Avery2/Avery2.github.io/blob/main/pages/index.html)
+A modern, automated personal website built with vanilla HTML, CSS, and JavaScript. Features automatic GitHub project integration, resume data extraction, and a responsive masonry grid layout.
+
+**Visit:** https://www.averychan.site
+
+## ✨ Features
+
+- 🎨 **No Framework** - Pure HTML/CSS/JavaScript, no build step required
+- 🔄 **Auto-sync GitHub Projects** - Automatically fetches and displays your repositories
+- 📄 **Resume Integration** - Extracts experience and education from your resume HTML
+- 🎯 **Masonry Grid Layout** - True CSS masonry with responsive columns
+- 🌓 **Dark/Light Theme** - Auto-detects system preference with manual override
+- 🔍 **Search & Filter** - Filter projects by language, tags, and text search
+- 🚀 **GitHub Actions** - Automated metadata generation and deployment
+
+## 🚀 Quick Start
+
+Visit [docs/FORKING.md](./docs/FORKING.md) for detailed setup instructions.
+
+```bash
+# 1. Fork this repository
+# 2. Edit data/site-config.yml with your info
+# 3. Enable GitHub Actions and Pages
+# 4. Done! Your site is live
+```
+
+## 📚 Documentation
+
+- [Forking Guide](./docs/FORKING.md) - How to make this your own
+- [Architecture](./docs/ARCHITECTURE.md) - How the system works
+- [Tile Guide](./docs/TILE_GUIDE.md) - Creating custom tiles
+- [Development](./docs/DEVELOPMENT.md) - Local development setup

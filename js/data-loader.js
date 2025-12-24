@@ -81,16 +81,18 @@ export async function loadMarkdownContent(tiles) {
 }
 
 /**
- * Merge GitHub projects with manual tiles
+ * Merge GitHub projects with manual tiles and resume tiles
  * @param {Array} githubProjects - Auto-generated project tiles
  * @param {Array} manualTiles - User-defined manual tiles
+ * @param {Array} resumeTiles - Auto-generated resume tiles (experience/education)
  * @returns {Array} Combined and sorted tile array
  */
-export function mergeData(githubProjects, manualTiles) {
-  // Combine auto-generated projects with manual tiles
+export function mergeData(githubProjects, manualTiles, resumeTiles = []) {
+  // Combine auto-generated projects with manual tiles and resume tiles
   const allTiles = [
     ...(githubProjects || []).map(p => ({ ...p, source: 'github' })),
-    ...(manualTiles || []).map(t => ({ ...t, source: 'manual' }))
+    ...(manualTiles || []).map(t => ({ ...t, source: 'manual' })),
+    ...(resumeTiles || []).map(r => ({ ...r, source: 'resume' }))
   ];
 
   // Sort by priority (descending) - higher priority appears first
