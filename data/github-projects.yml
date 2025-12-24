@@ -28,7 +28,7 @@ projects:
   - python
   - notion-api
   - things3
-  featured: true
+  featured: false
   span_columns: 1
   span_rows: 1
 - id: sun-calendar
