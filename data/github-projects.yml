@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2025-12-24T09:58:23.766918+00:00'
+  generated_at: '2025-12-24T10:25:41.326259+00:00'
   source_api: https://api.github.com/users/Avery2/repos
   total_repos: 28
 projects:
@@ -79,8 +79,8 @@ projects:
   - jekyll
   - liquid
   created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2025-12-24T09:30:35Z'
-  pushed_at: '2025-12-24T09:30:30Z'
+  updated_at: '2025-12-24T10:21:47Z'
+  pushed_at: '2025-12-24T10:21:44Z'
   traffic:
     views_14d: 11
     unique_visitors_14d: 4
@@ -90,6 +90,32 @@ projects:
   - github-pages
   - jekyll
   - liquid
+  featured: true
+  span_columns: 1
+  span_rows: 1
+- id: normal-resume
+  type: project
+  name: normal-resume
+  title: Normal Resume
+  description: Version control for my resume
+  url: https://github.com/Avery2/normal-resume
+  homepage: https://www.averychan.site/normal-resume/
+  image: ''
+  language: HTML
+  stars: 0
+  forks: 0
+  topics:
+  - resume
+  created_at: '2021-08-11T02:36:49Z'
+  updated_at: '2025-12-24T10:12:52Z'
+  pushed_at: '2025-12-24T10:12:47Z'
+  traffic:
+    views_14d: 0
+    unique_visitors_14d: 0
+  priority: 21
+  tags:
+  - html
+  - resume
   featured: true
   span_columns: 1
   span_rows: 1
@@ -121,32 +147,6 @@ projects:
   - mcp-server
   - things3
   featured: false
-  span_columns: 1
-  span_rows: 1
-- id: normal-resume
-  type: project
-  name: normal-resume
-  title: Normal Resume
-  description: Version control for my resume
-  url: https://github.com/Avery2/normal-resume
-  homepage: https://www.averychan.site/normal-resume/
-  image: ''
-  language: HTML
-  stars: 0
-  forks: 0
-  topics:
-  - resume
-  created_at: '2021-08-11T02:36:49Z'
-  updated_at: '2025-10-23T03:24:30Z'
-  pushed_at: '2025-10-23T03:24:27Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
-  priority: 16
-  tags:
-  - html
-  - resume
-  featured: true
   span_columns: 1
   span_rows: 1
 - id: Toggl-Analysis
