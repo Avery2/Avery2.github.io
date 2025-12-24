@@ -1,19 +1,19 @@
 metadata:
-  generated_at: '2025-12-24T09:58:08.489693+00:00'
+  generated_at: '2025-12-24T10:26:36.584757+00:00'
 experiences:
 - company: Amplitude
   location: San Francisco, CA
-  title: Intern → Product Engineer II
+  title: Product Engineer II
   dates: May 2022 – Present
-  description_html: '<p>Grew from intern to Product Engineer II at Amplitude, a digital
-    analytics platform that helps companies understand user behavior across their
-    products to improve engagement, retention, and growth through data-driven insights.
-    Built systems that make complex analytical systems accessible, translating complicated
-    system configurations and computation definitions into usable, understandable
-    interfaces across products like Data Tables, Metrics, and AI-powered chart interfaces.
-    Worked across the full stack, primarily in React and TypeScript, with contributions
-    to GraphQL and back-end configuration. Focused on developing analytical tools
-    that were powerful, resilient, and accessible.</p><ul>
+  description_html: '<p>Product Engineer at Amplitude, a digital analytics platform
+    that helps companies understand user behavior across their products to improve
+    engagement, retention, and growth through data-driven insights. Built systems
+    that make complex analytical systems accessible, translating complicated system
+    configurations and computation definitions into usable, understandable interfaces
+    across products like Data Tables, Metrics, and AI-powered chart interfaces. Worked
+    across the full stack, primarily in React and TypeScript, building GraphQL endpoints
+    and back-end configuration. Focused on developing analytical tools that were powerful,
+    resilient, and accessible.</p><ul>
 
     <li><strong>Feature Development on Core Products:</strong></li>
 
@@ -23,9 +23,9 @@ experiences:
     Tables, Metrics, and Chart Controls, enabling users to define analytical queries
     through intuitive UI controls reused across multiple product areas.</li>
 
-    <li>Contributed to <strong>pre-built analytics experiences</strong> including
-    Marketing and Product Analytics, and led development of the Ad Performance Hub,
-    translating business-specific needs into guided analytical flows.</li>
+    <li>Built <strong>pre-built analytics experiences</strong> including Marketing
+    and Product Analytics, and led development of the Ad Performance Hub, translating
+    business-specific needs into guided analytical flows.</li>
 
     <li>Developed <strong>Out-of-the-Box Metrics</strong> to give users default insights
     without setup, improving onboarding and product accessibility.</li>
@@ -36,10 +36,10 @@ experiences:
 
     <ul>
 
-    <li>Contributed to creating <strong>Chart Chat</strong>, an AI-powered interface
-    that lets users modify charts through natural language (started as a hackathon
-    project), later expanded into the company''s <strong>Global Chat</strong> initiative
-    integrating LLMs and MCP servers.</li>
+    <li>Co-created <strong>Chart Chat</strong>, an AI-powered interface that lets
+    users modify charts through natural language (started as a hackathon project),
+    later expanded into the company''s <strong>Global Chat</strong> initiative integrating
+    LLMs and MCP servers.</li>
 
     <li>Implemented and maintained <strong>system improvements</strong> such as Dark
     Mode (via new GraphQL endpoints), refactored breakdown tables (tabular data that
@@ -56,8 +56,8 @@ experiences:
     <li><strong>Maintained team surface areas</strong> with bug fixes, clarifying
     limitations, and making quick fixes for both internal and external users; supported
     reliability as an <strong>on-call engineer</strong> (debugging Cypress tests,
-    managing deploys, coordinating rollbacks) and contributed to cross-org efforts
-    including pricing and packaging.</li>
+    managing deploys, coordinating rollbacks) and supported cross-org efforts including
+    pricing and packaging.</li>
 
     <li>Collaborated daily with product, design, and customers to come up with creative
     UI solutions during development and bug resolution, participating in <strong>customer
@@ -84,20 +84,19 @@ experiences:
   title: Developer Intern
   dates: May 2021 – August 2021
   description_html: <p>Halo is a startup focused on pairing researchers to various
-    funding sources. Contributed by implementing features and designs at the direction
-    of the CEO or UX designer, fixing bugs, and setting up developer productivity
-    tools like Storybook and Chromatic. Developed a new React component library to
-    reduce code redundancy and wrote Python web scraping scripts for the marketing
-    team.</p>
+    funding sources. Implemented features and designs at the direction of the CEO
+    or UX designer, fixed bugs, and set up developer productivity tools like Storybook
+    and Chromatic. Developed a new React component library to reduce code redundancy
+    and wrote Python web scraping scripts for the marketing team.</p>
 - company: MAterials Simulation Toolkit Machine Learning (MAST-ML)
   location: Madison, WI
   title: Member
   dates: June 2020 – December 2021
   description_html: <p>MAST-ML is an open-source machine learning Python package with
-    a focus on the material sciences. Contributing to the tool by implementing various
-    functionality proposed by supervisor Dr. Ryan Jacobs, including data-twin removal
-    to improve model performance, graphs to summarize classification models, and exploration
-    of gp-learn library and other feature generation methods.</p>
+    a focus on the material sciences. Implemented various functionality proposed by
+    supervisor Dr. Ryan Jacobs, including data-twin removal to improve model performance,
+    graphs to summarize classification models, and exploration of gp-learn library
+    and other feature generation methods.</p>
 education:
 - school: University of Wisconsin-Madison
   location: Madison, WI

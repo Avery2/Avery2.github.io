@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2025-12-24T10:25:41.326259+00:00'
+  generated_at: '2025-12-24T10:26:36.271549+00:00'
   source_api: https://api.github.com/users/Avery2/repos
   total_repos: 28
 projects:
@@ -20,9 +20,6 @@ projects:
   created_at: '2021-11-30T07:50:42Z'
   updated_at: '2025-06-19T22:48:10Z'
   pushed_at: '2025-06-19T22:48:06Z'
-  traffic:
-    views_14d: 2
-    unique_visitors_14d: 2
   priority: 53
   tags:
   - python
@@ -50,9 +47,6 @@ projects:
   created_at: '2023-10-29T18:23:07Z'
   updated_at: '2025-12-22T01:27:10Z'
   pushed_at: '2025-12-22T01:27:07Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 26
   tags:
   - python
@@ -79,11 +73,8 @@ projects:
   - jekyll
   - liquid
   created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2025-12-24T10:21:47Z'
-  pushed_at: '2025-12-24T10:21:44Z'
-  traffic:
-    views_14d: 11
-    unique_visitors_14d: 4
+  updated_at: '2025-12-24T10:25:54Z'
+  pushed_at: '2025-12-24T10:25:50Z'
   priority: 21
   tags:
   - javascript
@@ -109,9 +100,6 @@ projects:
   created_at: '2021-08-11T02:36:49Z'
   updated_at: '2025-12-24T10:12:52Z'
   pushed_at: '2025-12-24T10:12:47Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 21
   tags:
   - html
@@ -137,9 +125,6 @@ projects:
   created_at: '2025-11-17T06:13:48Z'
   updated_at: '2025-12-23T00:13:43Z'
   pushed_at: '2025-12-23T00:13:39Z'
-  traffic:
-    views_14d: 3
-    unique_visitors_14d: 1
   priority: 20
   tags:
   - python
@@ -167,9 +152,6 @@ projects:
   created_at: '2021-05-30T06:32:18Z'
   updated_at: '2025-04-22T06:33:42Z'
   pushed_at: '2025-04-22T06:33:38Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 7
   tags:
   - html
@@ -195,9 +177,6 @@ projects:
   created_at: '2022-02-09T21:37:14Z'
   updated_at: '2022-11-22T20:08:11Z'
   pushed_at: '2022-10-22T07:42:07Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 7
   tags:
   - python
@@ -223,9 +202,6 @@ projects:
   created_at: '2021-07-28T23:30:04Z'
   updated_at: '2022-07-02T02:58:13Z'
   pushed_at: '2021-07-29T18:51:29Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 7
   tags:
   - python
@@ -249,9 +225,6 @@ projects:
   created_at: '2023-11-18T07:26:26Z'
   updated_at: '2025-06-02T21:09:27Z'
   pushed_at: '2025-06-02T21:09:24Z'
-  traffic:
-    views_14d: 2
-    unique_visitors_14d: 2
   priority: 6
   tags:
   - javascript
@@ -276,9 +249,6 @@ projects:
   created_at: '2021-09-15T22:51:38Z'
   updated_at: '2025-12-19T01:13:47Z'
   pushed_at: '2021-10-08T19:35:19Z'
-  traffic:
-    views_14d: 1
-    unique_visitors_14d: 1
   priority: 4
   tags:
   - html
@@ -306,9 +276,6 @@ projects:
   created_at: '2022-09-27T00:36:08Z'
   updated_at: '2025-07-03T23:22:42Z'
   pushed_at: '2022-09-27T03:45:42Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 4
   tags:
   - python
@@ -336,9 +303,6 @@ projects:
   created_at: '2021-05-01T06:32:29Z'
   updated_at: '2023-08-15T06:28:48Z'
   pushed_at: '2021-06-20T19:09:42Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 4
   tags:
   - html
@@ -363,9 +327,6 @@ projects:
   created_at: '2024-06-10T23:09:01Z'
   updated_at: '2024-12-29T03:54:28Z'
   pushed_at: '2024-06-11T04:48:52Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - html
@@ -387,9 +348,6 @@ projects:
   created_at: '2024-05-28T20:31:24Z'
   updated_at: '2024-05-28T20:35:10Z'
   pushed_at: '2024-05-28T20:35:06Z'
-  traffic:
-    views_14d: 1
-    unique_visitors_14d: 1
   priority: 1
   tags:
   - rich text format
@@ -416,9 +374,6 @@ projects:
   created_at: '2021-11-01T22:28:57Z'
   updated_at: '2023-11-22T06:25:54Z'
   pushed_at: '2022-11-15T00:20:45Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - html
@@ -444,9 +399,6 @@ projects:
   created_at: '2023-06-29T07:12:06Z'
   updated_at: '2023-06-29T07:12:23Z'
   pushed_at: '2023-06-29T07:17:58Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - javascript
@@ -472,9 +424,6 @@ projects:
   created_at: '2021-04-07T23:23:42Z'
   updated_at: '2023-01-28T06:31:34Z'
   pushed_at: '2021-04-25T19:54:38Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - c
@@ -501,9 +450,6 @@ projects:
   created_at: '2022-06-04T06:20:21Z'
   updated_at: '2022-11-22T20:08:44Z'
   pushed_at: '2022-06-04T06:21:12Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - html
@@ -531,9 +477,6 @@ projects:
   created_at: '2022-09-28T05:58:23Z'
   updated_at: '2022-11-22T20:03:13Z'
   pushed_at: '2022-10-05T20:43:09Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - python
@@ -561,9 +504,6 @@ projects:
   created_at: '2022-05-24T05:54:56Z'
   updated_at: '2022-11-22T20:00:52Z'
   pushed_at: '2022-11-22T20:01:04Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - jupyter notebook
@@ -589,9 +529,6 @@ projects:
   created_at: '2022-09-25T21:53:28Z'
   updated_at: '2022-11-22T19:58:33Z'
   pushed_at: '2022-09-25T22:32:19Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - python
@@ -617,9 +554,6 @@ projects:
   created_at: '2021-07-17T01:07:36Z'
   updated_at: '2022-01-11T12:02:49Z'
   pushed_at: '2022-11-05T18:50:01Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - javascript
@@ -646,9 +580,6 @@ projects:
   created_at: '2021-11-18T23:52:30Z'
   updated_at: '2022-01-07T12:13:52Z'
   pushed_at: '2021-12-19T17:08:13Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - javascript
@@ -678,9 +609,6 @@ projects:
   created_at: '2021-09-22T17:56:47Z'
   updated_at: '2021-10-19T06:07:35Z'
   pushed_at: '2021-10-08T19:22:51Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - html
@@ -710,9 +638,6 @@ projects:
   created_at: '2021-04-02T01:37:14Z'
   updated_at: '2021-09-13T18:54:25Z'
   pushed_at: '2021-05-16T20:03:56Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - html
@@ -740,9 +665,6 @@ projects:
   created_at: '2019-12-16T16:58:38Z'
   updated_at: '2021-08-26T03:30:58Z'
   pushed_at: '2019-12-17T19:27:42Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - java
@@ -768,9 +690,6 @@ projects:
   created_at: '2019-08-22T00:57:34Z'
   updated_at: '2021-08-26T03:27:27Z'
   pushed_at: '2021-04-25T05:35:51Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - java
@@ -796,9 +715,6 @@ projects:
   created_at: '2021-08-09T23:24:09Z'
   updated_at: '2021-08-16T00:59:18Z'
   pushed_at: '2021-08-16T00:59:16Z'
-  traffic:
-    views_14d: 0
-    unique_visitors_14d: 0
   priority: 1
   tags:
   - javascript

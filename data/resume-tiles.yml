@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2025-12-24T09:58:08.487645+00:00'
+  generated_at: '2025-12-24T10:26:36.579486+00:00'
   source: resume
   total_tiles: 4
 tiles:
@@ -7,14 +7,14 @@ tiles:
   type: experience
   name: Amplitude
   title: Amplitude
-  description: Intern → Product Engineer II
+  description: Product Engineer II
   url: ./writing/experience/amplitude.html
   tags:
   - experience
   - professional
   meta:
     company: Amplitude
-    title: Intern → Product Engineer II
+    title: Product Engineer II
     location: San Francisco, CA
     dates: May 2022 – Present
   priority: 100
