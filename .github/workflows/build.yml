@@ -1,0 +1,65 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate HTML structure
+        run: |
+          # Check that key HTML files exist
+          if [ ! -f "index.html" ]; then
+            echo "❌ index.html not found"
+            exit 1
+          fi
+          echo "✅ index.html exists"
+
+      - name: Validate CSS files
+        run: |
+          # Check that CSS directory and main file exist
+          if [ ! -d "css" ]; then
+            echo "❌ css directory not found"
+            exit 1
+          fi
+          if [ ! -f "css/main.css" ]; then
+            echo "❌ css/main.css not found"
+            exit 1
+          fi
+          echo "✅ CSS files exist"
+
+      - name: Validate JavaScript files
+        run: |
+          # Check that JS directory and main file exist
+          if [ ! -d "js" ]; then
+            echo "❌ js directory not found"
+            exit 1
+          fi
+          if [ ! -f "js/main.js" ]; then
+            echo "❌ js/main.js not found"
+            exit 1
+          fi
+          echo "✅ JavaScript files exist"
+
+      - name: Validate data files
+        run: |
+          # Check that data directory exists
+          if [ ! -d "data" ]; then
+            echo "❌ data directory not found"
+            exit 1
+          fi
+          echo "✅ Data directory exists"
+
+      - name: Build validation complete
+        run: |
+          echo "✅ All build validation checks passed!"

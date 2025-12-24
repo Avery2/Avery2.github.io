@@ -35,10 +35,11 @@ layout:
 # Curated list of repositories to display
 # Only these repos will be shown (not all repos)
 curated_repos:
+  - normal-resume
+  - Avery2.github.io
   - things3-mcp-tools
   - sun-calendar
   - thingsagent
-  - Avery2.github.io
   - steam-hours
   - Toggl-Analysis
   - Just-Read-Less-Features
