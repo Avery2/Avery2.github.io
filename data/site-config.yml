@@ -67,3 +67,9 @@ curated_repos:
   - automate-exalidraw
   - Qbserve-Blocker
   - git-message-helper
+
+# Featured repositories (manual override)
+# These repos will have featured styling regardless of star count
+featured_repos:
+  - normal-resume
+  - Avery2.github.io

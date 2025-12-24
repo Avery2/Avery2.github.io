@@ -1,7 +1,7 @@
 metadata:
-  generated_at: '2025-12-24T09:03:17.394460+00:00'
+  generated_at: '2025-12-24T09:08:08.545391+00:00'
   source_api: https://api.github.com/users/Avery2/repos
-  total_repos: 27
+  total_repos: 28
 projects:
 - id: things3notionscript
   type: project
@@ -63,6 +63,36 @@ projects:
   featured: false
   span_columns: 1
   span_rows: 1
+- id: Avery2.github.io
+  type: project
+  name: Avery2.github.io
+  title: Avery2.Github.Io
+  description: My personal website.
+  url: https://github.com/Avery2/Avery2.github.io
+  homepage: https://www.averychan.site
+  image: ./assets/images/projects/Avery2.github.io.jpg
+  language: JavaScript
+  stars: 0
+  forks: 1
+  topics:
+  - github-pages
+  - jekyll
+  - liquid
+  created_at: '2019-12-06T06:16:24Z'
+  updated_at: '2025-12-24T09:03:39Z'
+  pushed_at: '2025-12-24T09:03:34Z'
+  traffic:
+    views_14d: 11
+    unique_visitors_14d: 4
+  priority: 21
+  tags:
+  - javascript
+  - github-pages
+  - jekyll
+  - liquid
+  featured: true
+  span_columns: 1
+  span_rows: 1
 - id: things3-mcp-tools
   type: project
   name: things3-mcp-tools
@@ -93,34 +123,30 @@ projects:
   featured: false
   span_columns: 1
   span_rows: 1
-- id: Avery2.github.io
+- id: normal-resume
   type: project
-  name: Avery2.github.io
-  title: Avery2.Github.Io
-  description: My personal website.
-  url: https://github.com/Avery2/Avery2.github.io
-  homepage: https://www.averychan.site
-  image: ./assets/images/projects/Avery2.github.io.jpg
+  name: normal-resume
+  title: Normal Resume
+  description: Version control for my resume
+  url: https://github.com/Avery2/normal-resume
+  homepage: https://www.averychan.site/normal-resume/
+  image: ''
   language: HTML
   stars: 0
-  forks: 1
+  forks: 0
   topics:
-  - github-pages
-  - jekyll
-  - liquid
-  created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2025-10-24T02:29:37Z'
-  pushed_at: '2025-10-24T02:29:33Z'
+  - resume
+  created_at: '2021-08-11T02:36:49Z'
+  updated_at: '2025-10-23T03:24:30Z'
+  pushed_at: '2025-10-23T03:24:27Z'
   traffic:
-    views_14d: 11
-    unique_visitors_14d: 4
+    views_14d: 0
+    unique_visitors_14d: 0
   priority: 16
   tags:
   - html
-  - github-pages
-  - jekyll
-  - liquid
-  featured: false
+  - resume
+  featured: true
   span_columns: 1
   span_rows: 1
 - id: Toggl-Analysis

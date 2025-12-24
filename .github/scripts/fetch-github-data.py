@@ -175,7 +175,7 @@ def get_image_for_repo(repo_name: str) -> str:
     return ''
 
 
-def transform_repo_to_tile(repo: Dict[str, Any]) -> Dict[str, Any]:
+def transform_repo_to_tile(repo: Dict[str, Any], featured_repos: List[str] = None) -> Dict[str, Any]:
     """Transform GitHub API response to tile data structure."""
     repo_name = repo['name']
 
@@ -190,8 +190,14 @@ def transform_repo_to_tile(repo: Dict[str, Any]) -> Dict[str, Any]:
     # Get topics
     topics = repo.get('topics', [])
 
-    # Featured if stars > 5
-    featured = repo.get('stargazers_count', 0) > 5
+    # Featured: check manual override list first, otherwise use stars > 5
+    if featured_repos and repo_name in featured_repos:
+        featured = True
+        print(f"  Marked as featured (manual override)")
+    else:
+        featured = repo.get('stargazers_count', 0) > 5
+        if featured:
+            print(f"  Marked as featured (stars > 5)")
 
     # Get image if exists
     image = get_image_for_repo(repo_name)
@@ -239,9 +245,31 @@ def transform_repo_to_tile(repo: Dict[str, Any]) -> Dict[str, Any]:
     return {k: v for k, v in tile.items() if v is not None}
 
 
+def load_featured_repos() -> List[str]:
+    """Load the featured repository list from site config."""
+    try:
+        repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+        config_path = os.path.join(repo_root, 'data', 'site-config.yml')
+
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config = yaml.safe_load(f)
+
+        featured = config.get('featured_repos', [])
+        if featured:
+            print(f"Loaded {len(featured)} featured repositories from site-config.yml")
+        return featured
+    except Exception as e:
+        print(f"WARNING: Could not load featured list: {e}")
+        print("Will use automatic featured detection (stars > 5)")
+        return []
+
+
 def generate_yaml_output(repos: List[Dict[str, Any]]) -> str:
     """Generate YAML output file."""
-    tiles = [transform_repo_to_tile(repo) for repo in repos]
+    # Load featured repos list from site config
+    featured_repos = load_featured_repos()
+
+    tiles = [transform_repo_to_tile(repo, featured_repos) for repo in repos]
 
     # Sort by priority (descending)
     tiles.sort(key=lambda x: x['priority'], reverse=True)

@@ -67,6 +67,11 @@
 .header-left {
   gap: 1.5rem;
   align-items: center;
+  transition: gap 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.site-header.scrolled .header-left {
+  gap: 0.75rem;
 }
 
 .header-right {
@@ -78,7 +83,11 @@
   font-weight: 700;
   color: var(--text-primary);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.site-header.scrolled .site-title {
+  font-size: 1.25rem;
 }
 
 .site-title:hover {
