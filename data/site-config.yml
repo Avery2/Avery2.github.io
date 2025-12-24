@@ -1,0 +1,68 @@
+# Site Configuration
+# This file contains all site-wide settings and author information
+
+site:
+  title: "Avery"
+  description: "Hi, I'm Justin \"Avery\" Chan 👋 Welcome to my website!"
+  domain: "www.averychan.site"
+  repository: "Avery2/Avery2.github.io"
+  baseurl: ""
+
+author:
+  name: "Justin \"Avery\" Chan"
+  email: "justinaverychan@gmail.com"
+  profile_image: "./assets/images/profile/face.jpg"
+  resume_url: "https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf#view=FitH"
+  github: "Avery2"
+  linkedin: "avery2"
+
+navigation:
+  show_social_in_header: true
+  back_to_top: true
+
+features:
+  theme_toggle: true
+  project_filtering: true
+  search: true
+  analytics_dashboard: false  # Future feature
+
+layout:
+  grid_type: "masonry"  # True masonry layout
+  min_tile_width: "280px"
+  gap: "20px"
+  columns_auto_fill: true
+
+# Curated list of repositories to display
+# Only these repos will be shown (not all repos)
+curated_repos:
+  - things3-mcp-tools
+  - sun-calendar
+  - thingsagent
+  - Avery2.github.io
+  - steam-hours
+  - Toggl-Analysis
+  - Just-Read-Less-Features
+  - Qbserve-data
+  - Backpropagation-Neural-Network
+  - ClassifyTerms
+  - Antibiotic-Visualization
+  - PersonalVisualization
+  - 639-Final-Project
+  - things3notionscript
+  - optical-flow-count
+  - text-to-spooch
+  - SimpleReadme
+  - SpotifyDataAnalysis
+  - OneTab_to_CSV
+  - QbserveBlocker
+  - netflix-data-clean
+  - slack-duck-message-generator
+  - xv6_memoryencrypt
+  - life-to-24h
+  - rename-contacts
+  - graffiti-template-generator
+  - controller-input-canvas
+  - wordle-helper
+  - automate-exalidraw
+  - Qbserve-Blocker
+  - git-message-helper

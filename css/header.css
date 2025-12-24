@@ -1,0 +1,327 @@
+/* Header and Navigation Styles */
+
+.site-header {
+  background-color: transparent;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 12rem;
+  position: relative;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Header pill containers */
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  transition: all 0.3s ease;
+}
+
+/* When scrolled and collapsed - separate pills */
+.site-header.scrolled:not(.filters-expanded) .header-left,
+.site-header.scrolled:not(.filters-expanded) .header-right {
+  background-color: var(--header-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 0.5rem 1rem;
+  backdrop-filter: blur(10px);
+  margin: 0 0.5rem;
+}
+
+/* When filters expanded - header-left and header-right get background */
+.site-header.filters-expanded .header-left {
+  background-color: var(--header-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 0.5rem 1rem;
+  backdrop-filter: blur(10px);
+  margin: 0 0.5rem 0 0;
+}
+
+.site-header.filters-expanded .header-right {
+  background-color: var(--header-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 0.5rem 1rem;
+  backdrop-filter: blur(10px);
+  margin: 0 0 0 0.5rem;
+}
+
+.header-left {
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.header-right {
+  gap: 0.75rem;
+}
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-title:hover {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+/* Profile section removed - now a tile */
+
+/* Social links */
+.social-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-color);
+  background-color: var(--accent-primary);
+  color: white;
+  text-decoration: none;
+}
+
+.social-link:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  transform: rotate(20deg);
+  border-color: var(--accent-primary);
+  background-color: var(--accent-primary);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Footer */
+.site-footer {
+  background-color: transparent;
+  border-top: none;
+  padding: 1rem 0;
+  margin-top: auto;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 12rem;
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+}
+
+.footer-content p {
+  margin-bottom: 0;
+}
+
+/* Responsive header */
+@media (max-width: 900px) {
+  .header-content {
+    padding: 0 4rem;
+  }
+
+  .site-header.filters-expanded .header-content::before {
+    left: 4rem;
+    right: 4rem;
+  }
+
+  .footer-content {
+    padding: 0 4rem;
+  }
+
+  .header-content {
+    gap: 1rem;
+  }
+
+  .site-title {
+    font-size: 1.25rem;
+  }
+
+  .header-right {
+    gap: 0.5rem;
+  }
+
+  .social-link {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.125rem;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-content {
+    padding: 0 1rem;
+  }
+
+  .site-header.filters-expanded .header-content::before {
+    left: 1rem;
+    right: 1rem;
+  }
+
+  /* Hide site title on small screens, keep Find button */
+  .site-title {
+    display: none;
+  }
+
+  .header-left {
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  /* Collapse social links into menu button */
+  .header-right {
+    position: relative;
+  }
+
+  .header-right > .social-links,
+  .header-right > .theme-toggle {
+    display: none;
+  }
+
+  /* Show menu button on mobile */
+  .mobile-menu-toggle {
+    display: flex !important;
+  }
+
+  /* Mobile menu dropdown */
+  .mobile-menu-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    z-index: 200;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 150px;
+  }
+
+  .mobile-menu-dropdown.active {
+    display: flex;
+  }
+
+  .mobile-menu-dropdown .social-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .mobile-menu-dropdown .theme-toggle {
+    display: flex;
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .footer-content {
+    padding: 0 1rem;
+  }
+}
+
+/* Mobile menu toggle button (hidden by default, shown on mobile) */
+.mobile-menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}
+
+.mobile-menu-toggle:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.mobile-menu-toggle[aria-expanded="true"] {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.mobile-menu-toggle i {
+  font-size: 1.125rem;
+}
+
+/* Mobile menu dropdown - hidden by default */
+.mobile-menu-dropdown {
+  display: none;
+}

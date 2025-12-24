@@ -1,0 +1,57 @@
+/* Main Stylesheet - Imports all component styles */
+
+/* Import order matters - base styles first, components last */
+@import url('base.css');
+@import url('themes.css');
+@import url('grid.css');
+@import url('header.css');
+@import url('filters.css');
+@import url('tiles.css');
+
+/* Additional global styles that don't fit in other files */
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-padding-top: 80px; /* Account for sticky header */
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .site-header,
+  .filters-section,
+  .site-footer {
+    display: none;
+  }
+
+  .tile {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .grid-container {
+    display: block;
+  }
+
+  .tile {
+    margin-bottom: 1rem;
+    box-shadow: none !important;
+  }
+}

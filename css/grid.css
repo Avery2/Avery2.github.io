@@ -1,0 +1,110 @@
+/* Masonry Grid Layout - True masonry using CSS columns */
+
+.projects-section {
+  width: 100%;
+  background-color: transparent;
+}
+
+.projects-container {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 12rem;
+}
+
+/* CSS Grid masonry layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap);
+  grid-auto-rows: 0;
+  row-gap: 1px;
+}
+
+.grid-container .tile {
+  width: 100%;
+}
+
+/* Profile tile spans 2 columns */
+.profile-tile {
+  grid-column: span 2;
+}
+
+/* Responsive column count */
+@media (min-width: 1800px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1400px) {
+  :root {
+    --grid-max-width: 1200px;
+  }
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --grid-min-tile-width: 260px;
+    --grid-gap: 18px;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Profile tile spans full width on 2-column layout */
+  .profile-tile {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --grid-min-tile-width: 250px;
+    --grid-gap: 16px;
+  }
+
+  .projects-container {
+    padding: 0 4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --grid-gap: 12px;
+  }
+
+  /* Single column on mobile */
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-container {
+    padding: 0 1rem;
+  }
+
+  /* Profile tile spans full width on mobile */
+  .profile-tile {
+    grid-column: span 1;
+  }
+}
+
+/* Grid container states */
+.grid-container[data-loading="true"] .tile {
+  display: none;
+}
+
+.grid-container[data-loading="false"] .loading-spinner {
+  display: none;
+}
+
+/* Loading spinner (spans all columns) */
+.loading-spinner {
+  grid-column: 1 / -1;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}

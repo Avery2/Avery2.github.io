@@ -1,0 +1,86 @@
+/* Theme System - Light and Dark Mode */
+
+:root {
+  /* Light theme (default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+
+  --text-primary: #1A1A1A;
+  --text-secondary: #6c757d;
+  --text-tertiary: #6B7280;
+
+  --accent-primary: #DA7422;
+
+  --border-color: #dee2e6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  --tile-bg: #ffffff;
+  --tile-hover-bg: #f8f9fa;
+
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --footer-bg: #f8f9fa;
+
+  /* Grid configuration */
+  --grid-min-tile-width: 280px;
+  --grid-gap: 20px;
+  --grid-max-width: 1400px;
+
+  /* Brand colors */
+  --linkedin-blue: #0A66C2;
+  --github-gray: #24292e;
+}
+
+[data-theme="dark"] {
+  /* Dark theme overrides */
+  --bg-primary: #1A1A1A;
+  --bg-secondary: #2D2E2F;
+  --bg-tertiary: #3a3a3a;
+
+  --text-primary: #e9ecef;
+  --text-secondary: #9EA3B0;
+  --text-tertiary: #9EA3B0;
+
+  --accent-primary: #DA7422;
+
+  --border-color: #3a3a3a;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+
+  --tile-bg: #2D2E2F;
+  --tile-hover-bg: #3a3a3a;
+
+  --header-bg: rgba(26, 26, 26, 0.95);
+  --footer-bg: #2D2E2F;
+
+  /* Brand colors stay the same in dark mode */
+  --linkedin-blue: #0A66C2;
+  --github-gray: #ffffff;
+}
+
+/* Smooth theme transitions */
+*,
+*::before,
+*::after {
+  transition-property: background-color, color, border-color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Disable transitions for specific elements */
+a,
+button,
+.tile,
+.filter-pill,
+.theme-toggle {
+  /* These have their own specific transitions */
+  transition-property: transform, box-shadow, opacity, background-color, color, border-color;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+html:not([data-theme]) {
+  visibility: hidden;
+}
+
+html[data-theme] {
+  visibility: visible;
+}

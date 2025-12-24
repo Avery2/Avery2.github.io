@@ -1,0 +1,67 @@
+# Filter Groups Configuration
+# Defines the filtering and sorting options for project tiles
+
+filters:
+  # Tags filter (includes topics + language)
+  - id: "tags"
+    label: "Tags"
+    type: "multi-select"
+    enabled: true
+    options:
+      # Priority tags - these will be shown first
+      - value: "python"
+        label: "python"
+        color: "#3776ab"
+
+      - value: "javascript"
+        label: "javascript"
+        color: "#f7df1e"
+
+      - value: "r"
+        label: "r"
+        color: "#276dc3"
+
+      - value: "data-visualization"
+        label: "data-visualization"
+
+      - value: "automation"
+        label: "automation"
+
+      - value: "productivity"
+        label: "productivity"
+
+      # More tags will be auto-populated from all project tags/topics
+
+  # Search filter
+  - id: "search"
+    label: "Search"
+    type: "search"
+    enabled: true
+    placeholder: "Search projects..."
+    search_fields: ["title", "description", "topics", "tags"]
+
+  # Sort options
+  - id: "sort"
+    label: "Sort By"
+    type: "radio"
+    enabled: true
+    default: "priority"
+    options:
+      - value: "priority"
+        label: "Featured First"
+
+      - value: "stars"
+        label: "Most Stars"
+
+      - value: "recent"
+        label: "Recently Updated"
+
+      - value: "alphabetical"
+        label: "A-Z"
+
+display:
+  show_filter_count: true  # Show "23 projects"
+  filter_position: "top"   # top or sidebar
+  filter_style: "pills"    # pills, buttons, or dropdown
+  animate_transitions: true
+  transition_duration: 300  # ms

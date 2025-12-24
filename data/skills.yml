@@ -1,0 +1,33 @@
+# Skills Configuration
+# Consolidated from programming-skills.yml and other-skills.yml
+
+skill_groups:
+  - title: "Programming Languages & Technologies"
+    id: "programming"
+    skills:
+      - name: "Python"
+        level: 90
+        color: "#3776ab"  # Python blue
+
+      - name: "R"
+        level: 85
+        color: "#276dc3"  # R blue
+
+      - name: "HTML5/CSS3"
+        level: 70
+        color: "#e34c26"  # HTML5 orange/red
+
+      - name: "Javascript"
+        level: 70
+        color: "#f7df1e"  # JavaScript yellow
+
+  - title: "Other Interests"
+    id: "other"
+    skills:
+      - name: "Productivity Software"
+        level: 95
+        color: "#6c757d"  # Gray
+
+      - name: "Reading"
+        level: 90
+        color: "#6c757d"  # Gray

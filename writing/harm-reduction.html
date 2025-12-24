@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harm Reduction - Avery</title>
+  <meta name="description" content="A philosophy that honors dignity and autonomy">
+
+  <!-- Reuse main site CSS -->
+  <link rel="stylesheet" href="../css/main.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <!-- Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@11.1.0/marked.min.js"></script>
+
+  <style>
+    .writing-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .writing-header {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .writing-title {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .writing-description {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .writing-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-tertiary);
+    }
+
+    .writing-content {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--text-primary);
+    }
+
+    .writing-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .writing-content a {
+      color: var(--accent-primary);
+      text-decoration: none;
+    }
+
+    .writing-content a:hover {
+      text-decoration: underline;
+    }
+
+    .writing-content h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+    }
+
+    .writing-content h3 {
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.375rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent-primary);
+      text-decoration: none;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 4rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <!-- Simple header -->
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="../" class="site-title">Avery</a>
+      </div>
+      <div class="header-right">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          🌙
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="writing-container">
+    <a href="../" class="back-link">
+      <i class="fas fa-arrow-left"></i>
+      Back to Portfolio
+    </a>
+
+    <div id="loading" class="loading">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Loading...</p>
+    </div>
+
+    <div id="content" style="display: none;">
+      <div class="writing-header">
+        <h1 class="writing-title">Harm Reduction</h1>
+        <p class="writing-description">A philosophy that honors dignity and autonomy</p>
+        <div class="writing-meta">
+          <span>philosophy • writing</span>
+        </div>
+      </div>
+
+      <article class="writing-content" id="markdown-content">
+        <!-- Rendered markdown goes here -->
+      </article>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+
+    // Initialize theme
+    initTheme();
+
+    // Load and render the piece
+    loadPiece();
+
+    async function loadPiece() {
+      try {
+        // Fetch markdown
+        const response = await fetch('./harm-reduction.md');
+        if (!response.ok) {
+          throw new Error('Failed to load content');
+        }
+        const markdown = await response.text();
+
+        // Render
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+
+        // Show content
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+      } catch (error) {
+        console.error('Error loading piece:', error);
+        document.getElementById('loading').innerHTML = '<p>Error loading content.</p>';
+      }
+    }
+  </script>
+</body>
+</html>

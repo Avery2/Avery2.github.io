@@ -1,16 +1,33 @@
-# Local Site Directories
-_site
-.sass-cache
-.jekyll-cache
-.jekyll-metadata
+# Environment Variables
+.env
 
-# Ruby Gems
-.bundle
-Gemfile.lock
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+
+# Node
+node_modules/
+npm-debug.log*
 
 # Log Files
 *.log
 
-# other
-vendor
+# OS Files
 .DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+.cache/

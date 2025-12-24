@@ -1,0 +1,108 @@
+# Manual Tiles Configuration
+# User-defined custom tiles that appear alongside auto-generated GitHub project tiles
+
+tiles:
+  # Profile tile (spans all columns at top)
+  - id: "profile-intro"
+    type: "profile"
+    title: "Hi, I'm Justin \"Avery\" Chan 👋"
+    description: "Welcome to my website, I hope you enjoy it!"
+    image: "./assets/images/profile/face.jpg"
+    priority: 1000  # Highest priority - always at top
+    tags: ["profile"]
+    span_all_columns: true
+    featured: true
+
+  # Resume link tile
+  - id: "resume-tile"
+    type: "link"
+    title: "View My Resume"
+    description: "Full resume with experience and education"
+    url: "https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf#view=FitH"
+    open_new_tab: true
+    priority: 450
+    tags: ["professional"]
+    style:
+      border_color: "#6B7280"
+
+  # More projects on GitHub (second-to-last tile)
+  - id: "github-more"
+    type: "link"
+    title: "GitHub"
+    description: "More projects on GitHub"
+    icon: "fab fa-github"
+    url: "https://github.com/Avery2?tab=repositories&type=source"
+    open_new_tab: true
+    priority: -1
+    tags: ["professional", "projects"]
+    style:
+      border_color: "#6B7280"
+
+  # Harm Reduction writing
+  - id: "harm-reduction"
+    type: "link"
+    title: "Harm Reduction"
+    description: "A philosophy that honors dignity and autonomy. Harm reduction resonated deeply with me when I first learned about it during CASA training... → Read more"
+    url: "./writing/harm-reduction.html"
+    open_new_tab: false
+    priority: 110
+    tags: ["philosophy", "writing"]
+    style:
+      border_color: "#6B7280"
+
+  # LinkedIn profile
+  - id: "linkedin-profile"
+    type: "link"
+    title: "LinkedIn"
+    description: "Feel free to say hi"
+    icon: "fab fa-linkedin"
+    url: "https://www.linkedin.com/in/avery2/"
+    open_new_tab: true
+    priority: 75
+    tags: ["professional", "social"]
+    style:
+      border_color: "#6B7280"
+
+  # Back to Top (absolute last tile)
+  - id: "back-to-top"
+    type: "link"
+    title: "Back to Top"
+    description: "Return to the top of the page"
+    icon: "fas fa-arrow-up"
+    url: "#"
+    open_new_tab: false
+    priority: -2
+    tags: ["navigation"]
+    style:
+      border_color: "#6B7280"
+
+  # Example: About Me tile (commented out for now)
+  # - id: "about-me"
+  #   type: "content"
+  #   title: "About Me"
+  #   description: "Software engineer passionate about productivity tools"
+  #   content_markdown: |
+  #     I'm a Product Engineer at Amplitude working on frontend systems.
+  #
+  #     My interests include:
+  #     - Data visualization
+  #     - Productivity software
+  #     - Web development
+  #   image: null
+  #   priority: 900
+  #   tags: ["about"]
+  #   span_columns: 2
+  #   span_rows: 1
+
+  # Example: More projects link
+  # - id: "github-profile"
+  #   type: "link"
+  #   title: "More Projects on GitHub"
+  #   description: "View all my repositories"
+  #   url: "https://github.com/Avery2?tab=repositories&type=source"
+  #   open_new_tab: true
+  #   icon: "fab fa-github"
+  #   priority: 10  # Low priority, appears at end
+  #   tags: ["projects"]
+  #   span_columns: 1
+  #   span_rows: 1
