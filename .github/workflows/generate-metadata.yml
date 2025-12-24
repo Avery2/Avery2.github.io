@@ -59,7 +59,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add data/github-projects.yml data/resume-tiles.yml data/resume-details.yml writing/experience/ writing/education/
-          git commit -m "Auto-update: GitHub projects and resume metadata [skip ci]"
+          git commit -m "Auto-update: GitHub projects and resume metadata"
           git push
 
       - name: Summary
