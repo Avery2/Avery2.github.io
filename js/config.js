@@ -1,6 +1,6 @@
 /**
  * Configuration Constants
- * Central configuration for the portfolio website
+ * Central configuration for the website
  */
 
 const config = {
@@ -36,7 +36,7 @@ const config = {
 
   // Error messages
   ERRORS: {
-    DATA_LOAD_FAILED: 'Failed to load portfolio data. Please try again later.',
+    DATA_LOAD_FAILED: 'Failed to load data. Please try again later.',
     NETWORK_ERROR: 'Network error. Please check your connection.',
     PARSE_ERROR: 'Error parsing data files.'
   }

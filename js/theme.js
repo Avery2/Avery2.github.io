@@ -3,7 +3,7 @@
  * Handles light/dark/auto theme switching with localStorage persistence
  */
 
-const THEME_KEY = 'portfolio-theme';
+const THEME_KEY = 'site-theme';
 const THEMES = {
   LIGHT: 'light',
   DARK: 'dark',

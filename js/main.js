@@ -1,6 +1,6 @@
 /**
  * Main Application Entry Point
- * Initializes the portfolio website
+ * Initializes the website
  */
 
 import config from './config.js';
@@ -13,7 +13,7 @@ import { initFilterSystem } from './filter-system.js';
  * Initialize the application
  */
 async function init() {
-  console.log('Initializing portfolio site...');
+  console.log('Initializing site...');
 
   // Initialize theme system first (prevents FOUC)
   initTheme();
@@ -55,7 +55,7 @@ async function init() {
     setupScrollAnimations();
     setupResponsiveRerender(allTiles, gridContainer);
 
-    console.log('✅ Portfolio site initialized successfully!');
+    console.log('✅ Site initialized successfully!');
 
   } catch (error) {
     console.error('Failed to initialize:', error);
@@ -231,11 +231,28 @@ function setupMobileMenu() {
 function setupScrollBehavior() {
   // Header scroll effect
   const header = document.querySelector('.site-header');
+  const siteTitle = document.querySelector('.site-title');
+  const headerLeft = document.querySelector('.header-left');
   let lastScrollY = window.scrollY;
 
   function updateHeaderOnScroll() {
     const scrollY = window.scrollY;
+    const maxScroll = 100; // Distance over which to animate (in pixels)
 
+    // Calculate scroll progress (0 to 1)
+    const scrollProgress = Math.min(scrollY / maxScroll, 1);
+
+    // Interpolate font size from 1.5rem to 1.25rem
+    const startFontSize = 1.5;
+    const endFontSize = 1.25;
+    const currentFontSize = startFontSize - (startFontSize - endFontSize) * scrollProgress;
+
+    // Apply interpolated font size
+    if (siteTitle) {
+      siteTitle.style.fontSize = `${currentFontSize}rem`;
+    }
+
+    // Keep scrolled class for background styling
     if (scrollY > 50) {
       header.classList.add('scrolled');
     } else {
@@ -252,7 +269,6 @@ function setupScrollBehavior() {
   window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
 
   // Scroll to top when clicking site title
-  const siteTitle = document.querySelector('.site-title');
   if (siteTitle) {
     siteTitle.addEventListener('click', (e) => {
       e.preventDefault();
