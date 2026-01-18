@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-01-11T00:59:56.701424+00:00'
+  generated_at: '2026-01-18T00:58:54.565297+00:00'
   source_api: https://api.github.com/users/Avery2/repos
   total_repos: 28
 projects:
@@ -20,7 +20,7 @@ projects:
   created_at: '2021-11-30T07:50:42Z'
   updated_at: '2025-06-19T22:48:10Z'
   pushed_at: '2025-06-19T22:48:06Z'
-  priority: 52
+  priority: 51
   tags:
   - python
   - notion-api
@@ -45,15 +45,42 @@ projects:
   - sunrise
   - sunset
   created_at: '2023-10-29T18:23:07Z'
-  updated_at: '2026-01-10T01:23:56Z'
-  pushed_at: '2026-01-10T01:23:52Z'
-  priority: 27
+  updated_at: '2026-01-16T01:26:58Z'
+  pushed_at: '2026-01-16T01:26:54Z'
+  priority: 26
   tags:
   - python
   - calendar
   - sun
   - sunrise
   - sunset
+  featured: false
+  span_columns: 1
+  span_rows: 1
+- id: Qbserve-data
+  type: project
+  name: Qbserve-data
+  title: Qbserve Data
+  description: Personal data of app usage recorded by Qbserve.
+  url: https://github.com/Avery2/Qbserve-data
+  homepage: http://www.averychan.site/Qbserve-data/
+  image: ./assets/images/projects/Qbserve-data.jpg
+  language: HTML
+  stars: 8
+  forks: 0
+  topics:
+  - personal-data
+  - r
+  - rmd
+  created_at: '2021-09-15T22:51:38Z'
+  updated_at: '2026-01-16T10:41:23Z'
+  pushed_at: '2021-10-08T19:35:19Z'
+  priority: 25
+  tags:
+  - html
+  - personal-data
+  - r
+  - rmd
   featured: false
   span_columns: 1
   span_rows: 1
@@ -73,8 +100,8 @@ projects:
   - jekyll
   - liquid
   created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2026-01-04T01:00:22Z'
-  pushed_at: '2026-01-04T01:00:15Z'
+  updated_at: '2026-01-11T01:00:02Z'
+  pushed_at: '2026-01-11T00:59:59Z'
   priority: 20
   tags:
   - javascript
@@ -210,54 +237,6 @@ projects:
   featured: false
   span_columns: 1
   span_rows: 1
-- id: graffiti-template-generator
-  type: project
-  name: graffiti-template-generator
-  title: Graffiti Template Generator
-  description: ''
-  url: https://github.com/Avery2/graffiti-template-generator
-  homepage: http://www.averychan.site/graffiti-template-generator/
-  image: ''
-  language: JavaScript
-  stars: 0
-  forks: 0
-  topics: []
-  created_at: '2023-11-18T07:26:26Z'
-  updated_at: '2025-06-02T21:09:27Z'
-  pushed_at: '2025-06-02T21:09:24Z'
-  priority: 5
-  tags:
-  - javascript
-  featured: false
-  span_columns: 1
-  span_rows: 1
-- id: Qbserve-data
-  type: project
-  name: Qbserve-data
-  title: Qbserve Data
-  description: Personal data of app usage recorded by Qbserve.
-  url: https://github.com/Avery2/Qbserve-data
-  homepage: http://www.averychan.site/Qbserve-data/
-  image: ./assets/images/projects/Qbserve-data.jpg
-  language: HTML
-  stars: 1
-  forks: 0
-  topics:
-  - personal-data
-  - r
-  - rmd
-  created_at: '2021-09-15T22:51:38Z'
-  updated_at: '2025-12-19T01:13:47Z'
-  pushed_at: '2021-10-08T19:35:19Z'
-  priority: 4
-  tags:
-  - html
-  - personal-data
-  - r
-  - rmd
-  featured: false
-  span_columns: 1
-  span_rows: 1
 - id: slack-duck-message-generator
   type: project
   name: slack-duck-message-generator
@@ -282,6 +261,27 @@ projects:
   - ducks
   - emoji
   - slack
+  featured: false
+  span_columns: 1
+  span_rows: 1
+- id: graffiti-template-generator
+  type: project
+  name: graffiti-template-generator
+  title: Graffiti Template Generator
+  description: ''
+  url: https://github.com/Avery2/graffiti-template-generator
+  homepage: http://www.averychan.site/graffiti-template-generator/
+  image: ''
+  language: JavaScript
+  stars: 0
+  forks: 0
+  topics: []
+  created_at: '2023-11-18T07:26:26Z'
+  updated_at: '2025-06-02T21:09:27Z'
+  pushed_at: '2025-06-02T21:09:24Z'
+  priority: 4
+  tags:
+  - javascript
   featured: false
   span_columns: 1
   span_rows: 1
