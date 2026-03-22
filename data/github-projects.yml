@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-03-15T01:14:49.560733+00:00'
+  generated_at: '2026-03-22T01:09:49.689069+00:00'
   source_api: https://api.github.com/users/Avery2/repos
   total_repos: 28
 projects:
@@ -20,7 +20,7 @@ projects:
   created_at: '2021-11-30T07:50:42Z'
   updated_at: '2025-06-19T22:48:10Z'
   pushed_at: '2025-06-19T22:48:06Z'
-  priority: 48
+  priority: 47
   tags:
   - python
   - notion-api
@@ -55,6 +55,33 @@ projects:
   featured: false
   span_columns: 1
   span_rows: 1
+- id: Toggl-Analysis
+  type: project
+  name: Toggl-Analysis
+  title: Toggl Analysis
+  description: I tracked all my worked hours for over a year.
+  url: https://github.com/Avery2/Toggl-Analysis
+  homepage: https://www.averychan.site/Toggl-Analysis/
+  image: ./assets/images/projects/Toggl-Analysis.jpg
+  language: HTML
+  stars: 1
+  forks: 0
+  topics:
+  - data-science
+  - productivity
+  - r
+  created_at: '2021-05-30T06:32:18Z'
+  updated_at: '2026-03-21T02:19:09Z'
+  pushed_at: '2026-03-21T02:19:06Z'
+  priority: 24
+  tags:
+  - html
+  - data-science
+  - productivity
+  - r
+  featured: false
+  span_columns: 1
+  span_rows: 1
 - id: sun-calendar
   type: project
   name: sun-calendar
@@ -65,7 +92,7 @@ projects:
   image: ''
   language: Python
   stars: 2
-  forks: 2
+  forks: 3
   topics:
   - calendar
   - sun
@@ -74,7 +101,7 @@ projects:
   created_at: '2023-10-29T18:23:07Z'
   updated_at: '2026-02-16T01:56:45Z'
   pushed_at: '2026-02-16T01:56:42Z'
-  priority: 25
+  priority: 24
   tags:
   - python
   - calendar
@@ -100,9 +127,9 @@ projects:
   - jekyll
   - liquid
   created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2026-03-08T01:06:35Z'
-  pushed_at: '2026-03-08T01:06:31Z'
-  priority: 20
+  updated_at: '2026-03-21T20:29:51Z'
+  pushed_at: '2026-03-21T20:29:46Z'
+  priority: 21
   tags:
   - javascript
   - github-pages
@@ -237,33 +264,6 @@ projects:
   featured: false
   span_columns: 1
   span_rows: 1
-- id: Toggl-Analysis
-  type: project
-  name: Toggl-Analysis
-  title: Toggl Analysis
-  description: I tracked all my worked hours for over a year.
-  url: https://github.com/Avery2/Toggl-Analysis
-  homepage: https://www.averychan.site/Toggl-Analysis/
-  image: ./assets/images/projects/Toggl-Analysis.jpg
-  language: HTML
-  stars: 1
-  forks: 0
-  topics:
-  - data-science
-  - productivity
-  - r
-  created_at: '2021-05-30T06:32:18Z'
-  updated_at: '2025-04-22T06:33:42Z'
-  pushed_at: '2025-04-22T06:33:38Z'
-  priority: 4
-  tags:
-  - html
-  - data-science
-  - productivity
-  - r
-  featured: false
-  span_columns: 1
-  span_rows: 1
 - id: steam-hours
   type: project
   name: steam-hours
@@ -287,27 +287,6 @@ projects:
   - html
   - python
   - r
-  featured: false
-  span_columns: 1
-  span_rows: 1
-- id: graffiti-template-generator
-  type: project
-  name: graffiti-template-generator
-  title: Graffiti Template Generator
-  description: ''
-  url: https://github.com/Avery2/graffiti-template-generator
-  homepage: http://www.averychan.site/graffiti-template-generator/
-  image: ''
-  language: JavaScript
-  stars: 0
-  forks: 0
-  topics: []
-  created_at: '2023-11-18T07:26:26Z'
-  updated_at: '2025-06-02T21:09:27Z'
-  pushed_at: '2025-06-02T21:09:24Z'
-  priority: 1
-  tags:
-  - javascript
   featured: false
   span_columns: 1
   span_rows: 1
@@ -720,6 +699,27 @@ projects:
   - javascript
   - profile
   - resume
+  featured: false
+  span_columns: 1
+  span_rows: 1
+- id: graffiti-template-generator
+  type: project
+  name: graffiti-template-generator
+  title: Graffiti Template Generator
+  description: ''
+  url: https://github.com/Avery2/graffiti-template-generator
+  homepage: http://www.averychan.site/graffiti-template-generator/
+  image: ''
+  language: JavaScript
+  stars: 0
+  forks: 0
+  topics: []
+  created_at: '2023-11-18T07:26:26Z'
+  updated_at: '2025-06-02T21:09:27Z'
+  pushed_at: '2025-06-02T21:09:24Z'
+  priority: 0
+  tags:
+  - javascript
   featured: false
   span_columns: 1
   span_rows: 1
