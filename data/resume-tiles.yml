@@ -7,14 +7,14 @@ tiles:
   type: experience
   name: Amplitude
   title: Amplitude
-  description: Product Engineer II
+  description: Senior Software Engineer
   url: ./writing/experience/amplitude.html
   tags:
   - experience
   - professional
   meta:
     company: Amplitude
-    title: Product Engineer II
+    title: Senior Software Engineer
     location: San Francisco, CA
     dates: May 2022 – Present
   priority: 100

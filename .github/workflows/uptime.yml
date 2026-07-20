@@ -1,0 +1,33 @@
+name: Uptime Check
+
+on:
+  schedule:
+    # Every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+# A failing run triggers GitHub's built-in "workflow failed" email to the
+# account that owns this workflow file. No secrets or email config required.
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping www.averychan.site
+        run: |
+          URL="https://www.averychan.site"
+          EXPECTED="<title>Avery</title>"
+          for attempt in 1 2 3; do
+            echo "Attempt $attempt: checking $URL"
+            status=$(curl -sSL -o response.html -w "%{http_code}" --max-time 30 "$URL" || echo "000")
+            echo "HTTP status: $status"
+            if [ "$status" = "200" ] && grep -qF "$EXPECTED" response.html; then
+              echo "✅ Site is up (HTTP $status, expected content found)."
+              exit 0
+            fi
+            echo "⚠️ Check failed (status=$status, or expected content missing). Retrying in 20s..."
+            sleep 20
+          done
+          echo "::error::Site appears DOWN. Last HTTP status: $status. Expected content '$EXPECTED' not found."
+          echo "----- response body (first 40 lines) -----"
+          head -n 40 response.html || true
+          exit 1

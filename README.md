@@ -30,6 +30,11 @@ Visit [docs/FORKING.md](./docs/FORKING.md) for detailed setup instructions.
 # 4. Done! Your site is live
 ```
 
+## 🌐 Domain & Uptime
+
+- **Domain:** `averychan.site` is registered and DNS-managed at **[Name.com](https://www.name.com)**. If the site goes offline, check the DNS records there first — the custom domain (`www` CNAME → `avery2.github.io`, apex `A` records → `185.199.108–111.153`) can get reset to a registrar parking IP after a renewal.
+- **Uptime alert:** [`.github/workflows/uptime.yml`](./.github/workflows/uptime.yml) pings `https://www.averychan.site` every 6 hours. If it's down, the job fails and GitHub automatically emails the repo owner (its built-in workflow-failure notification — no secrets or email config required).
+
 ## 📚 Documentation
 
 - [Forking Guide](./docs/FORKING.md) - How to make this your own
