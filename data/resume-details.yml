@@ -1,19 +1,19 @@
 metadata:
-  generated_at: '2026-07-19T01:24:55.274488+00:00'
+  generated_at: '2026-07-26T01:30:05.321337+00:00'
 experiences:
 - company: Amplitude
   location: San Francisco, CA
   title: Senior Software Engineer
   dates: May 2022 – Present
-  description_html: '<p>Senior Software Engineer at Amplitude, a digital analytics platform
-    that helps companies understand user behavior across their products to improve
-    engagement, retention, and growth through data-driven insights. Built systems
-    that make complex analytical systems accessible, translating complicated system
-    configurations and computation definitions into usable, understandable interfaces
-    across products like Data Tables, Metrics, and AI-powered chart interfaces. Worked
-    across the full stack, primarily in React and TypeScript, building GraphQL endpoints
-    and back-end configuration. Focused on developing analytical tools that were powerful,
-    resilient, and accessible.</p><ul>
+  description_html: '<p>Senior Software Engineer at Amplitude (promoted from Product
+    Engineer II in April 2026), a digital analytics platform that helps companies
+    understand user behavior across their products to improve engagement, retention,
+    and growth through data-driven insights. Built systems that make complex analytical
+    systems accessible, translating complicated system configurations and computation
+    definitions into usable, understandable interfaces across products like Data Tables,
+    Metrics, and AI-powered chart interfaces. Worked across the full stack, primarily
+    in React and TypeScript, building GraphQL endpoints and back-end configuration.
+    Focused on developing analytical tools that were powerful, resilient, and accessible.</p><ul>
 
     <li><strong>Feature Development on Core Products:</strong></li>
 

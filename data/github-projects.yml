@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-07-19T01:24:54.924781+00:00'
+  generated_at: '2026-07-26T01:30:04.994069+00:00'
   source_api: https://api.github.com/users/Avery2/repos
   total_repos: 28
 projects:
@@ -72,9 +72,9 @@ projects:
   - sunrise
   - sunset
   created_at: '2023-10-29T18:23:07Z'
-  updated_at: '2026-07-16T02:20:57Z'
-  pushed_at: '2026-07-16T02:20:54Z'
-  priority: 26
+  updated_at: '2026-07-25T02:23:34Z'
+  pushed_at: '2026-07-25T02:23:30Z'
+  priority: 27
   tags:
   - python
   - calendar
@@ -100,14 +100,37 @@ projects:
   - jekyll
   - liquid
   created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2026-07-12T01:26:50Z'
-  pushed_at: '2026-07-12T01:26:47Z'
+  updated_at: '2026-07-20T08:34:41Z'
+  pushed_at: '2026-07-20T08:34:21Z'
   priority: 20
   tags:
   - javascript
   - github-pages
   - jekyll
   - liquid
+  featured: true
+  span_columns: 1
+  span_rows: 1
+- id: normal-resume
+  type: project
+  name: normal-resume
+  title: Normal Resume
+  description: Version control for my resume
+  url: https://github.com/Avery2/normal-resume
+  homepage: https://www.averychan.site/normal-resume/
+  image: ''
+  language: HTML
+  stars: 0
+  forks: 0
+  topics:
+  - resume
+  created_at: '2021-08-11T02:36:49Z'
+  updated_at: '2026-07-20T06:35:50Z'
+  pushed_at: '2026-07-20T06:35:46Z'
+  priority: 20
+  tags:
+  - html
+  - resume
   featured: true
   span_columns: 1
   span_rows: 1
@@ -129,7 +152,7 @@ projects:
   created_at: '2021-05-30T06:32:18Z'
   updated_at: '2026-03-21T02:19:09Z'
   pushed_at: '2026-03-21T02:19:06Z'
-  priority: 16
+  priority: 15
   tags:
   - html
   - data-science
@@ -156,36 +179,13 @@ projects:
   created_at: '2025-11-17T06:13:48Z'
   updated_at: '2026-03-26T20:40:00Z'
   pushed_at: '2026-01-07T16:17:45Z'
-  priority: 11
+  priority: 10
   tags:
   - python
   - mcp
   - mcp-server
   - things3
   featured: false
-  span_columns: 1
-  span_rows: 1
-- id: normal-resume
-  type: project
-  name: normal-resume
-  title: Normal Resume
-  description: Version control for my resume
-  url: https://github.com/Avery2/normal-resume
-  homepage: https://www.averychan.site/normal-resume/
-  image: ''
-  language: HTML
-  stars: 0
-  forks: 0
-  topics:
-  - resume
-  created_at: '2021-08-11T02:36:49Z'
-  updated_at: '2025-12-24T10:12:52Z'
-  pushed_at: '2025-12-24T10:12:47Z'
-  priority: 7
-  tags:
-  - html
-  - resume
-  featured: true
   span_columns: 1
   span_rows: 1
 - id: wordle-helper
