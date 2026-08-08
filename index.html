@@ -55,6 +55,7 @@
             <i class="fas fa-search"></i>
             <span>Find</span>
             <i class="fas fa-chevron-down toggle-icon"></i>
+            <kbd class="shortcut-badge" aria-hidden="true">⌘K</kbd>
           </button>
         </div>
 
@@ -63,6 +64,11 @@
           <div class="social-links" id="social-links">
             <!-- Populated by JavaScript -->
           </div>
+
+          <!-- Keyboard help button -->
+          <button id="keyboard-help-btn" class="keyboard-help-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (?)">
+            <i class="fas fa-keyboard"></i>
+          </button>
 
           <!-- Theme toggle -->
           <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
@@ -79,6 +85,9 @@
             <div class="social-links" id="mobile-social-links">
               <!-- Populated by JavaScript -->
             </div>
+            <button id="mobile-keyboard-help-btn" class="keyboard-help-btn" aria-label="Keyboard shortcuts">
+              <i class="fas fa-keyboard"></i>
+            </button>
             <button id="mobile-theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
               🌙
             </button>

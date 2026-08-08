@@ -1,0 +1,218 @@
+/* Keyboard Navigation Styles */
+
+/* Shortcut badge in filter button */
+.shortcut-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
+  line-height: 1;
+  margin-left: 0.5rem;
+}
+
+/* Hide badge on mobile */
+@media (max-width: 600px) {
+  .shortcut-badge {
+    display: none;
+  }
+}
+
+/* Keyboard help button */
+.keyboard-help-btn {
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--text-primary);
+}
+
+.keyboard-help-btn:hover {
+  transform: scale(1.05);
+  border-color: var(--accent-primary);
+  background-color: var(--bg-tertiary);
+}
+
+.keyboard-help-btn:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Tile focus highlight for keyboard navigation only (not mouse clicks) */
+.tile:has(.tile-link:focus-visible) {
+  box-shadow: 0 0 0 3px var(--accent-primary);
+  transform: translateY(-2px);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+/* Remove default outline; the parent ring above replaces it */
+.tile-link:focus-visible {
+  outline: none;
+}
+
+/* Help overlay backdrop */
+.keyboard-help-overlay {
+  display: none;
+}
+
+.keyboard-help-overlay:not([hidden]) {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Help card */
+.keyboard-help-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 40px var(--shadow-color);
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Help card title */
+.keyboard-help-card h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  padding-right: 2rem;
+}
+
+/* Help card close button */
+.keyboard-help-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.keyboard-help-close:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.keyboard-help-close:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Help overlay table styles */
+.keyboard-help-card table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-primary);
+}
+
+.keyboard-help-card table tr {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.keyboard-help-card table tr:last-child {
+  border-bottom: none;
+}
+
+.keyboard-help-card table td {
+  padding: 0.75rem 0;
+  vertical-align: top;
+}
+
+.keyboard-help-card table td:first-child {
+  padding-right: 1.5rem;
+  white-space: nowrap;
+}
+
+.keyboard-help-card kbd {
+  display: inline-block;
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-right: 0.25rem;
+}
+
+/* Toast notification */
+.kbnav-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  z-index: 999;
+  cursor: pointer;
+  animation: toast-enter 0.3s ease forwards;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.kbnav-toast.exiting {
+  animation: toast-exit 0.3s ease forwards;
+}
+
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}
+
+@keyframes toast-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px) translateX(20px);
+  }
+}

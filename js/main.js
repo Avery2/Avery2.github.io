@@ -8,6 +8,7 @@ import { initTheme } from './theme.js';
 import { loadData, mergeData } from './data-loader.js';
 import { renderAllTiles, calculateMasonryLayout } from './tile-renderer.js';
 import { initFilterSystem } from './filter-system.js';
+import { initKeyboardNav } from './keyboard-nav.js';
 
 /**
  * Initialize the application
@@ -56,6 +57,7 @@ async function init() {
     setupMobileMenu();
     setupScrollAnimations();
     setupResponsiveRerender(allTiles, gridContainer);
+    initKeyboardNav();
 
     console.log('✅ Site initialized successfully!');
 
