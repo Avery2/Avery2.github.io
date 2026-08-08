@@ -6,6 +6,13 @@
 let lastKey = null;
 let lastKeyTime = 0;
 
+// Throttle j/k tile moves so OS key-repeat (or fast manual tapping) can't
+// outrun scrollIntoView — without this, each repeat restarts the smooth
+// scroll before it can visually progress, so nothing appears to move
+// until the key is released.
+let lastTileMoveTime = 0;
+const TILE_MOVE_THROTTLE_MS = 130;
+
 /**
  * Initialize keyboard navigation
  */
@@ -269,16 +276,24 @@ function setupKeydownHandler() {
 
     // Priority 5: j (next tile, same as Tab)
     if (e.key === 'j') {
-      focusNextTile();
-      maybeShowHint();
+      const now = Date.now();
+      if (now - lastTileMoveTime >= TILE_MOVE_THROTTLE_MS) {
+        lastTileMoveTime = now;
+        focusNextTile();
+        maybeShowHint();
+      }
       lastKey = null;
       return;
     }
 
     // Priority 6: k (previous tile, same as Shift+Tab)
     if (e.key === 'k') {
-      focusPrevTile();
-      maybeShowHint();
+      const now = Date.now();
+      if (now - lastTileMoveTime >= TILE_MOVE_THROTTLE_MS) {
+        lastTileMoveTime = now;
+        focusPrevTile();
+        maybeShowHint();
+      }
       lastKey = null;
       return;
     }
