@@ -37,7 +37,7 @@ function buildHelpOverlay() {
       <table>
         <tr><td><kbd>⌘K</kbd> or <kbd>/</kbd></td><td>Open search</td></tr>
         <tr><td><kbd>Esc</kbd></td><td>Close search or dismiss</td></tr>
-        <tr><td><kbd>j</kbd> / <kbd>k</kbd></td><td>Scroll down / up</td></tr>
+        <tr><td><kbd>j</kbd> / <kbd>k</kbd></td><td>Next / previous tile (same as Tab)</td></tr>
         <tr><td><kbd>g</kbd> <kbd>g</kbd></td><td>Jump to top</td></tr>
         <tr><td><kbd>Shift</kbd>+<kbd>G</kbd></td><td>Jump to bottom</td></tr>
         <tr><td><kbd>Tab</kbd></td><td>Move between tiles</td></tr>
@@ -48,6 +48,50 @@ function buildHelpOverlay() {
   `;
 
   document.body.appendChild(overlay);
+}
+
+/**
+ * Get all tile links in DOM order
+ */
+function getTileLinks() {
+  return Array.from(document.querySelectorAll('.tile-link'));
+}
+
+/**
+ * Focus a tile link and bring it into view
+ */
+function focusTileLink(link) {
+  if (!link) return;
+  link.focus();
+  link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+/**
+ * Focus the next tile link (same direction as Tab)
+ */
+function focusNextTile() {
+  const links = getTileLinks();
+  if (links.length === 0) return;
+  const currentIndex = links.indexOf(document.activeElement);
+  if (currentIndex === -1) {
+    focusTileLink(links[0]);
+  } else if (currentIndex < links.length - 1) {
+    focusTileLink(links[currentIndex + 1]);
+  }
+}
+
+/**
+ * Focus the previous tile link (same direction as Shift+Tab)
+ */
+function focusPrevTile() {
+  const links = getTileLinks();
+  if (links.length === 0) return;
+  const currentIndex = links.indexOf(document.activeElement);
+  if (currentIndex === -1) {
+    focusTileLink(links[0]);
+  } else if (currentIndex > 0) {
+    focusTileLink(links[currentIndex - 1]);
+  }
 }
 
 /**
@@ -223,17 +267,17 @@ function setupKeydownHandler() {
       return;
     }
 
-    // Priority 5: j (scroll down)
+    // Priority 5: j (next tile, same as Tab)
     if (e.key === 'j') {
-      window.scrollBy({ top: window.innerHeight * 0.3, behavior: 'smooth' });
+      focusNextTile();
       maybeShowHint();
       lastKey = null;
       return;
     }
 
-    // Priority 6: k (scroll up)
+    // Priority 6: k (previous tile, same as Shift+Tab)
     if (e.key === 'k') {
-      window.scrollBy({ top: -window.innerHeight * 0.3, behavior: 'smooth' });
+      focusPrevTile();
       maybeShowHint();
       lastKey = null;
       return;
