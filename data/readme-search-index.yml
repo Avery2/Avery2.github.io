@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-08-09T04:56:54.767350+00:00'
+  generated_at: '2026-08-09T05:41:10.646112+00:00'
   total_entries: 30
 readmes:
   639-Final-Project: Link to interactive website source To run software run
@@ -30,7 +30,9 @@ readmes:
     of this is because I had chosen to facet by , it was hard to compare the value
   Avery2.github.io: 'Personal Website A modern, automated personal website built with
     vanilla HTML, CSS, and JavaScript. Features automatic GitHub project integration,
-    resume data extraction, and a responsive masonry grid layout. Visit: https://www.averychan.site
+    resume data extraction, and a responsive masonry grid layout. Long-form and linked
+    writing is authored, compiled, and deployed from the sibling GitHub Pages project
+    site at . Homepage writing links remain manually curated here. Visit: https://www.averychan.site
     ✨ Features 🎨 No Framework - Pure HTML/CSS/JavaScript, no build step required 🔄
     Auto-sync GitHub Projects - Automatically fetches and displays your repositories
     📄 Resume Integration - Extracts experience and education from your resume HTML
