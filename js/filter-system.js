@@ -352,92 +352,188 @@ function setupFilterEventListeners() {
 }
 
 /**
- * Apply active filters to all tiles
+ * Bounded Levenshtein distance — returns maxDistance + 1 as soon as it's
+ * clear the true distance exceeds maxDistance, so long words bail out fast.
  */
-function applyFilters() {
-  const gridContainer = document.querySelector('.grid-container');
+function boundedLevenshtein(a, b, maxDistance) {
+  if (Math.abs(a.length - b.length) > maxDistance) return maxDistance + 1;
 
-  // Get all tiles from grid
-  const allTileElements = Array.from(gridContainer.querySelectorAll('.tile'));
+  let prevRow = Array.from({ length: b.length + 1 }, (_, i) => i);
 
-  allTileElements.forEach(tileEl => {
-    const tileData = getTileDataFromElement(tileEl);
-    const matches = evaluateFilters(tileData);
+  for (let i = 1; i <= a.length; i++) {
+    const currRow = [i];
+    let rowMin = currRow[0];
 
-    if (matches) {
-      // Show tile
-      tileEl.dataset.filtered = 'false';
-      tileEl.style.display = '';
-      tileEl.classList.remove('tile-hiding');
-      tileEl.classList.add('tile-visible');
-    } else {
-      // Hide tile
-      tileEl.dataset.filtered = 'true';
-      tileEl.style.display = 'none';
-      tileEl.classList.remove('tile-visible');
-      tileEl.classList.add('tile-hiding');
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      currRow[j] = Math.min(
+        prevRow[j] + 1,      // deletion
+        currRow[j - 1] + 1,  // insertion
+        prevRow[j - 1] + cost // substitution
+      );
+      rowMin = Math.min(rowMin, currRow[j]);
     }
-  });
 
-  // Add padding if filters are active to prevent content hiding behind filter panel
-  const hasActiveFilters = (activeFilters.tags && activeFilters.tags.length > 0) || activeFilters.search;
-  const projectsContainer = document.querySelector('.projects-container');
-
-  if (hasActiveFilters) {
-    const filterWrapper = document.getElementById('filter-wrapper');
-    if (filterWrapper && filterWrapper.classList.contains('expanded')) {
-      const filterHeight = filterWrapper.offsetHeight;
-      projectsContainer.style.paddingTop = `${filterHeight + 20}px`;
-      projectsContainer.style.transition = 'padding-top 0.3s ease';
-    }
-  } else {
-    projectsContainer.style.paddingTop = '';
+    if (rowMin > maxDistance) return maxDistance + 1;
+    prevRow = currRow;
   }
 
-  // Recalculate masonry layout after filtering (skip hidden tiles)
-  setTimeout(() => {
-    calculateMasonryLayout(gridContainer);
-  }, 50);
-
-  // Re-sort if needed
-  if (activeFilters.sort) {
-    sortTiles(activeFilters.sort);
-  }
+  return prevRow[b.length];
 }
 
 /**
- * Evaluate if a tile matches the active filters
- * @param {Object} tileData - Tile data object
- * @returns {boolean} Whether the tile matches all active filters
+ * Score how well a single query word matches a single field word.
+ * Exact/prefix/substring match first, then typo tolerance scaled to word
+ * length — this keeps matching to "close enough" words instead of letting
+ * a query match scattered characters spread across a whole sentence.
+ * @returns {number} score, or -1 for no match
  */
-function evaluateFilters(tileData) {
-  // Tags filter (includes language, topics, and tags)
+function wordMatchScore(query, word) {
+  if (!word) return -1;
+  if (word === query) return 100;
+  if (word.startsWith(query)) return 80 - Math.min(word.length - query.length, 20);
+  if (word.includes(query)) return 50;
+
+  const maxTypos = query.length <= 3 ? 0 : query.length <= 6 ? 1 : 2;
+  if (maxTypos === 0) return -1;
+
+  const distance = boundedLevenshtein(query, word, maxTypos);
+  return distance <= maxTypos ? 40 - distance * 15 : -1;
+}
+
+/**
+ * Split text into lowercase words for word-level matching
+ */
+function toWords(text) {
+  return (text || '').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+}
+
+/**
+ * Best match score for one query word against a list of field words
+ */
+function bestWordScore(queryWord, words) {
+  let best = -1;
+  for (const word of words) {
+    const score = wordMatchScore(queryWord, word);
+    if (score > best) best = score;
+  }
+  return best;
+}
+
+/**
+ * Fuzzy score for a (possibly multi-word) query across a set of weighted
+ * fields. Every query word must find some reasonably close word in at
+ * least one field — this is word-level fuzzy (typos, prefixes, substrings),
+ * not a full-text subsequence match, so it won't fire on letters scattered
+ * across an unrelated paragraph.
+ * @param {string} query - Lowercased search query
+ * @param {Array<{text: string, weight: number}>} fields - Fields to search
+ * @returns {number} combined score, or -1 if any query word finds no match
+ */
+function fuzzyScoreFields(query, fields) {
+  const queryWords = query.split(/\s+/).filter(Boolean);
+  if (queryWords.length === 0) return -1;
+
+  const fieldWordLists = fields.map(({ text, weight }) => ({ words: toWords(text), weight }));
+
+  let total = 0;
+  for (const queryWord of queryWords) {
+    let best = -1;
+    for (const { words, weight } of fieldWordLists) {
+      const score = bestWordScore(queryWord, words);
+      if (score >= 0) best = Math.max(best, score * weight);
+    }
+    if (best < 0) return -1; // this query word matched nothing anywhere
+    total += best;
+  }
+
+  return total;
+}
+
+/**
+ * Evaluate a tile against active filters
+ * @param {Object} tileData - Tile data object
+ * @returns {{isMatch: boolean, score: number}} Whether it matches, and its search rank
+ */
+function evaluateTile(tileData) {
+  // Tags filter (includes language, topics, and tags) — a categorical
+  // selection, so it stays a hard AND filter rather than fuzzy-scored.
   if (activeFilters.tags && activeFilters.tags.length > 0) {
     const tileTags = [
       ...(tileData.tags || []),
       ...(tileData.topics || []),
-      tileData.language // Include language
+      tileData.language
     ].filter(Boolean).map(t => t.toLowerCase());
 
     const hasMatch = activeFilters.tags.some(filterTag => tileTags.includes(filterTag.toLowerCase()));
-    if (!hasMatch) return false;
+    if (!hasMatch) return { isMatch: false, score: 0 };
   }
 
-  // Search filter
   if (activeFilters.search) {
-    const searchableText = [
-      tileData.title,
-      tileData.description,
-      ...(tileData.tags || []),
-      ...(tileData.topics || [])
-    ].join(' ').toLowerCase();
+    const score = fuzzyScoreFields(activeFilters.search, [
+      { text: tileData.title, weight: 3 },
+      { text: [...(tileData.tags || []), ...(tileData.topics || [])].join(' '), weight: 2 },
+      { text: tileData.description, weight: 1 }
+    ]);
 
-    if (!searchableText.includes(activeFilters.search)) {
-      return false;
-    }
+    if (score < 0) return { isMatch: false, score: 0 };
+    return { isMatch: true, score };
   }
 
-  return true;
+  return { isMatch: true, score: 0 };
+}
+
+/**
+ * Compare two tiles by the currently selected sort criterion
+ * @param {Object} dataA - First tile's data
+ * @param {Object} dataB - Second tile's data
+ * @returns {number} Comparison result
+ */
+function compareByActiveSort(dataA, dataB) {
+  switch (activeFilters.sort) {
+    case 'stars':
+      return dataB.stars - dataA.stars;
+    case 'recent':
+      return dataB.priority - dataA.priority; // Priority includes recency
+    case 'alphabetical':
+      return dataA.title.localeCompare(dataB.title);
+    case 'priority':
+    default:
+      return dataB.priority - dataA.priority;
+  }
+}
+
+/**
+ * Apply active filters to all tiles: matches are sorted to the top (by
+ * search rank when searching, else by the active sort), non-matches are
+ * dimmed and sink to the bottom but stay visible and in the grid flow.
+ */
+function applyFilters() {
+  const gridContainer = document.querySelector('.grid-container');
+  const tileElements = Array.from(gridContainer.querySelectorAll('.tile'));
+
+  const evaluated = tileElements.map(tileEl => {
+    const data = getTileDataFromElement(tileEl);
+    const { isMatch, score } = evaluateTile(data);
+    return { tileEl, data, isMatch, score };
+  });
+
+  evaluated.sort((a, b) => {
+    if (a.isMatch !== b.isMatch) return a.isMatch ? -1 : 1;
+    if (activeFilters.search && b.score !== a.score) return b.score - a.score;
+    return compareByActiveSort(a.data, b.data);
+  });
+
+  evaluated.forEach(({ tileEl, isMatch }) => {
+    tileEl.dataset.filtered = isMatch ? 'false' : 'true';
+    tileEl.classList.toggle('tile-dimmed', !isMatch);
+    gridContainer.appendChild(tileEl);
+  });
+
+  // Recalculate masonry layout after reordering (dimmed tiles stay in flow)
+  setTimeout(() => {
+    calculateMasonryLayout(gridContainer);
+  }, 50);
 }
 
 /**
@@ -457,35 +553,6 @@ function getTileDataFromElement(tileEl) {
     topics: JSON.parse(tileEl.dataset.topics || '[]'),
     priority: parseInt(tileEl.dataset.priority || '0')
   };
-}
-
-/**
- * Sort tiles by the specified criteria
- * @param {string} sortBy - Sort criterion (priority, stars, recent, alphabetical)
- */
-function sortTiles(sortBy) {
-  const gridContainer = document.querySelector('.grid-container');
-  const tileElements = Array.from(gridContainer.querySelectorAll('.tile'));
-
-  tileElements.sort((a, b) => {
-    const dataA = getTileDataFromElement(a);
-    const dataB = getTileDataFromElement(b);
-
-    switch (sortBy) {
-      case 'stars':
-        return dataB.stars - dataA.stars;
-      case 'recent':
-        return dataB.priority - dataA.priority;  // Priority includes recency
-      case 'alphabetical':
-        return dataA.title.localeCompare(dataB.title);
-      case 'priority':
-      default:
-        return dataB.priority - dataA.priority;
-    }
-  });
-
-  // Re-append in sorted order
-  tileElements.forEach(tile => gridContainer.appendChild(tile));
 }
 
 /**

@@ -160,8 +160,23 @@ function setupFilterToggle() {
   const toggleBtn = document.getElementById('filter-toggle-btn');
   const filterWrapper = document.getElementById('filter-wrapper');
   const header = document.querySelector('.site-header');
+  const projectsContainer = document.querySelector('.projects-container');
 
   if (!toggleBtn || !filterWrapper || !header) return;
+
+  // The filter panel is a position:absolute overlay (no native layout
+  // shift), so while it's open we push the content down by its height
+  // ourselves — otherwise it covers the top row of tiles. A ResizeObserver
+  // keeps this in sync if the panel's own height changes while open (e.g.
+  // expanding the "show more" tags dropdown).
+  const syncPushDown = () => {
+    if (!projectsContainer) return;
+    projectsContainer.style.paddingTop = `${filterWrapper.offsetHeight + 20}px`;
+  };
+
+  const panelResizeObserver = projectsContainer && 'ResizeObserver' in window
+    ? new ResizeObserver(syncPushDown)
+    : null;
 
   toggleBtn.addEventListener('click', () => {
     const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
@@ -171,11 +186,21 @@ function setupFilterToggle() {
       toggleBtn.setAttribute('aria-expanded', 'false');
       filterWrapper.classList.remove('expanded');
       header.classList.remove('filters-expanded');
+      panelResizeObserver?.disconnect();
+      if (projectsContainer) {
+        projectsContainer.style.paddingTop = '';
+      }
     } else {
       // Expand
       toggleBtn.setAttribute('aria-expanded', 'true');
       filterWrapper.classList.add('expanded');
       header.classList.add('filters-expanded');
+
+      if (projectsContainer) {
+        projectsContainer.style.transition = 'padding-top 0.3s ease';
+        syncPushDown();
+        panelResizeObserver?.observe(filterWrapper);
+      }
 
       // Auto-focus search input
       setTimeout(() => {

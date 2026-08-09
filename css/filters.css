@@ -38,7 +38,8 @@
   transform: rotate(180deg);
 }
 
-/* Filter Wrapper - overlays content, no layout shift */
+/* Filter Wrapper - absolutely positioned overlay; main.js pushes content
+   down by its height while expanded so it doesn't cover the top tiles */
 .header-filter-wrapper {
   position: absolute;
   top: 100%;

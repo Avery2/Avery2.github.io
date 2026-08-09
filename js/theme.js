@@ -1,46 +1,49 @@
 /**
  * Theme Management System
- * Handles light/dark/auto theme switching with localStorage persistence
+ * Follows the OS light/dark preference by default. Auto is not a selectable
+ * mode — it's just what happens when there's no override. Clicking the
+ * toggle sets an override for the current tab session only (sessionStorage),
+ * so a fresh visit always starts from the system preference again.
  */
 
-const THEME_KEY = 'site-theme';
+const OVERRIDE_KEY = 'site-theme-override';
 const THEMES = {
   LIGHT: 'light',
-  DARK: 'dark',
-  AUTO: 'auto'
+  DARK: 'dark'
 };
 
-let currentTheme = THEMES.AUTO;
+let sessionOverride = null;
 
 /**
  * Initialize the theme system
- * Loads saved theme and sets up event listeners
+ * Loads any session override and sets up event listeners
  */
 export function initTheme() {
-  // Load saved theme or default to auto
-  const savedTheme = localStorage.getItem(THEME_KEY);
-  currentTheme = savedTheme || THEMES.AUTO;
-
-  applyTheme(currentTheme);
+  sessionOverride = sessionStorage.getItem(OVERRIDE_KEY);
+  applyTheme();
   setupThemeToggle();
   setupSystemThemeListener();
 }
 
 /**
- * Apply the specified theme
- * @param {string} theme - Theme to apply (light, dark, or auto)
+ * Whether the OS is currently set to dark mode
  */
-function applyTheme(theme) {
-  const root = document.documentElement;
+function systemPrefersDark() {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
 
-  if (theme === THEMES.AUTO) {
-    // Use system preference
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    root.dataset.theme = prefersDark ? THEMES.DARK : THEMES.LIGHT;
-  } else {
-    root.dataset.theme = theme;
-  }
+/**
+ * The theme actually in effect: the session override if set, else system preference
+ */
+function resolvedTheme() {
+  return sessionOverride || (systemPrefersDark() ? THEMES.DARK : THEMES.LIGHT);
+}
 
+/**
+ * Apply the resolved theme to the document
+ */
+function applyTheme() {
+  document.documentElement.dataset.theme = resolvedTheme();
   updateToggleButton();
 }
 
@@ -52,27 +55,20 @@ function setupThemeToggle() {
   if (!toggleButton) return;
 
   toggleButton.addEventListener('click', () => {
-    // Cycle: light → dark → auto
-    if (currentTheme === THEMES.LIGHT) {
-      currentTheme = THEMES.DARK;
-    } else if (currentTheme === THEMES.DARK) {
-      currentTheme = THEMES.AUTO;
-    } else {
-      currentTheme = THEMES.LIGHT;
-    }
-
-    localStorage.setItem(THEME_KEY, currentTheme);
-    applyTheme(currentTheme);
+    // Flip whatever is currently showing and pin it as this session's override
+    sessionOverride = resolvedTheme() === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK;
+    sessionStorage.setItem(OVERRIDE_KEY, sessionOverride);
+    applyTheme();
   });
 }
 
 /**
- * Listen for system theme changes (only applies when theme is AUTO)
+ * Live-update when the OS preference changes, but only while unoverridden
  */
 function setupSystemThemeListener() {
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (currentTheme === THEMES.AUTO) {
-      applyTheme(THEMES.AUTO);
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (!sessionOverride) {
+      applyTheme();
     }
   });
 }
@@ -84,21 +80,17 @@ function updateToggleButton() {
   const toggleButton = document.getElementById('theme-toggle');
   if (!toggleButton) return;
 
-  // Update button icon/text
-  const icons = {
-    [THEMES.LIGHT]: '☀️',
-    [THEMES.DARK]: '🌙',
-    [THEMES.AUTO]: '🌗'
-  };
-
-  toggleButton.textContent = icons[currentTheme];
-  toggleButton.title = `Theme: ${currentTheme}`;
+  const theme = resolvedTheme();
+  toggleButton.textContent = theme === THEMES.DARK ? '🌙' : '☀️';
+  toggleButton.title = sessionOverride
+    ? `Theme: ${theme} (session override)`
+    : `Theme: ${theme} (system)`;
 }
 
 /**
- * Get the current theme
- * @returns {string} Current theme (light, dark, or auto)
+ * Get the theme currently in effect
+ * @returns {string} Current theme (light or dark)
  */
 export function getCurrentTheme() {
-  return currentTheme;
+  return resolvedTheme();
 }

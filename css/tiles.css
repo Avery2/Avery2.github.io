@@ -32,6 +32,17 @@
   background-color: var(--tile-hover-bg);
 }
 
+/* Filtered/searched-out tiles: dimmed and sunk to the bottom, but still
+   present in the grid flow (not display:none) so layout doesn't jump. */
+.tile.tile-dimmed {
+  opacity: 0.35;
+  filter: grayscale(0.5);
+}
+
+.tile.tile-dimmed:hover {
+  opacity: 0.65;
+}
+
 /* Tile link wrapper */
 .tile-link {
   display: flex;
