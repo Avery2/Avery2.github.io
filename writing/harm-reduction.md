@@ -1,1 +1,0 @@
-Harm reduction is a philosophy that resonated deeply with me when I first learned about it during [CASA training](https://www.sfcasa.org/). I appreciate how it provides a means and orientation to honor the dignity and autonomy of people in every circumstance of living.

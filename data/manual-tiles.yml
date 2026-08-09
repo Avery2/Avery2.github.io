@@ -52,7 +52,7 @@ tiles:
     type: "link"
     title: "Harm Reduction"
     description: "A philosophy that honors dignity and autonomy. Harm reduction resonated deeply with me when I first learned about it during CASA training... → Read more"
-    url: "./writing/harm-reduction.html"
+    url: "./writing/notes/harm-reduction.html"
     open_new_tab: false
     priority: 110
     tags: ["philosophy", "writing"]

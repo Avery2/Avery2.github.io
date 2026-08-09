@@ -4,6 +4,8 @@
 
 This portfolio website is built with vanilla HTML, CSS, and JavaScript - no frameworks, no build system. It features a tile-based architecture with GitHub Actions automation for metadata generation.
 
+The portfolio source itself remains build-light. The sibling `Avery2/writing` repository is a GitHub Pages project site that directly owns `/writing/`; Markdown, graph data, and the linked-reading engine live there. Resume experience and education sources remain portfolio-owned and are copied into the writing Pages artifact for backward-compatible URLs.
+
 ## Tech Stack
 
 - **HTML5**: Semantic structure

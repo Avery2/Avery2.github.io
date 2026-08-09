@@ -7,6 +7,8 @@
 
 A modern, automated personal website built with vanilla HTML, CSS, and JavaScript. Features automatic GitHub project integration, resume data extraction, and a responsive masonry grid layout.
 
+Long-form and linked writing is authored, compiled, and deployed from the sibling [`Avery2/writing`](https://github.com/Avery2/writing) GitHub Pages project site at `/writing/`. Homepage writing links remain manually curated here.
+
 **Visit:** https://www.averychan.site
 
 ## ✨ Features
