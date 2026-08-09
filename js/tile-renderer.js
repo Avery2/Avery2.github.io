@@ -209,11 +209,6 @@ function applyCommonTileAttributes(element, tileData) {
     element.dataset.topics = JSON.stringify(tileData.topics);
   }
 
-  // Apply orange border for experience/education tiles
-  if (tileData.type === 'experience' || tileData.type === 'education') {
-    element.style.borderColor = '#DA7422';  // Orange color
-  }
-
   // Apply custom styling - only background and border colors, NEVER text color
   if (tileData.style) {
     if (tileData.style.background_color) {
