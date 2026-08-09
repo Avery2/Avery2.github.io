@@ -245,7 +245,14 @@
   color: #ff1744;
 }
 
-.layout-debug-copy {
+.layout-debug-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.layout-debug-copy,
+.layout-debug-reset {
   padding: 0.5rem 0.65rem;
   border: 1px solid var(--border-color);
   border-radius: 6px;

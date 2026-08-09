@@ -170,7 +170,12 @@ export function calculateMasonryLayout(container) {
 
   // Clear stale placement as a group before measuring. This also prevents a
   // desktop column assignment from creating implicit columns after a resize.
-  clearExplicitPlacement(visibleTiles);
+  clearExplicitPlacement(Array.from(tiles));
+  const useGroupedLayout = shouldUseGroupedLayout(container);
+  if (useGroupedLayout) {
+    document.documentElement.dataset.groupedLayout = layoutMode();
+    visibleTiles.forEach(tile => { tile.dataset.layoutGroup = semanticGroup(tile); });
+  }
   installLayoutDebugControls();
 
   // Clear stale spans as a group before measuring. Measuring and mutating one
@@ -181,7 +186,7 @@ export function calculateMasonryLayout(container) {
     rowSpan: Math.ceil((tile.getBoundingClientRect().height + gap) / rowHeight)
   }));
 
-  if (shouldUseGroupedLayout(container)) {
+  if (useGroupedLayout) {
     applyGroupedLayout(container, measurements);
     return;
   }
@@ -191,7 +196,7 @@ export function calculateMasonryLayout(container) {
   });
 }
 
-const GROUP_ORDER = ['intro', 'writing', 'experience', 'projects', 'links', 'navigation', 'other'];
+const GROUP_ORDER = ['intro', 'writing', 'experience', 'links', 'projects', 'navigation', 'other'];
 const LAYOUT_PRESETS = {
   density: { groupDistance: 0.35, compactness: 0.03, holes: 0.4, readingOrder: 0.08, beamWidth: 80, requireConnected: false },
   balanced: { groupDistance: 2.2, compactness: 0.08, holes: 0.55, readingOrder: 0.15, beamWidth: 120, requireConnected: true },
@@ -200,6 +205,7 @@ const LAYOUT_PRESETS = {
 const BLOB_DEBUG_DEFAULTS = {
   groupGap: 40,
   halo: 21.5,
+  topologyHalo: 26.5,
   color: 90,
   radius: 0,
   dividerX: 0,
@@ -219,10 +225,11 @@ function layoutMode() {
 
 function shouldUseGroupedLayout(container) {
   if (layoutMode() === 'masonry') return false;
-  if (window.getComputedStyle(container).gridTemplateColumns.split(' ').length !== 3) return false;
-  if (document.querySelector('.content-type-pill.active, .filter-pill.active')) return false;
-  if (document.querySelector('.search-input')?.value.trim()) return false;
-  return true;
+  return gridColumnCount(container) > 0;
+}
+
+function gridColumnCount(container) {
+  return window.getComputedStyle(container).gridTemplateColumns.split(/\s+/).filter(Boolean).length;
 }
 
 function clearExplicitPlacement(tiles) {
@@ -283,13 +290,14 @@ function stateCost(state, preset) {
 }
 
 function placeGroup(initialHeights, cards, preset) {
+  const columnCount = initialHeights.length;
   let beam = [{ heights: [...initialHeights], placements: [], groupRects: [], groupDistanceCost: 0, readingOrderCost: 0 }];
 
   cards.forEach(card => {
     const next = [];
     beam.forEach(state => {
-      const span = card.tile.classList.contains('profile-tile') ? 2 : 1;
-      const starts = span === 2 ? [0] : [0, 1, 2];
+      const span = card.tile.classList.contains('profile-tile') ? Math.min(2, columnCount) : 1;
+      const starts = Array.from({ length: columnCount - span + 1 }, (_, index) => index);
       starts.forEach(col => {
         const row = Math.max(...state.heights.slice(col, col + span));
         const rect = { tile: card.tile, col, span, row, height: card.rowSpan };
@@ -324,7 +332,8 @@ function applyGroupedLayout(container, measurements) {
   const groups = new Map(GROUP_ORDER.map(group => [group, []]));
   measurements.forEach(card => groups.get(semanticGroup(card.tile)).push(card));
 
-  let heights = [1, 1, 1];
+  const columnCount = gridColumnCount(container);
+  let heights = Array(columnCount).fill(1);
   const placements = [];
   for (const group of GROUP_ORDER) {
     const cards = groups.get(group);
@@ -351,8 +360,11 @@ function markGroupBoundaries(container) {
   cancelAnimationFrame(container._groupBoundaryFrame);
   container._groupBoundaryFrame = requestAnimationFrame(() => {
     const gap = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || 20;
-    const halo = debugNumber(new URLSearchParams(window.location.search), 'halo', BLOB_DEBUG_DEFAULTS.halo);
-    renderGroupEdgeDiagnostics(container, gap, halo);
+    const params = new URLSearchParams(window.location.search);
+    const styledHalo = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--debug-group-halo'));
+    const halo = debugNumber(params, 'halo', Number.isFinite(styledHalo) ? styledHalo : gap / 2 + 1.5);
+    const topologyHalo = debugNumber(params, 'topologyHalo', gap * BLOB_DEBUG_DEFAULTS.topologyHalo / BLOB_DEBUG_DEFAULTS.groupGap);
+    renderGroupEdgeDiagnostics(container, gap, halo, topologyHalo);
   });
 }
 
@@ -371,7 +383,108 @@ function subtractIntervals(start, end, intervals) {
   return exposed;
 }
 
-function renderGroupEdgeDiagnostics(container, gap, halo) {
+function expandedTopologySignature(container, gap, topologyHalo) {
+  const containerRect = container.getBoundingClientRect();
+  const cards = [...container.querySelectorAll('.tile[data-layout-group]')].map(tile => {
+    const rect = tile.getBoundingClientRect();
+    return [tile.id, tile.dataset.layoutGroup, rect.left - containerRect.left, rect.top - containerRect.top, rect.width, rect.height].join(':');
+  });
+  return `${gap}|${topologyHalo}|${cards.join('|')}`;
+}
+
+/**
+ * Preserve the known-good expanded-rectangle detector, but expose its result as
+ * data. topologyHalo belongs to classification only; visible halo styling is
+ * deliberately absent from this function.
+ */
+function classifyExpandedRectangleTopology(container, gap, topologyHalo) {
+  const signature = expandedTopologySignature(container, gap, topologyHalo);
+  if (container._expandedGroupTopology?.signature === signature) return container._expandedGroupTopology;
+
+  const containerRect = container.getBoundingClientRect();
+  const cards = [...container.querySelectorAll('.tile[data-layout-group]')].map(tile => {
+    const measured = tile.getBoundingClientRect();
+    const raw = {
+      left: measured.left - containerRect.left,
+      right: measured.right - containerRect.left,
+      top: measured.top - containerRect.top,
+      bottom: measured.bottom - containerRect.top
+    };
+    return {
+      tile,
+      group: tile.dataset.layoutGroup,
+      raw,
+      left: raw.left - topologyHalo,
+      right: raw.right + topologyHalo,
+      top: raw.top - topologyHalo,
+      bottom: raw.bottom + topologyHalo,
+      segments: [],
+      corners: {}
+    };
+  });
+
+  const facesOtherGroup = (card, side, fixed, start, end) => cards.some(other => {
+    if (other === card || other.group === card.group) return false;
+    const projection = side === 'top' || side === 'bottom'
+      ? Math.min(end, other.right) - Math.max(start, other.left)
+      : Math.min(end, other.bottom) - Math.max(start, other.top);
+    if (projection <= 0) return false;
+    if (side === 'top') return other.top < fixed && fixed - other.bottom <= gap + topologyHalo;
+    if (side === 'bottom') return other.bottom > fixed && other.top - fixed <= gap + topologyHalo;
+    if (side === 'left') return other.left < fixed && fixed - other.right <= gap + topologyHalo;
+    return other.right > fixed && other.left - fixed <= gap + topologyHalo;
+  });
+
+  cards.forEach(card => {
+    const same = cards.filter(other => other !== card && other.group === card.group);
+    const sides = [
+      { side: 'top', fixed: card.top, start: card.left, end: card.right, covers: same.filter(other => other.top < card.top && other.bottom >= card.top).map(other => [other.left, other.right]) },
+      { side: 'right', fixed: card.right, start: card.top, end: card.bottom, covers: same.filter(other => other.left <= card.right && other.right > card.right).map(other => [other.top, other.bottom]) },
+      { side: 'bottom', fixed: card.bottom, start: card.left, end: card.right, covers: same.filter(other => other.top <= card.bottom && other.bottom > card.bottom).map(other => [other.left, other.right]) },
+      { side: 'left', fixed: card.left, start: card.top, end: card.bottom, covers: same.filter(other => other.left < card.left && other.right >= card.left).map(other => [other.top, other.bottom]) }
+    ];
+    sides.forEach(({ side, fixed, start, end, covers }) => {
+      const exposed = subtractIntervals(start, end, covers);
+      subtractIntervals(start, end, exposed).forEach(([segmentStart, segmentEnd]) => {
+        card.segments.push({ side, fixed, start: segmentStart, end: segmentEnd, kind: 'internal' });
+      });
+      exposed.forEach(([segmentStart, segmentEnd]) => {
+        const kind = facesOtherGroup(card, side, fixed, segmentStart, segmentEnd) ? 'intergroup' : 'external';
+        card.segments.push({ side, fixed, start: segmentStart, end: segmentEnd, kind });
+      });
+    });
+
+    const cornerTouchesSameGroup = (x, y) => same.some(other =>
+      x >= other.left - 0.5 && x <= other.right + 0.5 &&
+      y >= other.top - 0.5 && y <= other.bottom + 0.5
+    );
+    card.corners = {
+      TopLeft: cornerTouchesSameGroup(card.left, card.top),
+      TopRight: cornerTouchesSameGroup(card.right, card.top),
+      BottomRight: cornerTouchesSameGroup(card.right, card.bottom),
+      BottomLeft: cornerTouchesSameGroup(card.left, card.bottom)
+    };
+  });
+
+  const joins = [];
+  cards.forEach((a, index) => {
+    cards.slice(index + 1).forEach(b => {
+      if (a.group !== b.group) return;
+      const verticalOverlap = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+      const horizontalOverlap = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+      const horizontalContact = a.right <= b.left ? [a.right, b.left] : (b.right <= a.left ? [b.right, a.left] : null);
+      if (horizontalContact && horizontalContact[1] - horizontalContact[0] <= 2 && verticalOverlap > 0) joins.push({ a, b, orientation: 'vertical' });
+      const verticalContact = a.bottom <= b.top ? [a.bottom, b.top] : (b.bottom <= a.top ? [b.bottom, a.top] : null);
+      if (verticalContact && verticalContact[1] - verticalContact[0] <= 2 && horizontalOverlap > 0) joins.push({ a, b, orientation: 'horizontal' });
+    });
+  });
+
+  const topology = { signature, gap, topologyHalo, cards, joins };
+  container._expandedGroupTopology = topology;
+  return topology;
+}
+
+function renderGroupEdgeDiagnostics(container, gap, halo, topologyHalo = BLOB_DEBUG_DEFAULTS.topologyHalo) {
   container.querySelector('.group-edge-debug-layer')?.remove();
   container.querySelector('.group-halo-underlay-layer')?.remove();
   container.querySelector('.group-halo-corner-fill-layer')?.remove();
@@ -382,18 +495,15 @@ function renderGroupEdgeDiagnostics(container, gap, halo) {
   const cutout = debugNumber(params, 'cutout', BLOB_DEBUG_DEFAULTS.cutout);
   const cutoutEnd = debugNumber(params, 'cutoutEnd', cutout);
 
-  const containerRect = container.getBoundingClientRect();
-  const rects = [...container.querySelectorAll('.tile[data-layout-group]')].map(tile => {
-    const rect = tile.getBoundingClientRect();
-    return {
-      tile,
-      group: tile.dataset.layoutGroup,
-      left: rect.left - containerRect.left - halo,
-      right: rect.right - containerRect.left + halo,
-      top: rect.top - containerRect.top - halo,
-      bottom: rect.bottom - containerRect.top + halo
-    };
-  });
+  const topology = classifyExpandedRectangleTopology(container, gap, topologyHalo);
+  const rects = topology.cards.map(card => ({
+    ...card,
+    left: card.raw.left - halo,
+    right: card.raw.right + halo,
+    top: card.raw.top - halo,
+    bottom: card.raw.bottom + halo
+  }));
+  const visibleByTile = new Map(rects.map(rect => [rect.tile, rect]));
   const layer = document.createElement('div');
   layer.className = 'group-edge-debug-layer';
   layer.dataset.showLines = String(showEdges);
@@ -449,47 +559,27 @@ function renderGroupEdgeDiagnostics(container, gap, halo) {
     layer.appendChild(line);
   };
 
-  const facesOtherGroup = (rect, side, fixed, start, end) => rects.some(other => {
-    if (other === rect || other.group === rect.group) return false;
-    const projection = side === 'top' || side === 'bottom'
-      ? Math.min(end, other.right) - Math.max(start, other.left)
-      : Math.min(end, other.bottom) - Math.max(start, other.top);
-    if (projection <= 0) return false;
-    if (side === 'top') return other.top < fixed && fixed - other.bottom <= gap + halo;
-    if (side === 'bottom') return other.bottom > fixed && other.top - fixed <= gap + halo;
-    if (side === 'left') return other.left < fixed && fixed - other.right <= gap + halo;
-    return other.right > fixed && other.left - fixed <= gap + halo;
-  });
-
   rects.forEach(rect => {
-    const same = rects.filter(other => other !== rect && other.group === rect.group);
-    const sides = [
-      { side: 'top', fixed: rect.top, start: rect.left, end: rect.right, covers: same.filter(other => other.top < rect.top && other.bottom >= rect.top).map(other => [other.left, other.right]) },
-      { side: 'right', fixed: rect.right, start: rect.top, end: rect.bottom, covers: same.filter(other => other.left <= rect.right && other.right > rect.right).map(other => [other.top, other.bottom]) },
-      { side: 'bottom', fixed: rect.bottom, start: rect.left, end: rect.right, covers: same.filter(other => other.top <= rect.bottom && other.bottom > rect.bottom).map(other => [other.left, other.right]) },
-      { side: 'left', fixed: rect.left, start: rect.top, end: rect.bottom, covers: same.filter(other => other.left < rect.left && other.right >= rect.left).map(other => [other.top, other.bottom]) }
-    ];
-    const exposedBySide = {};
-    sides.forEach(({ side, fixed, start, end, covers }) => {
-      const exposed = subtractIntervals(start, end, covers);
-      exposedBySide[side] = exposed;
-      subtractIntervals(start, end, exposed).forEach(([segmentStart, segmentEnd]) => {
-        addSegment(side, fixed, segmentStart, segmentEnd, 'internal');
-      });
-      exposed.forEach(([segmentStart, segmentEnd]) => {
-        const kind = facesOtherGroup(rect, side, fixed, segmentStart, segmentEnd) ? 'intergroup' : 'external';
-        if (kind === 'intergroup') {
-          const attribute = `groupBoundary${side[0].toUpperCase()}${side.slice(1)}`;
-          rect.tile.dataset[attribute] = 'true';
-        }
-        addSegment(side, fixed, segmentStart, segmentEnd, kind);
-      });
+    const topologyCard = topology.cards.find(card => card.tile === rect.tile);
+    const baselineGeometry = halo === topologyHalo;
+    const horizontalScale = (rect.right - rect.left) / (topologyCard.right - topologyCard.left);
+    const verticalScale = (rect.bottom - rect.top) / (topologyCard.bottom - topologyCard.top);
+    const mapHorizontal = value => baselineGeometry ? value : rect.left + (value - topologyCard.left) * horizontalScale;
+    const mapVertical = value => baselineGeometry ? value : rect.top + (value - topologyCard.top) * verticalScale;
+    topologyCard.segments.forEach(segment => {
+      const horizontal = segment.side === 'top' || segment.side === 'bottom';
+      const fixed = segment.side === 'top' ? rect.top
+        : segment.side === 'right' ? rect.right
+          : segment.side === 'bottom' ? rect.bottom : rect.left;
+      const start = horizontal ? mapHorizontal(segment.start) : mapVertical(segment.start);
+      const end = horizontal ? mapHorizontal(segment.end) : mapVertical(segment.end);
+      if (segment.kind === 'intergroup') {
+        const attribute = `groupBoundary${segment.side[0].toUpperCase()}${segment.side.slice(1)}`;
+        rect.tile.dataset[attribute] = 'true';
+      }
+      addSegment(segment.side, fixed, start, end, segment.kind);
     });
 
-    const cornerTouchesSameGroup = (x, y) => same.some(other =>
-      x >= other.left - 0.5 && x <= other.right + 0.5 &&
-      y >= other.top - 0.5 && y <= other.bottom + 0.5
-    );
     const corners = [
       { name: 'TopLeft', x: rect.left, y: rect.top },
       { name: 'TopRight', x: rect.right, y: rect.top },
@@ -498,7 +588,7 @@ function renderGroupEdgeDiagnostics(container, gap, halo) {
     ];
     const color = getComputedStyle(rect.tile).getPropertyValue('--layout-region-fill');
     corners.forEach(corner => {
-      const internal = cornerTouchesSameGroup(corner.x, corner.y);
+      const internal = topologyCard.corners[corner.name];
       rect.tile.dataset[`groupCorner${corner.name}`] = String(!internal);
       if (!internal || halo <= 0) return;
       addHaloFill(
@@ -513,23 +603,22 @@ function renderGroupEdgeDiagnostics(container, gap, halo) {
 
   // Exact shadow contacts can still expose a subpixel antialiasing seam.
   // Bridge only same-group facing edges, with one pixel of overlap per side.
-  rects.forEach((a, index) => {
-    rects.slice(index + 1).forEach(b => {
-      if (a.group !== b.group) return;
+  topology.joins.forEach(join => {
+      const a = visibleByTile.get(join.a.tile);
+      const b = visibleByTile.get(join.b.tile);
       const color = getComputedStyle(a.tile).getPropertyValue('--layout-region-fill');
       const verticalOverlap = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
       const horizontalOverlap = Math.min(a.right, b.right) - Math.max(a.left, b.left);
 
       const horizontalContact = a.right <= b.left ? [a.right, b.left] : (b.right <= a.left ? [b.right, a.left] : null);
-      if (horizontalContact && horizontalContact[1] - horizontalContact[0] <= 2 && verticalOverlap > 0) {
+      if (join.orientation === 'vertical' && horizontalContact && horizontalContact[1] - horizontalContact[0] <= 2 && verticalOverlap > 0) {
         addHaloFill(horizontalContact[0] - 1, Math.max(a.top, b.top), horizontalContact[1] - horizontalContact[0] + 2, verticalOverlap, color);
       }
 
       const verticalContact = a.bottom <= b.top ? [a.bottom, b.top] : (b.bottom <= a.top ? [b.bottom, a.top] : null);
-      if (verticalContact && verticalContact[1] - verticalContact[0] <= 2 && horizontalOverlap > 0) {
+      if (join.orientation === 'horizontal' && verticalContact && verticalContact[1] - verticalContact[0] <= 2 && horizontalOverlap > 0) {
         addHaloFill(Math.max(a.left, b.left), verticalContact[0] - 1, horizontalOverlap, verticalContact[1] - verticalContact[0] + 2, color);
       }
-    });
   });
 
   container.appendChild(underlayLayer);
@@ -558,14 +647,15 @@ function installLayoutDebugControls() {
     <div class="layout-debug-modes"><strong>Layout</strong><a data-mode="masonry">Original</a><a data-mode="density">Mostly masonry</a><a data-mode="balanced">Balanced</a><a data-mode="strong">Strong</a></div>
     <div class="layout-debug-tuners">
       <label><span><strong>Card gap</strong><output data-output="groupGap">${params.get('groupGap') || computedGap}px</output></span><input data-setting="groupGap" type="range" min="8" max="40" step="1" value="${params.get('groupGap') || computedGap}"><small>Base space between every masonry card.</small></label>
+      <label><span><strong>Topology halo</strong><span class="layout-debug-number-wrap"><input class="layout-debug-number" data-number-setting="topologyHalo" type="number" min="0" max="32" step="0.01" value="${params.get('topologyHalo') || BLOB_DEBUG_DEFAULTS.topologyHalo}"><span>px</span></span></span><input data-setting="topologyHalo" type="range" min="0" max="32" step="0.01" value="${params.get('topologyHalo') || BLOB_DEBUG_DEFAULTS.topologyHalo}"><small>Classification only. The 26.5px baseline adds tolerance without changing the visible 21.5px halo.</small></label>
       <label><span><strong>Halo spread</strong><span class="layout-debug-number-wrap"><input class="layout-debug-number" data-number-setting="halo" type="number" min="0" max="32" step="0.01" value="${params.get('halo') || BLOB_DEBUG_DEFAULTS.halo}"><span>px</span></span></span><input data-setting="halo" type="range" min="0" max="32" step="0.01" value="${params.get('halo') || BLOB_DEBUG_DEFAULTS.halo}"><small>Per-card expansion. Half the card gap is exact contact; hundredth-pixel steps allow a microscopic seam overlap.</small></label>
-      <label><span><strong>Halo radius</strong><output data-output="radius">${params.get('radius') || BLOB_DEBUG_DEFAULTS.radius}px</output></span><input data-setting="radius" type="range" min="0" max="32" step="1" value="${params.get('radius') || BLOB_DEBUG_DEFAULTS.radius}"><small>Corner radius of the current card-and-halo silhouette. Set to 0 to test fully square group geometry.</small></label>
+      <label><span><strong>Halo radius</strong><output data-output="radius">${params.get('radius') || BLOB_DEBUG_DEFAULTS.radius}px</output></span><input data-setting="radius" type="range" min="0" max="80" step="1" value="${params.get('radius') || BLOB_DEBUG_DEFAULTS.radius}"><small>Visible outer radius of each card halo. Topology is unaffected.</small></label>
       <label><span><strong>Radius mode</strong></span><select data-setting="radiusMode"><option value="smart" ${params.get('radiusMode') !== 'uniform' ? 'selected' : ''}>Smart same-color contact</option><option value="uniform" ${params.get('radiusMode') === 'uniform' ? 'selected' : ''}>Uniform/manual</option></select><small>Smart squares a corner only when that exact halo corner touches another halo of the same color.</small></label>
       <label><span><strong>Different-group horizontal padding</strong><output data-output="dividerX">${params.get('dividerX') || BLOB_DEBUG_DEFAULTS.dividerX}px</output></span><input data-setting="dividerX" type="range" min="0" max="32" step="1" value="${params.get('dividerX') || BLOB_DEBUG_DEFAULTS.dividerX}"><small>Real extra space shared by facing left/right card edges.</small></label>
       <label><span><strong>Different-group vertical padding</strong><output data-output="dividerY">${params.get('dividerY') || BLOB_DEBUG_DEFAULTS.dividerY}px</output></span><input data-setting="dividerY" type="range" min="0" max="32" step="1" value="${params.get('dividerY') || BLOB_DEBUG_DEFAULTS.dividerY}"><small>Real extra space shared by facing top/bottom card edges.</small></label>
       <label><span><strong>Perimeter cut</strong><output data-output="cutout">${params.get('cutout') || BLOB_DEBUG_DEFAULTS.cutout}px</output></span><input data-setting="cutout" type="range" min="0" max="16" step="1" value="${params.get('cutout') || BLOB_DEBUG_DEFAULTS.cutout}"><small>Background removed on each side of every group perimeter segment.</small></label>
       <label><span><strong>Perimeter end cut</strong><output data-output="cutoutEnd">${params.get('cutoutEnd') || params.get('cutout') || BLOB_DEBUG_DEFAULTS.cutoutEnd}px</output></span><input data-setting="cutoutEnd" type="range" min="0" max="24" step="1" value="${params.get('cutoutEnd') || params.get('cutout') || BLOB_DEBUG_DEFAULTS.cutoutEnd}"><small>Background removed beyond both endpoints of every perimeter segment.</small></label>
-      <label><span><strong>Cut radius</strong><output data-output="cutoutRadius">${params.get('cutoutRadius') || 0}px</output></span><input data-setting="cutoutRadius" type="range" min="0" max="16" step="1" value="${params.get('cutoutRadius') || 0}"><small>0 keeps square corners and endcaps; increase for rounded cuts.</small></label>
+      <label><span><strong>Cut radius</strong><output data-output="cutoutRadius">${params.get('cutoutRadius') || 0}px</output></span><input data-setting="cutoutRadius" type="range" min="0" max="48" step="1" value="${params.get('cutoutRadius') || 0}"><small>Rounds the channel cuts without changing their classified segments.</small></label>
       <label><span><strong>Blob softness</strong><output data-output="blobBlur">${params.get('blobBlur') || BLOB_DEBUG_DEFAULTS.blobBlur}px</output></span><input data-setting="blobBlur" type="range" min="0" max="8" step="0.5" value="${params.get('blobBlur') || BLOB_DEBUG_DEFAULTS.blobBlur}"><small>Softens only the colored underlay and fuses tiny seams.</small></label>
       <label><span><strong>Paper grain</strong><output data-output="grain">${params.get('grain') || BLOB_DEBUG_DEFAULTS.grain}%</output></span><input data-setting="grain" type="range" min="0" max="40" step="1" value="${params.get('grain') || BLOB_DEBUG_DEFAULTS.grain}"><small>Adds subtle texture to the colored regions, not the cards.</small></label>
       <label><span><strong>Channel softness</strong><output data-output="channelBlur">${params.get('channelBlur') || BLOB_DEBUG_DEFAULTS.channelBlur}px</output></span><input data-setting="channelBlur" type="range" min="0" max="4" step="0.5" value="${params.get('channelBlur') || BLOB_DEBUG_DEFAULTS.channelBlur}"><small>Softens the rounded background cuts between group regions.</small></label>
@@ -574,7 +664,7 @@ function installLayoutDebugControls() {
       <label class="layout-debug-check"><input data-setting="joins" type="checkbox" ${params.get('joins') === '1' ? 'checked' : ''}><span><strong>Show same-group joins</strong><small>Cyan lines mark internal edges where same-color halos overlap and fuse.</small></span></label>
     </div>
     <div class="layout-debug-math" aria-live="polite"></div>
-    <button class="layout-debug-copy" type="button">Copy configuration URL</button>`;
+    <div class="layout-debug-actions"><button class="layout-debug-reset" type="button">Reset baseline</button><button class="layout-debug-copy" type="button">Copy configuration URL</button></div>`;
   controls.querySelector('.layout-debug-collapse').addEventListener('click', event => {
     const collapsed = controls.classList.toggle('layout-debug-controls-collapsed');
     event.currentTarget.setAttribute('aria-expanded', String(!collapsed));
@@ -593,7 +683,7 @@ function installLayoutDebugControls() {
     input.addEventListener('input', () => {
       const setting = input.dataset.setting;
       const value = input.type === 'checkbox' ? (input.checked ? '1' : '0') : input.value;
-      if (setting === 'halo') controls.querySelector('[data-number-setting="halo"]').value = value;
+      if (setting === 'halo' || setting === 'topologyHalo') controls.querySelector(`[data-number-setting="${setting}"]`).value = value;
       const output = controls.querySelector(`[data-output="${setting}"]`);
       if (output) output.textContent = `${value}${setting === 'color' || setting === 'grain' ? '%' : 'px'}`;
       const url = new URL(window.location.href);
@@ -610,20 +700,32 @@ function installLayoutDebugControls() {
       if (setting === 'groupGap') {
         cancelAnimationFrame(relayoutFrame);
         relayoutFrame = requestAnimationFrame(() => calculateMasonryLayout(document.querySelector('.grid-container')));
-      } else if (setting === 'halo' || setting === 'radius' || setting === 'cutout' || setting === 'cutoutEnd' || setting === 'edges' || setting === 'joins' || setting === 'dividerX' || setting === 'dividerY') {
+      } else if (setting === 'halo' || setting === 'topologyHalo' || setting === 'radius' || setting === 'cutout' || setting === 'cutoutEnd' || setting === 'edges' || setting === 'joins' || setting === 'dividerX' || setting === 'dividerY') {
         markGroupBoundaries(document.querySelector('.grid-container'));
       }
     });
   });
-  controls.querySelector('[data-number-setting="halo"]').addEventListener('input', event => {
-    const slider = controls.querySelector('[data-setting="halo"]');
-    slider.value = event.currentTarget.value;
-    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  controls.querySelectorAll('[data-number-setting]').forEach(numberInput => {
+    numberInput.addEventListener('input', event => {
+      const slider = controls.querySelector(`[data-setting="${event.currentTarget.dataset.numberSetting}"]`);
+      slider.value = event.currentTarget.value;
+      slider.dispatchEvent(new Event('input', { bubbles: true }));
+    });
   });
   controls.querySelector('.layout-debug-copy').addEventListener('click', async event => {
     await navigator.clipboard.writeText(window.location.href);
     event.currentTarget.textContent = 'Copied';
     setTimeout(() => { event.currentTarget.textContent = 'Copy configuration URL'; }, 1200);
+  });
+  controls.querySelector('.layout-debug-reset').addEventListener('click', () => {
+    const baselineUrl = new URL(window.location.href);
+    baselineUrl.search = '';
+    baselineUrl.hash = '';
+    baselineUrl.searchParams.set('layout', 'strong');
+    baselineUrl.searchParams.set('layoutDebug', '1');
+    baselineUrl.searchParams.set('edges', '1');
+    baselineUrl.searchParams.set('topologyHalo', String(BLOB_DEBUG_DEFAULTS.topologyHalo));
+    window.location.assign(baselineUrl);
   });
   document.body.appendChild(controls);
   updateLayoutDebugMath(controls);
@@ -640,6 +742,8 @@ function applyLayoutDebugSettings() {
   const isThreeColumnLayout = window.matchMedia('(min-width: 1201px) and (max-width: 1799px)').matches;
   if (!isThreeColumnLayout && params.get('layoutDebug') !== '1') {
     root.style.removeProperty('--grid-gap');
+    const responsiveGap = parseFloat(getComputedStyle(root).getPropertyValue('--grid-gap')) || 16;
+    root.style.setProperty('--debug-group-halo', `${responsiveGap / 2 + 1.5}px`);
     return;
   }
   root.style.setProperty('--grid-gap', `${debugNumber(params, 'groupGap', BLOB_DEBUG_DEFAULTS.groupGap)}px`);
@@ -662,8 +766,9 @@ function updateLayoutDebugMath(controls) {
   const params = new URLSearchParams(window.location.search);
   const gap = debugNumber(params, 'groupGap', BLOB_DEBUG_DEFAULTS.groupGap);
   const halo = debugNumber(params, 'halo', BLOB_DEBUG_DEFAULTS.halo);
+  const topologyHalo = debugNumber(params, 'topologyHalo', BLOB_DEBUG_DEFAULTS.topologyHalo);
   const sameDelta = halo * 2 - gap;
-  controls.querySelector('.layout-debug-math').innerHTML = `Same-group halos: <strong>${sameDelta >= 0 ? `${sameDelta}px overlap` : `${Math.abs(sameDelta)}px gap`}</strong><br><strong class="debug-red-label">Red</strong> = boundary between groups`;
+  controls.querySelector('.layout-debug-math').innerHTML = `Classifier: <strong>${topologyHalo}px topology halo</strong><br>Visible halos: <strong>${sameDelta >= 0 ? `${sameDelta}px overlap` : `${Math.abs(sameDelta)}px gap`}</strong><br><strong class="debug-red-label">Red</strong> = boundary between groups`;
 }
 
 /**
