@@ -151,6 +151,8 @@ const LAYOUT_PRESETS = {
   strong: { groupDistance: 8, compactness: 0.16, holes: 0.7, readingOrder: 0.25, beamWidth: 160, requireConnected: true }
 };
 const LAYOUT_DEFAULTS = { groupGap: 30 };
+const SURFACED_GROUPS = new Set(['intro', 'writing', 'experience', 'links', 'projects']);
+const EMPHASIZED_SURFACE_GROUPS = new Set(['writing', 'links']);
 
 window.addEventListener('site-theme-change', () => {
   const container = document.querySelector('.grid-container');
@@ -323,9 +325,8 @@ function scheduleSemanticRegions(container) {
 
 function renderSemanticRegions(container) {
   container.querySelectorAll('.semantic-region-layer').forEach(layer => layer.remove());
-  const groupedTiles = container.querySelectorAll(
-    '.tile[data-layout-group="writing"], .tile[data-layout-group="links"]'
-  );
+  const groupedTiles = Array.from(container.querySelectorAll('.tile[data-layout-group]'))
+    .filter(tile => SURFACED_GROUPS.has(tile.dataset.layoutGroup));
   if (!groupedTiles.length) return;
 
   const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || LAYOUT_DEFAULTS.groupGap;
@@ -339,6 +340,9 @@ function renderSemanticRegions(container) {
     const rect = tile.getBoundingClientRect();
     const region = document.createElement('i');
     region.className = 'semantic-region';
+    if (EMPHASIZED_SURFACE_GROUPS.has(tile.dataset.layoutGroup)) {
+      region.classList.add('semantic-region--emphasis');
+    }
     Object.assign(region.style, {
       left: `${rect.left - containerRect.left - spread}px`,
       top: `${rect.top - containerRect.top - spread}px`,

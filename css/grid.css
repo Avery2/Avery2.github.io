@@ -234,6 +234,7 @@ html[data-grouped-layout] .grid-container {
 
 html[data-grouped-layout] .tile[data-layout-group] {
   --section-heading-surface: var(--bg-primary);
+  --section-heading-ink: var(--text-primary);
   position: relative;
   z-index: 1;
   width: auto;
@@ -247,7 +248,8 @@ html[data-grouped-layout] .tile[data-layout-group].tile-visible:hover {
 }
 
 /* Section anchors become labels sitting directly on their semantic paper
-   field. The title swatch repeats the group's color as an ink-like edge. */
+   field. Their labels use the full page background so they remain distinct
+   from the grouped cards behind them. */
 html[data-grouped-layout] .tile[data-section-header="true"] {
   overflow: visible;
   border-color: transparent !important;
@@ -276,11 +278,11 @@ html[data-grouped-layout] :is(
   margin: 0;
   padding: 0.4rem 0.7rem 0.45rem;
   border: 1px solid var(--border-color);
-  border-bottom: 4px solid var(--layout-region-ink);
+  border-bottom: 4px solid var(--section-heading-ink);
   border-radius: 5px 5px 2px 2px;
   background: var(--section-heading-surface);
-  color: var(--layout-region-ink);
-  box-shadow: 3px 3px 0 color-mix(in srgb, var(--layout-region-ink) 72%, transparent);
+  color: var(--section-heading-ink);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--section-heading-ink) 72%, transparent);
   font-size: clamp(1.45rem, 1.15rem + 0.8vw, 2rem);
   font-weight: 700;
   line-height: 1.05;
@@ -294,7 +296,7 @@ html[data-grouped-layout] :is(
   .profile-tile.section-spotlight:has(.spotlight-link):focus-within .profile-tile-title
 ) {
   border-bottom-color: var(--accent-primary);
-  background: color-mix(in srgb, var(--text-primary) 5%, var(--section-heading-surface));
+  background: var(--section-heading-surface);
   color: var(--accent-primary);
   box-shadow: 5px 5px 0 color-mix(in srgb, var(--accent-primary) 82%, transparent);
   transform: translate(-1px, -1px);
@@ -350,8 +352,8 @@ html[data-grouped-layout] .profile-tile.section-spotlight .spotlight-content {
   gap: 0.8rem;
 }
 
-/* Writing and Links share one neutral semantic field rendered independently
-   behind their rounded cards. */
+/* Group fields join adjacent cards into one visual section. Writing and Links
+   use the slightly stronger of the two neutral surfaces. */
 html[data-grouped-layout] :is(
   .tile[data-layout-group="writing"],
   .tile[data-layout-group="links"]
@@ -378,7 +380,11 @@ html[data-grouped-layout] :is(
   position: absolute;
   display: block;
   border-radius: 0;
-  background: var(--semantic-group-surface);
+  background: var(--group-surface);
+}
+
+.semantic-region--emphasis {
+  background: var(--group-surface-emphasis);
 }
 
 html[data-grouped-layout] .tile-link:focus-visible {
@@ -386,39 +392,8 @@ html[data-grouped-layout] .tile-link:focus-visible {
   outline-offset: -4px;
 }
 
-html[data-grouped-layout] .tile[data-layout-group="intro"] {
-  --layout-region-ink: var(--group-intro-ink);
-}
-html[data-grouped-layout] .tile[data-layout-group="writing"] {
-  --layout-region-ink: var(--group-writing-ink);
-}
-html[data-grouped-layout] .tile[data-layout-group="experience"] {
-  --layout-region-ink: var(--group-experience-ink);
-}
-html[data-grouped-layout] .tile[data-layout-group="projects"] {
-  --layout-region-ink: var(--group-projects-ink);
-}
-html[data-grouped-layout] .tile[data-layout-group="links"] {
-  --layout-region-ink: var(--group-links-ink);
-}
-html[data-grouped-layout] .tile[data-layout-group="navigation"] {
-  --layout-region-ink: var(--group-other-ink);
-}
-html[data-grouped-layout] .tile[data-layout-group="other"] {
-  --layout-region-ink: var(--group-other-ink);
-}
-html[data-grouped-layout] .tile[data-layout-group="selection"] {
-  --layout-region-ink: var(--text-primary);
-}
 html[data-grouped-layout] .tile[data-layout-group="filtered"] {
-  --layout-region-ink: var(--text-secondary);
-}
-
-html[data-grouped-layout] #tile-back-to-top,
-html[data-grouped-layout] #tile-back-to-top.tile-visible:hover {
-  border-color: transparent !important;
-  background: transparent;
-  box-shadow: none;
+  --section-heading-ink: var(--text-secondary);
 }
 
 @media (max-width: 900px) {

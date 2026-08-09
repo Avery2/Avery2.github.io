@@ -1,6 +1,5 @@
-/* Rubber-band "pull to top" footer affordance
-   Overscrolling past the bottom grows a "Back to top" button in below the
-   permanent footer message, with a ring that fills as you keep pulling. */
+/* Persistent "Back to top" footer control. Its ring fills when overscrolling
+   past the bottom and triggers automatically when the elastic pull completes. */
 
 .site-footer {
   position: relative;
@@ -27,10 +26,6 @@
 }
 
 :root {
-  /* Live-tunable via the dev panel (js/dev-tuning-panel.js) during local
-     testing; these are just the shipped defaults. */
-  --footer-reveal-gap: 0.85rem; /* fixed distance below the message — not animated, just where it sits */
-  --footer-reveal-min-opacity: 1; /* at 1, full opacity shows the instant pulling starts — no fade-in at all */
   --footer-spring-back-duration: 380ms;
 }
 
@@ -40,29 +35,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.75rem;
   --pull-progress: 0;
 }
 
 .footer-message-default {
   margin: 0;
+  line-height: 1.4;
 }
 
-/* Sits absolutely — not in flow — directly under the permanent message,
-   inside the footer's own padding. It fades and slides very slightly into
-   place as you pull, but the page's height never changes because of it:
-   this reads as something revealing in place, not the page growing/
-   scrolling to make room. */
+/* Permanently visible above the footer credit. Only the ring changes during
+   an elastic pull, so the footer geometry remains steady. */
 .footer-back-to-top {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-top: var(--footer-reveal-gap);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transform: translateX(-50%) translateY(calc((1 - var(--pull-progress)) * -6px));
-  opacity: var(--pull-progress);
+  margin: 0;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  opacity: 1;
   white-space: nowrap;
   background: none;
   border: none;
@@ -70,7 +62,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-secondary);
-  pointer-events: none;
+  pointer-events: auto;
   /* Buttons globally get a 0.3s theme-switch transition (themes.css) that
      would otherwise smear opacity behind the live pull gesture, making it
      lag the actual scroll input by up to 300ms. Cancel it here;
@@ -78,18 +70,35 @@
   transition: none;
 }
 
-/* Once actively pulling, jump straight to a legible floor instead of
-   fading in linearly from zero — otherwise the first several percent of
-   pulling shows nothing and it's unclear anything is happening at all. */
-.footer-pull.footer-pull-active .footer-back-to-top {
-  pointer-events: auto;
-  opacity: calc(var(--footer-reveal-min-opacity) + (1 - var(--footer-reveal-min-opacity)) * var(--pull-progress));
+.footer-back-to-top:hover,
+.footer-back-to-top:focus-visible {
+  color: var(--accent-primary);
+}
+
+.footer-back-to-top:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
 }
 
 .footer-pull-ring {
+  display: none;
   width: 22px;
   height: 22px;
   flex-shrink: 0;
+}
+
+.footer-up-arrow {
+  width: 22px;
+  color: currentColor;
+  text-align: center;
+}
+
+.footer-pull.footer-pull-active .footer-up-arrow {
+  display: none;
+}
+
+.footer-pull.footer-pull-active .footer-pull-ring {
+  display: block;
 }
 
 .footer-pull-ring-track {
@@ -125,15 +134,9 @@
   100% { transform: scale(1); }
 }
 
-/* Spring-back to default state animates smoothly; while actively pulling,
-   updates are instant so it tracks the gesture 1:1. Opacity/slide fade out
-   noticeably faster than the ring so the row is basically gone by the time
-   the ring finishes retracting — no synchronized "everything at once" yank. */
+/* Spring the progress ring back to empty after an unfinished pull. */
 .footer-pull-resetting,
-.footer-pull-resetting .footer-back-to-top,
 .footer-pull-resetting .footer-pull-ring-progress {
   transition:
-    opacity calc(var(--footer-spring-back-duration) * 0.5) ease-out,
-    transform calc(var(--footer-spring-back-duration) * 0.5) ease-out,
     stroke-dashoffset var(--footer-spring-back-duration) ease-out;
 }

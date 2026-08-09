@@ -143,7 +143,7 @@
 .site-footer {
   background-color: transparent;
   border-top: none;
-  padding: var(--footer-padding-top, 2.2rem) 0 var(--footer-padding-bottom, 6rem);
+  padding: var(--footer-padding-top, 2.75rem) 0 var(--footer-padding-bottom, 3rem);
   margin-top: auto;
   text-align: center;
 }

@@ -124,17 +124,6 @@ tiles:
     section_header: true
     tags: ["projects"]
 
-  # Back to Top (absolute last tile)
-  - id: "back-to-top"
-    type: "link"
-    title: "Back to Top"
-    icon: "fas fa-arrow-up"
-    url: "#top"
-    open_new_tab: false
-    priority: -2
-    content_type: "utility"
-    tags: ["navigation"]
-
   # Example: About Me tile (commented out for now)
   # - id: "about-me"
   #   type: "content"

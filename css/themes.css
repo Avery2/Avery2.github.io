@@ -25,16 +25,10 @@
   --tile-bg: #FFFEFB;
   --tile-hover-bg: #FFFFFF;
   --intro-card-bg: var(--brand-primary);
-  --semantic-group-surface: color-mix(in oklab, var(--text-primary) 6%, var(--bg-primary));
-
-  /* Category labels remain neutral; only Writing and Links receive the one
-     shared semantic surface in the grouped masonry. */
-  --group-intro-ink: var(--text-primary);
-  --group-writing-ink: var(--text-primary);
-  --group-experience-ink: var(--text-primary);
-  --group-projects-ink: var(--text-primary);
-  --group-links-ink: var(--text-primary);
-  --group-other-ink: var(--text-primary);
+  /* Neutral section fields: Writing/Links are emphasized without introducing
+     another hue, while Experience/Projects sit on a quieter version. */
+  --group-surface: color-mix(in oklab, var(--text-primary) 3%, var(--bg-primary));
+  --group-surface-emphasis: color-mix(in oklab, var(--text-primary) 6%, var(--bg-primary));
 
   --header-bg: rgba(244, 241, 234, 0.95);
   --footer-bg: #EBE7DF;
@@ -70,7 +64,8 @@
   --tile-bg: #191B1E;
   --tile-hover-bg: #1E2024;
   --intro-card-bg: var(--brand-primary);
-  --semantic-group-surface: color-mix(in oklab, var(--text-primary) 10%, var(--bg-primary));
+  --group-surface: color-mix(in oklab, var(--text-primary) 5%, var(--bg-primary));
+  --group-surface-emphasis: color-mix(in oklab, var(--text-primary) 10%, var(--bg-primary));
 
   --header-bg: rgba(17, 18, 20, 0.95);
   --footer-bg: #17191C;

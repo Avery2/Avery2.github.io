@@ -1,10 +1,9 @@
 /**
  * Rubber-Band Footer
  * Once the page is already scrolled to the very bottom, further scroll
- * input reveals a "Back to top" button in place, right under the
- * permanent footer message, with a ring that fills as you keep pulling —
+ * input fills the ring around the persistent "Back to top" button —
  * quick initial give that gets harder to push further, like real elastic.
- * The reveal is an absolutely-positioned overlay, not layout growth, so
+ * The control is an absolutely-positioned overlay, not layout growth, so
  * the page's scrollable height never changes during the gesture — it
  * reads as something appearing in place, not the page growing/scrolling
  * to make room. The instant the ring completes, it fires (no waiting
@@ -147,10 +146,8 @@ function pollUntilScrollSettles(callback, maxFrames = 240) {
 }
 
 /**
- * Native smooth scroll instead of a hand-rolled easing loop — matches the
- * feel of the site's plain "Back to Top" tile (data/manual-tiles.yml),
- * which is just a bare `<a href="#">` relying entirely on the browser's
- * own scroll-behavior:smooth. The browser's own animation is the same
+ * Native smooth scroll instead of a hand-rolled easing loop. The browser's
+ * own animation is the same
  * subsystem that owns any in-flight wheel momentum, so it doesn't fight
  * itself the way our old rAF loop (a second, competing driver of scrollTop)
  * sometimes did.
