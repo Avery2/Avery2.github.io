@@ -1,6 +1,7 @@
 /* Theme System - Light and Dark Mode */
 
 :root {
+  --site-shell-gutter: clamp(1.25rem, 4vw, 3rem);
   /* Light theme (default) */
   --bg-primary: #fbfaf7;
   --bg-secondary: #f8f9fa;

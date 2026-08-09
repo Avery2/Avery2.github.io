@@ -11,7 +11,7 @@
 .header-content {
   max-width: var(--grid-max-width);
   margin: 0 auto;
-  padding: 0 12rem;
+  padding: 0 var(--site-shell-gutter);
   position: relative;
 }
 
@@ -161,7 +161,7 @@
 .footer-content {
   max-width: var(--grid-max-width);
   margin: 0 auto;
-  padding: 0 12rem;
+  padding: 0 var(--site-shell-gutter);
   color: var(--text-tertiary);
   font-size: 0.875rem;
 }
@@ -173,16 +173,16 @@
 /* Responsive header */
 @media (max-width: 900px) {
   .header-content {
-    padding: 0 4rem;
+    padding: 0 var(--site-shell-gutter);
   }
 
   .site-header.filters-expanded .header-content::before {
-    left: 4rem;
-    right: 4rem;
+    left: var(--site-shell-gutter);
+    right: var(--site-shell-gutter);
   }
 
   .footer-content {
-    padding: 0 4rem;
+    padding: 0 var(--site-shell-gutter);
   }
 
   .header-content {
@@ -216,12 +216,12 @@
 
 @media (max-width: 600px) {
   .header-content {
-    padding: 0 1rem;
+    padding: 0 var(--site-shell-gutter);
   }
 
   .site-header.filters-expanded .header-content::before {
-    left: 1rem;
-    right: 1rem;
+    left: var(--site-shell-gutter);
+    right: var(--site-shell-gutter);
   }
 
   /* Hide site title on small screens, keep Find button */
@@ -285,7 +285,7 @@
   }
 
   .footer-content {
-    padding: 0 1rem;
+    padding: 0 var(--site-shell-gutter);
   }
 }
 
