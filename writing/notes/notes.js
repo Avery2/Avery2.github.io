@@ -245,10 +245,12 @@ function previewPrune(depth, visible) {
 
 function closeFromDepth(depth) {
   if (depth <= 0 || depth >= panes.length) return;
+  const survivingExpandedDepth = expandedDepth !== null && expandedDepth < depth ? expandedDepth : null;
   panes = panes.slice(0, depth);
-  expandedDepth = validExpandedDepth(undefined, panes.length);
-  expandedPinned = false;
-  currentExpanded = true;
+  const newCurrentDepth = panes.length - 1;
+  currentExpanded = survivingExpandedDepth === newCurrentDepth;
+  expandedDepth = currentExpanded ? null : survivingExpandedDepth;
+  expandedPinned = true;
   historyExpanded = false;
   commit(panes.at(-1).noteId, 'back');
 }
