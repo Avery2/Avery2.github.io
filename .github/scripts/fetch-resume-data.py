@@ -226,7 +226,7 @@ def generate_tiles(experience: List[Dict], education: List[Dict]) -> bool:
                 'name': exp['company'],
                 'title': exp['company'],
                 'description': exp['title'],  # Just the job title, no dates
-                'url': f'./writing/experience/{slug}.html',
+                'url': f'./writing/experience/{slug}.html?path=resume~{slug}&open=last&from=portfolio',
                 'tags': ['experience', 'professional'],
                 'meta': {
                     'company': exp['company'],
@@ -257,7 +257,7 @@ def generate_tiles(experience: List[Dict], education: List[Dict]) -> bool:
                 'name': edu['school'],
                 'title': edu['school'],
                 'description': edu['degree'],  # Just the degree, no dates
-                'url': f'./writing/education/{slug}.html',
+                'url': f'./writing/education/{slug}.html?path=resume~{slug}&open=last&from=portfolio',
                 'tags': ['education', 'academic'],
                 'meta': {
                     'school': edu['school'],

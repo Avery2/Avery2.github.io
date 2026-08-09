@@ -29,7 +29,7 @@ tiles:
     type: "link"
     title: "Notes"
     description: "A connected space for writing that can grow over time, plus a clearly labeled example corpus for testing the reading experience. → Read the note"
-    url: "./writing/notes/notes.html"
+    url: "./writing/notes/notes.html?from=portfolio"
     open_new_tab: false
     priority: 140
     tags: ["writing", "design", "prototype"]
@@ -52,7 +52,7 @@ tiles:
     type: "link"
     title: "Harm Reduction"
     description: "A philosophy that honors dignity and autonomy. Harm reduction resonated deeply with me when I first learned about it during CASA training... → Read more"
-    url: "./writing/notes/harm-reduction.html"
+    url: "./writing/notes/harm-reduction.html?from=portfolio"
     open_new_tab: false
     priority: 110
     tags: ["philosophy", "writing"]
