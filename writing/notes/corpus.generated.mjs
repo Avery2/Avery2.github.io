@@ -2,13 +2,13 @@
 export const notes = [
   {
     "slug": "notes",
-    "title": "Notes, linked and spatial",
-    "summary": "A note about the kind of writing space I want this site to become.",
+    "title": "Notes",
+    "summary": "A connected space for writing that can grow over time.",
     "status": "published",
     "kind": "substantial",
     "ai_generated": false,
     "root_note": true,
-    "body": "<p>I want writing here to feel less like a feed of finished posts and more like a body of ideas that can grow together. The basic unit is a small note centered on a concept, not a date. A note can be polished, partial, or only the acknowledgement that an idea belongs in the larger structure.</p>\n<p>The relationships matter before every destination is finished. I want to be able to say that two ideas are connected without creating the pressure to complete both essays first. The graph can contain the idea before the prose matures.</p>\n<p>That graph should stay underneath the reading experience. I do not want to replace writing with a diagram of writing. A reader follows one path at a time, and the pages they followed should remain physically present: new notes accumulate to the right, earlier pages stay exposed, and distant history gradually compresses without abruptly disappearing.</p>\n<p>In other words, navigation depth should become visible spatial depth. The accumulated pages are the breadcrumb. Returning to an earlier surface should make it natural to continue in a different direction from there.</p>\n<p>Eventually, existing writing such as <a href=\"../harm-reduction.html\">Harm reduction</a> can live within this same system alongside shorter and less finished notes. For now, the linked collection beyond this page is deliberately prototype material. It uses substantive but AI-generated example writing so the interaction can be evaluated before my real corpus is ready.</p>\n<p>[[seeing-information|Open the AI-generated example notes about seeing and navigating information.]]</p>"
+    "body": "<p>I want writing here to grow as connected, concept-oriented notes rather than a feed of finished posts. Following a link should add another page while keeping the path visible, so the notes themselves become the navigation. Existing writing such as <a href=\"../harm-reduction.html\">Harm reduction</a> can eventually live here alongside shorter and unfinished ideas; for now, the linked collection below is clearly labeled AI-generated material for testing the interaction.</p>\n<p>[[seeing-information|Open the AI-generated example notes about seeing and navigating information.]]</p>"
   },
   {
     "slug": "accessibility",

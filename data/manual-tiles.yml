@@ -27,8 +27,8 @@ tiles:
 
   - id: "linked-notes-demo"
     type: "link"
-    title: "Notes, linked and spatial"
-    description: "How I want writing on this site to grow: small connected notes, read as a spatial path rather than a feed or graph diagram. Includes a clearly labeled AI-generated corpus for testing the interaction. → Read the note"
+    title: "Notes"
+    description: "A connected space for writing that can grow over time, plus a clearly labeled example corpus for testing the reading experience. → Read the note"
     url: "./writing/notes/notes.html"
     open_new_tab: false
     priority: 140
