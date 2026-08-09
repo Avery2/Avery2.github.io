@@ -1,0 +1,106 @@
+/* Rubber-band "pull to top" footer affordance
+   Overscrolling past the bottom crossfades the footer message into a
+   "Back to top" button with a ring that fills as you keep pulling. */
+
+.site-footer {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle dot-grid pattern, faded at the edges so it reads as texture
+   rather than a hard-edged block */
+.site-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-position: center;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black, transparent),
+    linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent, black, transparent),
+    linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  mask-composite: intersect;
+  pointer-events: none;
+}
+
+.footer-pull {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  --pull-progress: 0;
+}
+
+.footer-message {
+  margin: 0;
+}
+
+.footer-message-default {
+  opacity: calc(1 - var(--pull-progress));
+}
+
+.footer-back-to-top {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  opacity: var(--pull-progress);
+  pointer-events: none;
+}
+
+.footer-pull.footer-pull-active .footer-back-to-top {
+  pointer-events: auto;
+}
+
+.footer-pull-ring {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.footer-pull-ring-track {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 2.5;
+}
+
+.footer-pull-ring-progress {
+  fill: none;
+  stroke: var(--accent-primary);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  stroke-dasharray: 106.8;
+  stroke-dashoffset: calc(106.8 * (1 - var(--pull-progress)));
+}
+
+.footer-pull.armed .footer-pull-ring-progress {
+  filter: drop-shadow(0 0 4px var(--accent-primary));
+}
+
+.footer-pull.armed .footer-back-to-top span {
+  color: var(--accent-primary);
+}
+
+/* Spring-back to default state animates smoothly; while actively pulling,
+   updates are instant so it tracks the gesture 1:1 */
+.footer-pull-resetting,
+.footer-pull-resetting .footer-message-default,
+.footer-pull-resetting .footer-back-to-top,
+.footer-pull-resetting .footer-pull-ring-progress {
+  transition: opacity 0.32s ease, stroke-dashoffset 0.32s ease;
+}
