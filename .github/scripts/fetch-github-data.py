@@ -414,7 +414,7 @@ PROJECT_PAGE_TEMPLATE = Template('''<!DOCTYPE html>
       document.documentElement.dataset.theme = override || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     } catch (_) {}
   </script>
-  <style>html { background: #fbfaf7; } html[data-theme="dark"] { background: #1a1a1a; }</style>
+  <style>html { background: #f4f1eb; } html[data-theme="dark"] { background: #111214; }</style>
   <link rel="icon" href="../assets/images/profile/face.jpg" type="image/jpeg">
   <link rel="stylesheet" href="/writing/assets/portfolio-foundation.css">
   <link rel="stylesheet" href="/writing/notes/notes.css">
