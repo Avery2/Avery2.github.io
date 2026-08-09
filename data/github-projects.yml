@@ -1,7 +1,7 @@
 metadata:
-  generated_at: '2026-08-09T03:45:18.869088+00:00'
+  generated_at: '2026-08-09T04:05:22.799429+00:00'
   source_api: https://api.github.com/users/Avery2/repos
-  total_repos: 29
+  total_repos: 30
 projects:
 - id: things3notionscript
   type: project
@@ -104,8 +104,8 @@ projects:
   - jekyll
   - liquid
   created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2026-08-09T03:44:39Z'
-  pushed_at: '2026-08-09T03:44:35Z'
+  updated_at: '2026-08-09T03:45:23Z'
+  pushed_at: '2026-08-09T03:45:20Z'
   priority: 21
   tags:
   - html
@@ -320,6 +320,29 @@ projects:
   - html
   - python
   - r
+  featured: false
+  span_columns: 1
+  span_rows: 1
+- id: OneTab-to-CSV
+  type: project
+  name: OneTab-to-CSV
+  title: Onetab To Csv
+  description: Takes raw text export from OneTab (an extension for browser tab aggregation)
+    into csv format.
+  url: ./projects/onetab-to-csv.html
+  repo_url: https://github.com/Avery2/OneTab-to-CSV
+  homepage: ''
+  image: ''
+  language: Jupyter Notebook
+  stars: 1
+  forks: 0
+  topics: []
+  created_at: '2022-06-04T06:11:18Z'
+  updated_at: '2022-11-22T19:59:00Z'
+  pushed_at: '2022-06-04T06:11:59Z'
+  priority: 4
+  tags:
+  - jupyter notebook
   featured: false
   span_columns: 1
   span_rows: 1

@@ -39,7 +39,6 @@ curated_repos:
   - Avery2.github.io
   - things3-mcp-tools
   - sun-calendar
-  - thingsagent
   - steam-hours
   - Toggl-Analysis
   - Just-Read-Less-Features
@@ -50,12 +49,10 @@ curated_repos:
   - PersonalVisualization
   - 639-Final-Project
   - things3notionscript
-  - optical-flow-count
   - text-to-spooch
   - SimpleReadme
   - SpotifyDataAnalysis
-  - OneTab_to_CSV
-  - QbserveBlocker
+  - OneTab-to-CSV
   - netflix-data-clean
   - slack-duck-message-generator
   - xv6_memoryencrypt

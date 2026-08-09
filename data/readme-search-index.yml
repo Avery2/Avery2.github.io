@@ -1,6 +1,6 @@
 metadata:
-  generated_at: '2026-08-09T03:45:18.882576+00:00'
-  total_entries: 29
+  generated_at: '2026-08-09T04:05:22.826517+00:00'
+  total_entries: 30
 readmes:
   639-Final-Project: Link to interactive website source To run software run
   Antibiotic-Visualization: This is a static visualization that communicates this
@@ -84,6 +84,8 @@ readmes:
     options page, you must restart any Just Read instances for the change to work.
     Using Just Read features How can I start Just Read? On a desktop or laptop Start
     Just Re'
+  OneTab-to-CSV: Takes raw text export from OneTab (an extension for browser tab aggregation)
+    into csv format.
   PersonalVisualization: 'Work Visualization The data visualized here is my time spent
     doing various things (mostly work) that I collected using Toggl over a year. The
     visuals were created using Observable and d3.js . Data parsing and exploration

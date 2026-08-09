@@ -696,6 +696,26 @@ def load_curated_list() -> List[str]:
         return []
 
 
+def warn_about_unmatched(curated_list: List[str], repos: List[Dict[str, Any]]):
+    """
+    Curated entries are matched against repo names exactly, so a repo that
+    gets renamed, deleted, or made private just stops appearing. Say so
+    loudly instead of dropping it on the floor.
+    """
+    matched = {repo['name'] for repo in repos}
+    unmatched = [name for name in curated_list if name not in matched]
+
+    if not unmatched:
+        return
+
+    summary = f"{len(unmatched)} curated repo(s) matched nothing and will not appear: {', '.join(unmatched)}"
+    print(f"\nWARNING: {summary}")
+    print("  Usually means the repo was renamed, deleted, or made private.")
+
+    if IS_GITHUB_ACTIONS:
+        print(f"::warning title=Unmatched curated repos::{summary}")
+
+
 def prune_stale_pages(repo_root: str, generated_slugs: List[str]):
     """
     Remove project pages for repos no longer curated. Skipped entirely when
@@ -750,6 +770,7 @@ def main():
         original_count = len(repos)
         repos = [r for r in repos if r['name'] in curated_list]
         print(f"Filtered to {len(repos)} curated repos (from {original_count} total)")
+        warn_about_unmatched(curated_list, repos)
 
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
     search_index: Dict[str, str] = {}
