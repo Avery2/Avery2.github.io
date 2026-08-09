@@ -59,10 +59,15 @@ function computePresentation() {
     pane.expanded = pane.active || (hasPair && index === expandedDepth);
     pane.presentationMode = pane.expanded ? 'full' : 'compact';
     pane.groupEnd = null;
+    pane.canCondenseHistory = false;
     pane.width = pane.expanded ? 0 : compact;
   });
 
   if (!historyExpanded) condenseCompactRuns(compact);
+  if (historyExpanded) {
+    const compactPanes = panes.filter((pane) => !pane.expanded);
+    if (compactPanes.length > 3) compactPanes[Math.floor(compactPanes.length / 2)].canCondenseHistory = true;
+  }
   const compactWidth = panes.reduce((sum, pane) => sum + (pane.expanded ? 0 : pane.width), 0);
   const minimumReader = mobile ? Math.max(280, viewport - compact) : 440;
   const availableForReaders = viewport - compactWidth;
@@ -105,9 +110,6 @@ function render({ focus = false, announce = true } = {}) {
   const trackEl = app.querySelector('.stack-track');
   trackEl.style.width = `${trackWidth}px`;
   trackEl.innerHTML = panes.map(paneHTML).join('');
-  if (historyExpanded && panes.filter((pane) => !pane.expanded).length > 3) {
-    trackEl.insertAdjacentHTML('beforeend', '<button class="history-density-toggle" type="button" data-collapse-history>Condense history</button>');
-  }
   bindInteractions();
   const active = panes.at(-1);
   viewportEl.scrollLeft = Math.max(0, active.offset + active.width - viewportEl.clientWidth);
@@ -130,9 +132,13 @@ function paneHTML(pane) {
     : `<div class="pane-label"><span class="history-depth">${String(pane.depth + 1).padStart(2, '0')}</span><strong>${note.title}</strong></div>`;
   const content = pane.expanded ? paneContent : `<div class="pane-inactive-content" aria-hidden="true">${paneContent}</div>`;
   const returnControl = pane.expanded ? '' : `<button class="pane-return" data-depth="${pane.depth}" aria-label="Open ${note.title} beside the current note, step ${pane.depth + 1} of ${panes.length}"></button>`;
-  const collapseControl = pane.expanded && !pane.active ? `<button class="pane-collapse-reader" data-collapse-reader aria-label="Collapse ${note.title}"><span aria-hidden="true">‹</span></button>` : '';
-  const closeControl = pane.depth > 0 ? `<button class="pane-close${pane.expanded ? ' pane-close--expanded' : ' pane-close--compact'}" data-close-depth="${pane.depth}" aria-label="Close ${note.title} and all later notes"><span aria-hidden="true">×</span></button>` : '';
-  return `<section class="stack-pane stack-pane--${pane.presentationMode}${activeClass}${pane.expanded ? ' stack-pane--expanded' : ''}" data-pane-depth="${pane.depth}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-width:${pane.width}px;--pane-z:${pane.depth + 1}" ${pane.active ? 'aria-current="page"' : ''}>${collapseControl}${closeControl}${content}${returnControl}</section>`;
+  const closeControl = pane.depth > 0
+    ? pane.expanded && !pane.active
+      ? `<button class="pane-close pane-close--expanded" data-collapse-reader aria-label="Collapse ${note.title}"><span aria-hidden="true">×</span></button>`
+      : `<button class="pane-close${pane.expanded ? ' pane-close--expanded' : ' pane-close--compact'}" data-close-depth="${pane.depth}" aria-label="Close ${note.title} and all later notes"><span aria-hidden="true">×</span></button>`
+    : '';
+  const condenseControl = pane.canCondenseHistory ? `<button class="pane-condense-history" data-collapse-history aria-label="Condense history"><span aria-hidden="true">›‹</span></button>` : '';
+  return `<section class="stack-pane stack-pane--${pane.presentationMode}${activeClass}${pane.expanded ? ' stack-pane--expanded' : ''}" data-pane-depth="${pane.depth}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-width:${pane.width}px;--pane-z:${pane.depth + 1}" ${pane.active ? 'aria-current="page"' : ''}>${closeControl}${condenseControl}${content}${returnControl}</section>`;
 }
 
 function articleHTML(note) {
