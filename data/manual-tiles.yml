@@ -27,9 +27,9 @@ tiles:
 
   - id: "linked-notes-demo"
     type: "link"
-    title: "Seeing and navigating information"
-    description: "An interactive linked-notes experiment about color, maps, reading, attention, and the web. The ideas are real; the small corpus is demo writing built to test a spatial way of reading. → Explore the notes"
-    url: "./writing/notes/seeing-information.html"
+    title: "Notes, linked and spatial"
+    description: "How I want writing on this site to grow: small connected notes, read as a spatial path rather than a feed or graph diagram. Includes a clearly labeled AI-generated corpus for testing the interaction. → Read the note"
+    url: "./writing/notes/notes.html"
     open_new_tab: false
     priority: 140
     tags: ["writing", "design", "prototype"]

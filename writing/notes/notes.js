@@ -1,5 +1,5 @@
 import { initTheme } from '../../js/theme.js';
-import { noteBySlug } from './corpus.mjs';
+import { noteBySlug } from './corpus.generated.mjs';
 
 const app = document.querySelector('#notes-app');
 const initialSlug = app?.dataset.initialNote;
@@ -106,10 +106,11 @@ function paneHTML(pane) {
 
 function articleHTML(note) {
   const status = note.status === 'published' ? '' : `<span class="note-status note-status--${note.status}">${note.status}</span>`;
+  const warning = note.ai_generated ? `<aside class="generated-note-notice" role="note"><strong>AI-generated example</strong><span>This is substantive prototype content written to test the linked-reading interface, not Avery’s published writing.</span></aside>` : '';
   const body = note.unavailable
     ? `<div class="unavailable-note"><p>This concept exists in the public graph, but its writing is not public.</p><p>No private note content is included in this site.</p></div>`
     : linkify(note.body);
-  return `<article class="note-article" data-note="${note.slug}"><header class="note-header"><div class="note-kicker">Note ${status}</div><h1 tabindex="-1">${note.title}</h1><p class="note-summary">${note.summary}</p></header><div class="note-body">${body}</div></article>`;
+  return `<article class="note-article" data-note="${note.slug}"><header class="note-header"><div class="note-kicker">${note.root_note ? 'About these notes' : 'Note'} ${status}</div><h1 tabindex="-1">${note.title}</h1><p class="note-summary">${note.summary}</p>${warning}</header><div class="note-body">${body}</div></article>`;
 }
 
 function linkify(body = '') {

@@ -51,10 +51,10 @@ See `harm-reduction.md` and `harm-reduction.html` for a working example.
 
 The concept-note system lives in `writing/notes/`:
 
-- `corpus.mjs` is the editable public content model. Links use `[[slug|label]]` syntax.
-- `generate-pages.mjs` creates real HTML routes so every note works without the enhanced interface.
+- `notes/content/*.md` are the editable sources. YAML frontmatter holds status and provenance; links use `[[slug|label]]` syntax.
+- `generate-pages.mjs` creates `corpus.generated.mjs` and real HTML routes so every note works without the enhanced interface.
 - `notes.js` progressively enhances those routes into a spatial reading stack.
-- Private concepts include public title/status metadata only. Do not add private prose to `corpus.mjs`.
+- Private concepts include public title/status metadata only. Do not put private prose in this public repository.
 
 After changing the corpus, run:
 
