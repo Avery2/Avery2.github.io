@@ -9,6 +9,7 @@ import { loadData, mergeData } from './data-loader.js';
 import { renderAllTiles, calculateMasonryLayout } from './tile-renderer.js';
 import { initFilterSystem } from './filter-system.js';
 import { initKeyboardNav } from './keyboard-nav.js';
+import { initCircularScroll } from './circular-scroll.js';
 
 /**
  * Initialize the application
@@ -58,6 +59,7 @@ async function init() {
     setupScrollAnimations();
     setupResponsiveRerender(allTiles, gridContainer);
     initKeyboardNav();
+    initCircularScroll();
 
     console.log('✅ Site initialized successfully!');
 

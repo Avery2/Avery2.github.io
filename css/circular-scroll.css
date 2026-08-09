@@ -1,0 +1,6 @@
+/* The cloned grid is purely a visual loop device — inert already excludes
+   it from interaction/accessibility, this just ensures it never affects
+   layout in ways that would look different from the real grid above it. */
+#circular-scroll-clone {
+  pointer-events: none;
+}
