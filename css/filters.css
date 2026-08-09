@@ -150,7 +150,7 @@
 }
 
 .content-type-pill {
-  --section-filter-ink: var(--text-primary);
+  --section-filter-ink: var(--accent-primary);
   position: relative;
   background: transparent;
   color: var(--text-secondary);

@@ -28,6 +28,7 @@ let readmeWordsByTileId = new Map();
 export function initFilterSystem(tilesData, config) {
   allTiles = tilesData;
   filterConfig = config;
+  restoreSectionFromURL();
 
   // Tokenized once at startup: READMEs are long enough that re-splitting
   // them on every keystroke would be wasteful, and deduping shrinks each
@@ -48,6 +49,34 @@ export function initFilterSystem(tilesData, config) {
 
   renderFilterUI();
   setupFilterEventListeners();
+  if (activeFilters.content_type) applyFilters();
+}
+
+function sectionOptions() {
+  return filterConfig?.filters?.find(filter => filter.id === 'content_type')?.options || [];
+}
+
+function restoreSectionFromURL() {
+  const requested = new URL(window.location.href).searchParams.get('section') || '';
+  const validSections = new Set(sectionOptions().map(option => option.value));
+  activeFilters.content_type = validSections.has(requested) ? requested : '';
+}
+
+function writeSectionToURL(section) {
+  const url = new URL(window.location.href);
+  if (section) url.searchParams.set('section', section);
+  else url.searchParams.delete('section');
+  history.pushState({ ...history.state, portfolioSection: section }, '', url);
+}
+
+function updateSectionNav(section) {
+  document.querySelectorAll('.content-type-pill').forEach(option => {
+    const active = option.dataset.value === section;
+    option.classList.toggle('active', active);
+    option.setAttribute('aria-pressed', String(active));
+    if (active) option.setAttribute('aria-current', 'page');
+    else option.removeAttribute('aria-current');
+  });
 }
 
 /**
@@ -134,15 +163,15 @@ function renderFilterUI() {
 
 function renderContentTypeFilter(filter) {
   return `
-    <div class="filter-content-types" data-filter-id="${filter.id}">
+    <nav class="filter-content-types site-section-nav" data-filter-id="${filter.id}" aria-label="Portfolio sections">
       <div class="filter-options" role="group" aria-label="Portfolio section">
         ${filter.options.map(opt => `
-          <button class="content-type-pill" data-value="${opt.value}" aria-pressed="false">
+          <button class="content-type-pill${opt.value === activeFilters.content_type ? ' active' : ''}" data-value="${opt.value}" aria-pressed="${opt.value === activeFilters.content_type}"${opt.value === activeFilters.content_type ? ' aria-current="page"' : ''}>
             ${opt.label}
           </button>
         `).join('')}
       </div>
-    </div>
+    </nav>
   `;
 }
 
@@ -306,13 +335,16 @@ function setupFilterEventListeners() {
       event.preventDefault();
       const nextValue = activeFilters.content_type === pill.dataset.value ? '' : pill.dataset.value;
       activeFilters.content_type = nextValue;
-      document.querySelectorAll('.content-type-pill').forEach(option => {
-        const active = option.dataset.value === nextValue;
-        option.classList.toggle('active', active);
-        option.setAttribute('aria-pressed', String(active));
-      });
+      updateSectionNav(nextValue);
+      writeSectionToURL(nextValue);
       applyFilters();
     });
+  });
+
+  window.addEventListener('popstate', () => {
+    restoreSectionFromURL();
+    updateSectionNav(activeFilters.content_type);
+    applyFilters();
   });
 
   // Multi-select pill toggles

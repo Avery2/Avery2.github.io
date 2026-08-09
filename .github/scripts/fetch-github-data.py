@@ -414,7 +414,7 @@ PROJECT_PAGE_TEMPLATE = Template('''<!DOCTYPE html>
       document.documentElement.dataset.theme = override || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     } catch (_) {}
   </script>
-  <style>html { background: #f4f1eb; } html[data-theme="dark"] { background: #111214; }</style>
+  <style>html { background: #f7f1e3; } html[data-theme="dark"] { background: #151310; }</style>
   <link rel="icon" href="../assets/images/profile/face.jpg" type="image/jpeg">
   <link rel="stylesheet" href="/writing/assets/portfolio-foundation.css">
   <link rel="stylesheet" href="/writing/notes/notes.css">
@@ -427,7 +427,13 @@ PROJECT_PAGE_TEMPLATE = Template('''<!DOCTYPE html>
 <body class="notes-page">
   <header class="notes-site-header">
     <a href="/" class="notes-brand">Avery</a>
-    <a href="/projects/index.html" class="notes-home">Projects</a>
+    <nav class="site-section-nav" aria-label="Portfolio sections">
+      <a href="/" data-section="home">Home</a>
+      <a href="/writing/notes/writing.html?path=writing&amp;open=last&amp;from=portfolio" data-section="writing">Writing</a>
+      <a href="/writing/resume.html?path=resume&amp;open=last&amp;from=portfolio" data-section="experience">Experience</a>
+      <a href="/writing/notes/find-me.html?path=find-me&amp;open=last&amp;from=portfolio" data-section="links">Links</a>
+      <a href="/projects/index.html" data-section="projects" aria-current="page">Projects</a>
+    </nav>
     <button id="theme-toggle" class="notes-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
   </header>
   <main id="notes-app" class="notes-app" data-initial-note="$slug" data-corpus="/data/projects.generated.mjs">

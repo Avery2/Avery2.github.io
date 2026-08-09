@@ -7,6 +7,8 @@ filters:
     type: "single-select"
     enabled: true
     options:
+      - value: ""
+        label: "Home"
       - value: "writing"
         label: "Writing"
       - value: "experience"
