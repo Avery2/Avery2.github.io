@@ -1,6 +1,6 @@
 /* Rubber-band "pull to top" footer affordance
-   Overscrolling past the bottom crossfades the footer message into a
-   "Back to top" button with a ring that fills as you keep pulling. */
+   Overscrolling past the bottom grows a "Back to top" button in below the
+   permanent footer message, with a ring that fills as you keep pulling. */
 
 .site-footer {
   position: relative;
@@ -29,35 +29,35 @@
 .footer-pull {
   position: relative;
   z-index: 1;
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 2.25rem;
   --pull-progress: 0;
 }
 
-.footer-message {
+.footer-message-default {
   margin: 0;
 }
 
-.footer-message-default {
-  opacity: calc(1 - var(--pull-progress));
-}
-
+/* Grows in below the permanent message as you pull — real layout space,
+   not a crossfade — so it reads as something opening up underneath rather
+   than replacing what's there. */
 .footer-back-to-top {
-  position: absolute;
-  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  margin: 0;
+  margin-top: calc(1.1rem * var(--pull-progress));
+  max-height: calc(3.5rem * var(--pull-progress));
+  opacity: var(--pull-progress);
+  overflow: hidden;
   background: none;
   border: none;
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-secondary);
-  opacity: var(--pull-progress);
   pointer-events: none;
 }
 
@@ -88,19 +88,26 @@
   stroke-dashoffset: calc(106.8 * (1 - var(--pull-progress)));
 }
 
-.footer-pull.armed .footer-pull-ring-progress {
-  filter: drop-shadow(0 0 4px var(--accent-primary));
-}
-
 .footer-pull.armed .footer-back-to-top span {
   color: var(--accent-primary);
+}
+
+/* A quick confirming pop right as it arms and fires — since the trigger is
+   now instant (no waiting around), this is the "yep, got it" cue */
+.footer-pull.armed .footer-pull-ring {
+  animation: footer-pull-armed-pop 0.4s ease;
+}
+
+@keyframes footer-pull-armed-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.3); filter: drop-shadow(0 0 6px var(--accent-primary)); }
+  100% { transform: scale(1); }
 }
 
 /* Spring-back to default state animates smoothly; while actively pulling,
    updates are instant so it tracks the gesture 1:1 */
 .footer-pull-resetting,
-.footer-pull-resetting .footer-message-default,
 .footer-pull-resetting .footer-back-to-top,
 .footer-pull-resetting .footer-pull-ring-progress {
-  transition: opacity 0.32s ease, stroke-dashoffset 0.32s ease;
+  transition: opacity 0.32s ease, max-height 0.32s ease, margin-top 0.32s ease, stroke-dashoffset 0.32s ease;
 }
