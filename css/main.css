@@ -15,12 +15,22 @@
 /* Keep the asynchronous shell visually stable until header data and tiles exist. */
 html[data-app-ready="false"] .header-right,
 html[data-app-ready="false"] .site-footer {
-  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 html[data-app-ready="false"] .grid-container .loading-spinner {
   min-height: calc(100dvh - 110px);
 }
+
+.header-right,
+.site-footer,
+.grid-container {
+  transition: opacity 180ms ease-out, transform 180ms ease-out;
+}
+
+html[data-app-ready="false"] .header-right { transform: translateY(-3px); }
+html[data-app-ready="false"] .grid-container { opacity: 0; transform: translateY(4px); }
 
 /* Smooth scrolling for anchor links */
 html {

@@ -2,7 +2,7 @@
 
 :root {
   /* Light theme (default) */
-  --bg-primary: #ffffff;
+  --bg-primary: #fbfaf7;
   --bg-secondary: #f8f9fa;
   --bg-tertiary: #e9ecef;
 
@@ -18,7 +18,7 @@
   --tile-bg: #ffffff;
   --tile-hover-bg: #f8f9fa;
 
-  --header-bg: rgba(255, 255, 255, 0.95);
+  --header-bg: rgba(251, 250, 247, 0.95);
   --footer-bg: #f8f9fa;
 
   /* Grid configuration */

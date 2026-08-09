@@ -405,6 +405,13 @@ PROJECT_PAGE_TEMPLATE = Template('''<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>$title - Avery</title>
   <meta name="description" content="$description">
+  <script>
+    try {
+      const override = sessionStorage.getItem('site-theme-override');
+      document.documentElement.dataset.theme = override || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    } catch (_) {}
+  </script>
+  <style>html {{ background: #fbfaf7; }} html[data-theme="dark"] {{ background: #1a1a1a; }}</style>
   <link rel="icon" href="../assets/images/profile/face.jpg" type="image/jpeg">
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/project-detail.css">
