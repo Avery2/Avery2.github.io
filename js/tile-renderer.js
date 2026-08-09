@@ -216,8 +216,11 @@ function clearExplicitPlacement(tiles) {
     tile.style.gridColumnEnd = '';
     tile.style.gridRowStart = '';
     delete tile.dataset.layoutGroup;
+    delete tile.dataset.groupBoundaryTop;
+    delete tile.dataset.groupBoundaryRight;
+    delete tile.dataset.groupBoundaryBottom;
+    delete tile.dataset.groupBoundaryLeft;
   });
-  document.querySelectorAll('.semantic-region-layer').forEach(layer => layer.remove());
   document.documentElement.removeAttribute('data-grouped-layout');
 }
 
@@ -312,93 +315,46 @@ function applyGroupedLayout(container, measurements) {
     tile.style.gridRowStart = String(row);
     tile.style.gridRowEnd = `span ${height}`;
   });
+  markGroupBoundaries(placements);
   document.documentElement.dataset.groupedLayout = layoutMode();
   installLayoutDebugControls();
-  renderSemanticRegions(container);
 }
 
-const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
-
-function svgElement(name, attributes = {}) {
-  const element = document.createElementNS(SVG_NAMESPACE, name);
-  Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, String(value)));
-  return element;
+function rangesOverlap(startA, endA, startB, endB) {
+  return Math.min(endA, endB) > Math.max(startA, startB);
 }
 
-function renderSemanticRegions(container) {
-  const params = new URLSearchParams(window.location.search);
-  container.querySelector('.semantic-region-layer')?.remove();
-  if (params.get('layoutDebug') !== '1') return;
+function markGroupBoundaries(placements) {
+  placements.forEach(rect => {
+    rect.tile.dataset.groupBoundaryTop = 'false';
+    rect.tile.dataset.groupBoundaryRight = 'false';
+    rect.tile.dataset.groupBoundaryBottom = 'false';
+    rect.tile.dataset.groupBoundaryLeft = 'false';
+  });
 
-  cancelAnimationFrame(container._semanticRegionFrame);
-  container._semanticRegionFrame = requestAnimationFrame(() => {
-    const containerRect = container.getBoundingClientRect();
-    const width = container.clientWidth;
-    const height = container.scrollHeight;
-    const groups = new Map();
+  placements.forEach((a, index) => {
+    placements.slice(index + 1).forEach(b => {
+      if (a.tile.dataset.layoutGroup === b.tile.dataset.layoutGroup) return;
 
-    container.querySelectorAll('.tile[data-layout-group]').forEach(tile => {
-      const group = tile.dataset.layoutGroup;
-      if (!groups.has(group)) groups.set(group, []);
-      const rect = tile.getBoundingClientRect();
-      groups.get(group).push({
-        x: rect.left - containerRect.left,
-        y: rect.top - containerRect.top,
-        width: rect.width,
-        height: rect.height
-      });
+      const verticalOverlap = rangesOverlap(a.row, a.row + a.height, b.row, b.row + b.height);
+      const horizontalOverlap = rangesOverlap(a.col, a.col + a.span, b.col, b.col + b.span);
+
+      if (verticalOverlap && a.col + a.span === b.col) {
+        a.tile.dataset.groupBoundaryRight = 'true';
+        b.tile.dataset.groupBoundaryLeft = 'true';
+      } else if (verticalOverlap && b.col + b.span === a.col) {
+        b.tile.dataset.groupBoundaryRight = 'true';
+        a.tile.dataset.groupBoundaryLeft = 'true';
+      }
+
+      if (horizontalOverlap && a.row + a.height === b.row) {
+        a.tile.dataset.groupBoundaryBottom = 'true';
+        b.tile.dataset.groupBoundaryTop = 'true';
+      } else if (horizontalOverlap && b.row + b.height === a.row) {
+        b.tile.dataset.groupBoundaryBottom = 'true';
+        a.tile.dataset.groupBoundaryTop = 'true';
+      }
     });
-
-    const svg = svgElement('svg', {
-      class: 'semantic-region-layer',
-      width,
-      height,
-      viewBox: `0 0 ${width} ${height}`,
-      'aria-hidden': 'true'
-    });
-    const definitions = svgElement('defs');
-    svg.appendChild(definitions);
-
-    [...groups.entries()].forEach(([group, rects], index) => {
-      const drawUnion = (spread, kind) => {
-        const maskId = `semantic-region-${kind}-${index}`;
-        const mask = svgElement('mask', {
-          id: maskId,
-          maskUnits: 'userSpaceOnUse',
-          x: -24,
-          y: -24,
-          width: width + 48,
-          height: height + 48
-        });
-        rects.forEach(rect => {
-          mask.appendChild(svgElement('rect', {
-            x: rect.x - spread,
-            y: rect.y - spread,
-            width: rect.width + spread * 2,
-            height: rect.height + spread * 2,
-            rx: 8 + spread,
-            fill: 'white'
-          }));
-        });
-        definitions.appendChild(mask);
-        svg.appendChild(svgElement('rect', {
-          class: `semantic-region semantic-region-${kind}`,
-          'data-layout-group': group,
-          x: -24,
-          y: -24,
-          width: width + 48,
-          height: height + 48,
-          mask: `url(#${maskId})`
-        }));
-      };
-
-      // A paper-colored outer union makes a small channel only where distinct
-      // semantic regions collide; the inner union remains seamless.
-      drawUnion(19, 'separator');
-      drawUnion(14, 'fill');
-    });
-
-    container.prepend(svg);
   });
 }
 

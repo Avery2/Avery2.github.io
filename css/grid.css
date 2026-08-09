@@ -148,41 +148,44 @@ html[data-layout-debug="true"] .grid-container {
 html[data-layout-debug="true"] .tile[data-layout-group] {
   position: relative;
   z-index: 1;
+  --group-boundary-inset: 6px;
+  margin-top: var(--group-inset-top, 0);
+  margin-right: var(--group-inset-right, 0);
+  margin-bottom: var(--group-inset-bottom, 0);
+  margin-left: var(--group-inset-left, 0);
+  box-shadow: 0 0 0 9px var(--layout-region-fill);
 }
 
-.semantic-region-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: visible;
-  pointer-events: none;
+html[data-layout-debug="true"] .tile[data-group-boundary-top="true"] {
+  --group-inset-top: var(--group-boundary-inset);
+}
+html[data-layout-debug="true"] .tile[data-group-boundary-right="true"] {
+  --group-inset-right: var(--group-boundary-inset);
+}
+html[data-layout-debug="true"] .tile[data-group-boundary-bottom="true"] {
+  --group-inset-bottom: var(--group-boundary-inset);
+}
+html[data-layout-debug="true"] .tile[data-group-boundary-left="true"] {
+  --group-inset-left: var(--group-boundary-inset);
 }
 
-.semantic-region {
-  fill: var(--layout-region-fill);
-}
-
-.semantic-region[data-layout-group="intro"] {
+html[data-layout-debug="true"] .tile[data-layout-group="intro"] {
   --layout-region-fill: color-mix(in srgb, #ff7a1a 32%, var(--bg-primary));
 }
-.semantic-region[data-layout-group="writing"] {
+html[data-layout-debug="true"] .tile[data-layout-group="writing"] {
   --layout-region-fill: color-mix(in srgb, #b75cff 38%, var(--bg-primary));
 }
-.semantic-region[data-layout-group="experience"] {
+html[data-layout-debug="true"] .tile[data-layout-group="experience"] {
   --layout-region-fill: color-mix(in srgb, #28c7ad 36%, var(--bg-primary));
 }
-.semantic-region[data-layout-group="projects"] {
+html[data-layout-debug="true"] .tile[data-layout-group="projects"] {
   --layout-region-fill: color-mix(in srgb, #4d8cff 36%, var(--bg-primary));
 }
-.semantic-region[data-layout-group="links"] {
+html[data-layout-debug="true"] .tile[data-layout-group="links"] {
   --layout-region-fill: color-mix(in srgb, #f0b52f 36%, var(--bg-primary));
 }
-.semantic-region[data-layout-group="navigation"] {
+html[data-layout-debug="true"] .tile[data-layout-group="navigation"] {
   --layout-region-fill: color-mix(in srgb, #aaa 28%, var(--bg-primary));
-}
-
-.semantic-region.semantic-region-separator {
-  fill: var(--bg-primary);
 }
 
 @media (max-width: 900px) {
