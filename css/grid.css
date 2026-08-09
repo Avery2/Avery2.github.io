@@ -89,6 +89,23 @@
   }
 }
 
+/* Once a section is selected, its overview takes the lead position. The
+   dimmed profile becomes an ordinary masonry card instead of reserving a
+   two-column hole below the matches. */
+.profile-tile.tile-dimmed {
+  grid-column: span 1;
+  padding: 1.25rem;
+}
+
+.profile-tile.tile-dimmed .profile-tile-image {
+  width: 72px;
+  height: 72px;
+}
+
+.profile-tile.tile-dimmed .profile-tile-title {
+  font-size: 1.4rem;
+}
+
 /* Grid container states */
 .grid-container[data-loading="true"] .tile {
   display: none;

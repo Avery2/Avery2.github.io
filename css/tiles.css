@@ -248,8 +248,12 @@
 
 /* Section anchors organize the masonry without turning it into a rigid list. */
 .tile[data-section-header="true"] {
-  border-color: var(--accent-primary);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-primary) 16%, transparent);
+}
+
+.tile[data-section-header="true"] .tile-title {
+  color: var(--accent-primary);
 }
 
 /* Keep title text default color - don't color it */

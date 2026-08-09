@@ -34,8 +34,8 @@
   transition: all 0.3s ease;
 }
 
-/* When scrolled and collapsed - separate pills */
-.site-header.scrolled:not(.filters-expanded) .header-left,
+/* When scrolled and collapsed, keep only the utility controls in a pill.
+   Search and its section shortcuts already have their own interaction states. */
 .site-header.scrolled:not(.filters-expanded) .header-right {
   background-color: var(--header-bg);
   border: 1px solid var(--border-color);
@@ -43,16 +43,6 @@
   padding: 0.5rem 1rem;
   backdrop-filter: blur(10px);
   margin: 0 0.75rem;
-}
-
-/* When filters expanded - header-left and header-right get background */
-.site-header.filters-expanded .header-left {
-  background-color: var(--header-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
-  padding: 0.5rem 1rem;
-  backdrop-filter: blur(10px);
-  margin: 0 0.75rem 0 0;
 }
 
 .site-header.filters-expanded .header-right {
