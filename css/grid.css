@@ -352,23 +352,6 @@ html[data-grouped-layout] .profile-tile.section-spotlight .spotlight-content {
   gap: 0.8rem;
 }
 
-/* Group fields join adjacent cards into one visual section. Writing and Links
-   use the slightly stronger of the two neutral surfaces. */
-html[data-grouped-layout] :is(
-  .tile[data-layout-group="writing"],
-  .tile[data-layout-group="links"]
-):not([data-section-header="true"]):not(.section-spotlight) {
-  box-shadow: var(--card-shadow);
-}
-
-html[data-grouped-layout] :is(
-  .tile[data-layout-group="writing"],
-  .tile[data-layout-group="links"]
-):not([data-section-header="true"]):not(.section-spotlight).tile-visible:hover {
-  box-shadow: var(--card-shadow-hover);
-  transform: none;
-}
-
 .semantic-region-layer {
   position: absolute;
   inset: 0;
@@ -380,11 +363,7 @@ html[data-grouped-layout] :is(
   position: absolute;
   display: block;
   border-radius: 0;
-  background: var(--group-surface);
-}
-
-.semantic-region--emphasis {
-  background: var(--group-surface-emphasis);
+  background: var(--featured-group-surface);
 }
 
 html[data-grouped-layout] .tile-link:focus-visible {

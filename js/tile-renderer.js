@@ -58,8 +58,7 @@ export async function renderAllTiles(tiles, container) {
   // Mark container as loaded
   container.dataset.loading = 'false';
 
-  // Do not reveal generic card markup before its final grouped geometry and
-  // generated semantic fields exist.
+  // Do not reveal generic card markup before its final grouped geometry exists.
   await waitForImagesToLoad(container);
   calculateMasonryLayout(container);
   await new Promise(resolve => requestAnimationFrame(resolve));
@@ -151,8 +150,7 @@ const LAYOUT_PRESETS = {
   strong: { groupDistance: 8, compactness: 0.16, holes: 0.7, readingOrder: 0.25, beamWidth: 160, requireConnected: true }
 };
 const LAYOUT_DEFAULTS = { groupGap: 30 };
-const SURFACED_GROUPS = new Set(['intro', 'writing', 'experience', 'links', 'projects']);
-const EMPHASIZED_SURFACE_GROUPS = new Set(['writing', 'links']);
+const SURFACED_GROUPS = new Set(['writing', 'links']);
 
 window.addEventListener('site-theme-change', () => {
   const container = document.querySelector('.grid-container');
@@ -340,9 +338,6 @@ function renderSemanticRegions(container) {
     const rect = tile.getBoundingClientRect();
     const region = document.createElement('i');
     region.className = 'semantic-region';
-    if (EMPHASIZED_SURFACE_GROUPS.has(tile.dataset.layoutGroup)) {
-      region.classList.add('semantic-region--emphasis');
-    }
     Object.assign(region.style, {
       left: `${rect.left - containerRect.left - spread}px`,
       top: `${rect.top - containerRect.top - spread}px`,

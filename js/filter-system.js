@@ -694,8 +694,8 @@ function applyFiltersNow() {
   updateTagAffordances();
   updateSearchTriggerSummary();
 
-  // Keep the transition's new snapshot pending until both the masonry and its
-  // generated semantic fields have reached their new geometry.
+  // Keep the transition's new snapshot pending until the masonry has reached
+  // its new geometry.
   return new Promise(resolve => {
     requestAnimationFrame(() => {
       calculateMasonryLayout(gridContainer);

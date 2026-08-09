@@ -1,7 +1,7 @@
 /* Theme System - Light and Dark Mode */
 
 :root {
-  --brand-primary: #F25B22;
+  --brand-primary: #38618C;
   --site-shell-gutter: clamp(1.25rem, 4vw, 3rem);
   /* Light theme (default) */
   --bg-primary: #F4F1EA;
@@ -13,7 +13,7 @@
   --text-tertiary: #7B7770;
 
   --accent-primary: var(--brand-primary);
-  --accent-secondary: #5F6772;
+  --accent-secondary: #96C5F7;
 
   --border-color: #D8D4CB;
   --shadow-color: rgb(20 15 10 / 0.07);
@@ -25,10 +25,7 @@
   --tile-bg: #FFFEFB;
   --tile-hover-bg: #FFFFFF;
   --intro-card-bg: var(--brand-primary);
-  /* Neutral section fields: Writing/Links are emphasized without introducing
-     another hue, while Experience/Projects sit on a quieter version. */
-  --group-surface: color-mix(in oklab, var(--text-primary) 3%, var(--bg-primary));
-  --group-surface-emphasis: color-mix(in oklab, var(--text-primary) 6%, var(--bg-primary));
+  --featured-group-surface: var(--accent-secondary);
 
   --header-bg: rgba(244, 241, 234, 0.95);
   --footer-bg: #EBE7DF;
@@ -54,7 +51,7 @@
   --text-tertiary: #918D87;
 
   --accent-primary: var(--brand-primary);
-  --accent-secondary: #7596EF;
+  --accent-secondary: #96C5F7;
 
   --border-color: #303238;
   --shadow-color: rgb(0 0 0 / 0.25);
@@ -64,8 +61,7 @@
   --tile-bg: #191B1E;
   --tile-hover-bg: #1E2024;
   --intro-card-bg: var(--brand-primary);
-  --group-surface: color-mix(in oklab, var(--text-primary) 5%, var(--bg-primary));
-  --group-surface-emphasis: color-mix(in oklab, var(--text-primary) 10%, var(--bg-primary));
+  --featured-group-surface: var(--accent-secondary);
 
   --header-bg: rgba(17, 18, 20, 0.95);
   --footer-bg: #17191C;
