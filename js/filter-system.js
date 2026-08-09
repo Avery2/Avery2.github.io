@@ -525,7 +525,7 @@ function evaluateTile(tileData) {
   }
 
   if (activeFilters.content_type && !tileData.contentTypes.includes(activeFilters.content_type)) {
-    return { isMatch: false, score: 0 };
+    return { isMatch: false, score: 0, hide: true };
   }
 
   // Tags filter (includes language, topics, and tags) — a categorical
@@ -656,8 +656,19 @@ function updateTagAffordances() {
  * dimmed and sink to the bottom but stay visible in the grid flow.
  */
 function applyFilters() {
+  return applyFiltersNow();
+}
+
+function applyFiltersNow() {
   const gridContainer = document.querySelector('.grid-container');
   updateProfileSpotlight(gridContainer);
+
+  const hasQueryFilter = Boolean(activeFilters.search || activeFilters.tags?.length);
+  const filterGroup = activeFilters.content_type || (hasQueryFilter ? 'selection' : '');
+  if (filterGroup) gridContainer.dataset.filterGroup = filterGroup;
+  else delete gridContainer.dataset.filterGroup;
+  if (activeFilters.search) gridContainer.dataset.searchActive = 'true';
+  else delete gridContainer.dataset.searchActive;
 
   const tileElements = Array.from(gridContainer.querySelectorAll('.tile'));
 
@@ -683,10 +694,14 @@ function applyFilters() {
   updateTagAffordances();
   updateSearchTriggerSummary();
 
-  // Recalculate masonry layout after reordering (dimmed tiles stay in flow)
-  setTimeout(() => {
-    calculateMasonryLayout(gridContainer);
-  }, 50);
+  // Keep the transition's new snapshot pending until both the masonry and its
+  // generated semantic fields have reached their new geometry.
+  return new Promise(resolve => {
+    requestAnimationFrame(() => {
+      calculateMasonryLayout(gridContainer);
+      requestAnimationFrame(resolve);
+    });
+  });
 }
 
 function updateProfileSpotlight(gridContainer) {

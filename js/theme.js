@@ -43,8 +43,10 @@ function resolvedTheme() {
  * Apply the resolved theme to the document
  */
 function applyTheme() {
-  document.documentElement.dataset.theme = resolvedTheme();
+  const theme = resolvedTheme();
+  document.documentElement.dataset.theme = theme;
   updateToggleButton();
+  window.dispatchEvent(new CustomEvent('site-theme-change', { detail: { theme } }));
 }
 
 /**

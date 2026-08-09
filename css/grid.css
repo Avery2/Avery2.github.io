@@ -30,6 +30,12 @@
   grid-column: span 2;
 }
 
+/* Selecting a section reuses the profile element as its heading, but that
+   heading remains an ordinary masonry card rather than a wide hero. */
+.profile-tile.section-spotlight {
+  grid-column: span 1;
+}
+
 /* Responsive column count */
 @media (min-width: 1800px) {
   .grid-container {
@@ -187,46 +193,9 @@
   grid-template-columns: 1fr auto;
 }
 
-.layout-debug-tuners .layout-debug-check {
-  grid-template-columns: auto 1fr;
-  align-items: start;
-}
-
-.layout-debug-tuners .layout-debug-check > span {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
 .layout-debug-tuners input {
   width: 100%;
   accent-color: var(--accent-primary);
-}
-
-.layout-debug-number-wrap {
-  display: inline-flex;
-  grid-template-columns: none;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.layout-debug-tuners .layout-debug-number {
-  width: 5.25rem;
-  padding: 0.25rem 0.35rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  background: var(--tile-bg);
-  color: var(--text-primary);
-  font: inherit;
-  text-align: right;
-}
-
-.layout-debug-tuners select {
-  width: 100%;
-  padding: 0.35rem 0.45rem;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  background: var(--tile-bg);
-  color: var(--text-primary);
 }
 
 .layout-debug-tuners small {
@@ -239,10 +208,6 @@
   border-radius: 6px;
   background: var(--bg-secondary);
   line-height: 1.5;
-}
-
-.debug-red-label {
-  color: #ff1744;
 }
 
 .layout-debug-actions {
@@ -264,36 +229,57 @@
 html[data-grouped-layout] .grid-container {
   position: relative;
   isolation: isolate;
-  margin-top: var(--debug-group-halo, 9px);
-  margin-bottom: var(--debug-group-halo, 9px);
+  margin-top: var(--group-region-spread, 9px);
+  margin-bottom: var(--group-region-spread, 9px);
 }
 
 html[data-grouped-layout] .tile[data-layout-group] {
   position: relative;
   z-index: 1;
   width: auto;
-  margin-top: var(--group-padding-top, 0);
-  margin-right: var(--group-padding-right, 0);
-  margin-bottom: var(--group-padding-bottom, 0);
-  margin-left: var(--group-padding-left, 0);
-  border: 0 !important;
-  box-shadow: 2px 3px 0 color-mix(in srgb, var(--text-primary) 14%, transparent);
+  border: 1px solid var(--border-color) !important;
+  box-shadow:
+    1px 2px 0 color-mix(in srgb, var(--text-primary) 9%, transparent),
+    var(--card-shadow);
 }
 
 html[data-grouped-layout] .tile[data-layout-group].tile-visible:hover {
-  box-shadow: 4px 6px 0 color-mix(in srgb, var(--text-primary) 17%, transparent);
+  box-shadow:
+    2px 3px 0 color-mix(in srgb, var(--text-primary) 11%, transparent),
+    var(--card-shadow-hover);
   transform: translateY(-2px);
+}
+
+/* Ordinary cards borrow a quieter version of the section-label language:
+   neutral paper and structure, with one small stroke of their region ink. */
+html[data-grouped-layout] .tile[data-layout-group]:not([data-section-header="true"]):not(.profile-tile):not(#tile-back-to-top) .tile-title::after {
+  content: '';
+  display: block;
+  width: 2.1rem;
+  height: 3px;
+  margin-top: 0.45rem;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--layout-region-ink) 68%, var(--border-color));
+  transform-origin: left center;
+  transition: width 160ms ease, background-color 160ms ease;
+}
+
+html[data-grouped-layout] .tile[data-layout-group]:not([data-section-header="true"]):not(.profile-tile):not(#tile-back-to-top):hover .tile-title::after {
+  width: 2.8rem;
+  background: var(--layout-region-ink);
 }
 
 /* Section anchors become labels sitting directly on their semantic paper
    field. The title swatch repeats the group's color as an ink-like edge. */
 html[data-grouped-layout] .tile[data-section-header="true"] {
   overflow: visible;
+  border-color: transparent !important;
   background: transparent;
   box-shadow: none;
 }
 
-html[data-grouped-layout] .tile[data-section-header="true"]:hover {
+html[data-grouped-layout] .tile[data-section-header="true"].tile-visible:hover {
+  border-color: transparent !important;
   background: transparent;
   box-shadow: none;
   transform: none;
@@ -308,11 +294,12 @@ html[data-grouped-layout] .tile[data-section-header="true"] .tile-title {
   display: inline-block;
   margin: 0;
   padding: 0.4rem 0.7rem 0.45rem;
-  border-bottom: 4px solid var(--layout-region-edge);
-  border-radius: 3px 3px 1px 1px;
+  border: 1px solid var(--border-color);
+  border-bottom: 4px solid var(--layout-region-ink);
+  border-radius: 5px 5px 2px 2px;
   background: var(--tile-bg);
-  color: var(--text-primary);
-  box-shadow: 3px 3px 0 color-mix(in srgb, var(--layout-region-edge) 75%, transparent);
+  color: var(--layout-region-ink);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--layout-region-ink) 72%, transparent);
   font-size: clamp(1.45rem, 1.15rem + 0.8vw, 2rem);
   line-height: 1.05;
 }
@@ -320,16 +307,48 @@ html[data-grouped-layout] .tile[data-section-header="true"] .tile-title {
 html[data-grouped-layout] .tile[data-section-header="true"] .tile-description {
   display: inline-block;
   margin: 0;
-  padding: 0.35rem 0.55rem;
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--tile-bg) 88%, transparent);
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
   color: var(--text-primary);
 }
 
-html[data-grouped-layout] .profile-tile[data-featured="true"],
-html[data-grouped-layout] .profile-tile.section-spotlight {
-  border: 0 !important;
-  box-shadow: 2px 3px 0 color-mix(in srgb, var(--text-primary) 14%, transparent);
+html[data-grouped-layout] .profile-tile[data-layout-group="intro"],
+html[data-grouped-layout] .profile-tile[data-layout-group="intro"].tile-visible:hover {
+  border-color: transparent !important;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+html[data-grouped-layout] .profile-tile.section-spotlight,
+html[data-grouped-layout] .profile-tile.section-spotlight.tile-visible:hover {
+  border-color: transparent !important;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+html[data-grouped-layout] .profile-tile.section-spotlight .profile-tile-title {
+  display: inline-block;
+  width: fit-content;
+  margin: 0;
+  padding: 0.4rem 0.7rem 0.45rem;
+  border: 1px solid var(--border-color);
+  border-bottom: 4px solid var(--layout-region-ink);
+  border-radius: 5px 5px 2px 2px;
+  background: var(--tile-bg);
+  color: var(--layout-region-ink);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--layout-region-ink) 72%, transparent);
+  font-size: clamp(1.45rem, 1.15rem + 0.8vw, 2rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+html[data-grouped-layout] .profile-tile.section-spotlight .spotlight-content {
+  display: grid;
+  justify-items: start;
+  gap: 0.8rem;
 }
 
 html[data-grouped-layout] .tile-link:focus-visible {
@@ -337,132 +356,60 @@ html[data-grouped-layout] .tile-link:focus-visible {
   outline-offset: -4px;
 }
 
-html[data-grouped-layout] .tile[data-group-boundary-top="true"] {
-  --group-padding-top: calc(var(--debug-divider-y, 1px) / 2);
-}
-html[data-grouped-layout] .tile[data-group-boundary-right="true"] {
-  --group-padding-right: calc(var(--debug-divider-x, 1px) / 2);
-}
-html[data-grouped-layout] .tile[data-group-boundary-bottom="true"] {
-  --group-padding-bottom: calc(var(--debug-divider-y, 1px) / 2);
-}
-html[data-grouped-layout] .tile[data-group-boundary-left="true"] {
-  --group-padding-left: calc(var(--debug-divider-x, 1px) / 2);
-}
-
-.group-halo-underlay-layer,
-.group-halo-corner-fill-layer {
+.group-halo-underlay-layer {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
 }
 
-.group-halo-underlay-layer,
-html[data-grouped-layout][data-halo-radius-mode="smart"] .group-halo-corner-fill-layer {
-  filter: blur(var(--debug-blob-blur, 1.5px));
-}
-
-.group-halo-underlay,
-.group-halo-corner-fill {
-  position: absolute;
-  display: block;
-}
-
 .group-halo-underlay {
-  overflow: hidden;
-}
-
-.group-halo-underlay::after,
-.group-halo-corner-fill::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
-  mix-blend-mode: soft-light;
-  opacity: var(--debug-group-grain, 0.12);
-  pointer-events: none;
-}
-
-.group-halo-corner-fill {
-  visibility: hidden;
-}
-
-html[data-grouped-layout][data-halo-radius-mode="smart"] .group-halo-corner-fill {
-  visibility: visible;
-}
-
-.group-edge-debug-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  pointer-events: none;
-}
-
-.group-edge-debug-segment {
   position: absolute;
   display: block;
-  border-radius: var(--debug-cutout-radius, 0);
-  background: var(--bg-primary);
-  filter: blur(var(--debug-channel-blur, 0.5px));
-}
-
-.group-edge-debug-segment-internal {
-  display: none;
-  z-index: 3;
-  min-width: 2px;
-  min-height: 2px;
-  background: #00e5ff;
-  box-shadow: 0 0 5px rgba(0, 229, 255, 0.75);
-  filter: none;
-}
-
-.group-edge-debug-layer[data-show-joins="true"] .group-edge-debug-segment-internal {
-  display: block;
-}
-
-.group-edge-debug-segment-horizontal:not(.group-edge-debug-segment-internal) {
-  min-height: calc(var(--debug-perimeter-cutout, 5px) * 2);
-  transform: translateY(-50%);
-}
-
-.group-edge-debug-segment-vertical:not(.group-edge-debug-segment-internal) {
-  min-width: calc(var(--debug-perimeter-cutout, 5px) * 2);
-  transform: translateX(-50%);
-}
-
-.group-edge-debug-layer[data-show-lines="true"] .group-edge-debug-segment-horizontal:not(.group-edge-debug-segment-internal) {
-  background: linear-gradient(to bottom, var(--bg-primary) calc(50% - 1px), #ff1744 calc(50% - 1px), #ff1744 calc(50% + 1px), var(--bg-primary) calc(50% + 1px));
-}
-
-.group-edge-debug-layer[data-show-lines="true"] .group-edge-debug-segment-vertical:not(.group-edge-debug-segment-internal) {
-  background: linear-gradient(to right, var(--bg-primary) calc(50% - 1px), #ff1744 calc(50% - 1px), #ff1744 calc(50% + 1px), var(--bg-primary) calc(50% + 1px));
 }
 
 html[data-grouped-layout] .tile[data-layout-group="intro"] {
-  --layout-region-fill: color-mix(in srgb, #ff7a1a var(--debug-group-color-strength, 42%), var(--bg-primary));
-  --layout-region-edge: #c85500;
+  --layout-region-fill: color-mix(in srgb, var(--group-intro-color) var(--group-color-strength, 90%), var(--bg-primary));
+  --layout-region-ink: var(--group-intro-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="writing"] {
-  --layout-region-fill: color-mix(in srgb, #b75cff var(--debug-group-color-strength, 42%), var(--bg-primary));
-  --layout-region-edge: #8f2ee0;
+  --layout-region-fill: color-mix(in srgb, var(--group-writing-color) var(--group-color-strength, 90%), var(--bg-primary));
+  --layout-region-ink: var(--group-writing-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="experience"] {
-  --layout-region-fill: color-mix(in srgb, #28c7ad var(--debug-group-color-strength, 42%), var(--bg-primary));
-  --layout-region-edge: #008d78;
+  --layout-region-fill: color-mix(in srgb, var(--group-experience-color) var(--group-color-strength, 90%), var(--bg-primary));
+  --layout-region-ink: var(--group-experience-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="projects"] {
-  --layout-region-fill: color-mix(in srgb, #4d8cff var(--debug-group-color-strength, 42%), var(--bg-primary));
-  --layout-region-edge: #2468d8;
+  --layout-region-fill: color-mix(in srgb, var(--group-projects-color) var(--group-color-strength, 90%), var(--bg-primary));
+  --layout-region-ink: var(--group-projects-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="links"] {
-  --layout-region-fill: color-mix(in srgb, #f0b52f var(--debug-group-color-strength, 42%), var(--bg-primary));
-  --layout-region-edge: #a87500;
+  --layout-region-fill: color-mix(in srgb, var(--group-links-color) var(--group-color-strength, 90%), var(--bg-primary));
+  --layout-region-ink: var(--group-links-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="navigation"] {
-  --layout-region-fill: color-mix(in srgb, #aaa var(--debug-group-color-strength, 42%), var(--bg-primary));
-  --layout-region-edge: #777;
+  --layout-region-fill: color-mix(in srgb, var(--group-other-color) var(--group-color-strength, 90%), var(--bg-primary));
+  --layout-region-ink: var(--group-other-ink);
+}
+html[data-grouped-layout] .tile[data-layout-group="other"] {
+  --layout-region-fill: color-mix(in srgb, var(--group-other-color) var(--group-color-strength, 90%), var(--bg-primary));
+  --layout-region-ink: var(--group-other-ink);
+}
+html[data-grouped-layout] .tile[data-layout-group="selection"] {
+  --layout-region-fill: color-mix(in srgb, var(--group-selection-color) var(--group-color-strength, 90%), var(--bg-primary));
+  --layout-region-ink: var(--accent-primary);
+}
+html[data-grouped-layout] .tile[data-layout-group="filtered"] {
+  --layout-region-fill: color-mix(in srgb, var(--text-tertiary) 10%, var(--bg-primary));
+  --layout-region-ink: var(--text-secondary);
+}
+
+html[data-grouped-layout] #tile-back-to-top,
+html[data-grouped-layout] #tile-back-to-top.tile-visible:hover {
+  border-color: transparent !important;
+  background: transparent;
+  box-shadow: none;
 }
 
 @media (max-width: 900px) {

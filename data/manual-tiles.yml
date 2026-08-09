@@ -128,15 +128,12 @@ tiles:
   - id: "back-to-top"
     type: "link"
     title: "Back to Top"
-    description: "Return to the top of the page"
     icon: "fas fa-arrow-up"
-    url: "#"
+    url: "#top"
     open_new_tab: false
     priority: -2
-    content_type: "navigation"
+    content_type: "utility"
     tags: ["navigation"]
-    style:
-      border_color: "#DA7422"
 
   # Example: About Me tile (commented out for now)
   # - id: "about-me"

@@ -3,16 +3,15 @@
 .tile {
   background-color: var(--tile-bg);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--card-radius, 12px);
   overflow: hidden;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   height: fit-content;
-  /* Scroll-in animation */
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  opacity: 1;
+  transform: none;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .tile.tile-visible {
@@ -20,15 +19,9 @@
   transform: translateY(0);
 }
 
-.tile.tile-hiding {
-  opacity: 0;
-  transform: scale(0.95) translateY(10px);
-  pointer-events: none;
-}
-
 .tile.tile-visible:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px var(--shadow-color);
+  box-shadow: var(--card-shadow-hover);
   background-color: var(--tile-hover-bg);
 }
 

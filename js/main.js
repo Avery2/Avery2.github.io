@@ -56,7 +56,7 @@ async function init() {
 
     // Render tiles into grid
     const gridContainer = document.querySelector('.grid-container');
-    renderAllTiles(allTiles, gridContainer);
+    await renderAllTiles(allTiles, gridContainer);
     document.documentElement.dataset.appReady = 'true';
 
     // Initialize filtering system
@@ -66,8 +66,7 @@ async function init() {
     setupScrollBehavior();
     setupFilterToggle();
     setupMobileMenu();
-    setupScrollAnimations();
-    setupResponsiveRerender(allTiles, gridContainer);
+    setupResponsiveRerender(gridContainer);
     initKeyboardNav();
     initRubberBandFooter();
 
@@ -274,8 +273,6 @@ function setupScrollBehavior() {
   // Header scroll effect
   const header = document.querySelector('.site-header');
   const siteTitle = document.querySelector('.site-title');
-  const headerLeft = document.querySelector('.header-left');
-  let lastScrollY = window.scrollY;
 
   function updateHeaderOnScroll() {
     const scrollY = window.scrollY;
@@ -301,7 +298,6 @@ function setupScrollBehavior() {
       header.classList.remove('scrolled');
     }
 
-    lastScrollY = scrollY;
   }
 
   // Initial check
@@ -343,60 +339,39 @@ function showErrorMessage(message) {
 }
 
 /**
- * Set up scroll animations for tiles
- */
-function setupScrollAnimations() {
-  const tiles = document.querySelectorAll('.tile');
-
-  // Create intersection observer with earlier trigger
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('tile-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0,  // Trigger as soon as any part is visible
-    rootMargin: '100px 0px 100px 0px'  // Trigger 100px before entering viewport
-  });
-
-  // Observe all tiles
-  tiles.forEach(tile => {
-    // Immediately show tiles already in viewport on page load
-    const rect = tile.getBoundingClientRect();
-    const isInViewport = (
-      rect.top < window.innerHeight &&
-      rect.bottom > 0
-    );
-
-    if (isInViewport) {
-      // Tile already in viewport - show immediately
-      tile.classList.add('tile-visible');
-    } else {
-      // Tile not in viewport - observe for scroll
-      observer.observe(tile);
-    }
-  });
-}
-
-/**
  * Set up responsive masonry layout recalculation
- * @param {Array} allTiles - All tile data
  * @param {HTMLElement} gridContainer - Grid container element
  */
-function setupResponsiveRerender(allTiles, gridContainer) {
+function setupResponsiveRerender(gridContainer) {
   let resizeTimeout;
+  let lastWidth = gridContainer.getBoundingClientRect().width;
+  let lastColumnCount = getGridColumnCount(gridContainer);
 
-  // Use ResizeObserver for efficient layout recalculation
-  const resizeObserver = new ResizeObserver(() => {
+  // Masonry writes change the container's height. Reacting to every observed
+  // size change made the layout repeatedly invalidate itself. Card geometry
+  // only needs to be measured again when the available width or responsive
+  // column count changes.
+  const resizeObserver = new ResizeObserver(entries => {
+    const width = entries[0]?.contentRect.width ?? gridContainer.getBoundingClientRect().width;
+    const columnCount = getGridColumnCount(gridContainer);
+    if (Math.abs(width - lastWidth) < 0.5 && columnCount === lastColumnCount) return;
+
+    lastWidth = width;
+    lastColumnCount = columnCount;
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       calculateMasonryLayout(gridContainer);
-    }, 100); // Debounce for performance
+    }, 80);
   });
 
   resizeObserver.observe(gridContainer);
+}
+
+function getGridColumnCount(gridContainer) {
+  return window.getComputedStyle(gridContainer).gridTemplateColumns
+    .split(/\s+/)
+    .filter(Boolean)
+    .length;
 }
 
 /**

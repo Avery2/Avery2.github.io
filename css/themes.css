@@ -3,24 +3,44 @@
 :root {
   --site-shell-gutter: clamp(1.25rem, 4vw, 3rem);
   /* Light theme (default) */
-  --bg-primary: #fbfaf7;
-  --bg-secondary: #f8f9fa;
-  --bg-tertiary: #e9ecef;
+  --bg-primary: #F4F1EB;
+  --bg-secondary: #EEEAE3;
+  --bg-tertiary: #E5E0D7;
 
-  --text-primary: #1A1A1A;
-  --text-secondary: #6c757d;
-  --text-tertiary: #6B7280;
+  --text-primary: #191817;
+  --text-secondary: #706C66;
+  --text-tertiary: #817C75;
 
-  --accent-primary: #DA7422;
+  --accent-primary: #F2672E;
+  --accent-secondary: #4F5D8C;
 
-  --border-color: #dee2e6;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --border-color: #D9D4CB;
+  --shadow-color: rgb(20 15 10 / 0.07);
+  --card-shadow: 0 2px 8px rgb(20 15 10 / 0.07);
+  --card-shadow-hover: 0 6px 18px rgb(20 15 10 / 0.12);
+  --card-radius: 12px;
+  --group-radius: 14px;
 
-  --tile-bg: #ffffff;
-  --tile-hover-bg: #f8f9fa;
+  --tile-bg: #FFFEFB;
+  --tile-hover-bg: #FFFFFF;
 
-  --header-bg: rgba(251, 250, 247, 0.95);
-  --footer-bg: #f8f9fa;
+  /* Soft semantic fields used by the grouped portfolio mosaic. */
+  --group-intro-color: #F2D8C5;
+  --group-writing-color: #E9E2F0;
+  --group-experience-color: #E1EBDD;
+  --group-projects-color: #F2E3D5;
+  --group-links-color: #DDE8EF;
+  --group-other-color: #ECE3E2;
+  --group-selection-color: #ECE3E2;
+  --group-intro-ink: #F2672E;
+  --group-writing-ink: #765787;
+  --group-experience-ink: #55734F;
+  --group-projects-ink: #9B6038;
+  --group-links-ink: #4B6E82;
+  --group-other-ink: #75666B;
+
+  --header-bg: rgba(244, 241, 235, 0.95);
+  --footer-bg: #EEEAE3;
 
   /* Grid configuration */
   --grid-min-tile-width: 280px;
@@ -34,24 +54,41 @@
 
 [data-theme="dark"] {
   /* Dark theme overrides */
-  --bg-primary: #1A1A1A;
-  --bg-secondary: #2D2E2F;
-  --bg-tertiary: #3a3a3a;
+  --bg-primary: #111214;
+  --bg-secondary: #17191C;
+  --bg-tertiary: #222429;
 
-  --text-primary: #e9ecef;
-  --text-secondary: #9EA3B0;
-  --text-tertiary: #9EA3B0;
+  --text-primary: #F2F0EC;
+  --text-secondary: #A5A19B;
+  --text-tertiary: #918D87;
 
-  --accent-primary: #DA7422;
+  --accent-primary: #FF7840;
+  --accent-secondary: #8992C7;
 
-  --border-color: #3a3a3a;
-  --shadow-color: rgba(0, 0, 0, 0.5);
+  --border-color: #303238;
+  --shadow-color: rgb(0 0 0 / 0.25);
+  --card-shadow: 0 2px 10px rgb(0 0 0 / 0.25);
+  --card-shadow-hover: 0 7px 20px rgb(0 0 0 / 0.38);
 
-  --tile-bg: #2D2E2F;
-  --tile-hover-bg: #3a3a3a;
+  --tile-bg: #191B1E;
+  --tile-hover-bg: #1E2024;
 
-  --header-bg: rgba(26, 26, 26, 0.95);
-  --footer-bg: #2D2E2F;
+  --group-intro-color: #38271F;
+  --group-writing-color: #2B2533;
+  --group-experience-color: #233028;
+  --group-projects-color: #332820;
+  --group-links-color: #222D35;
+  --group-other-color: #30262A;
+  --group-selection-color: #30262A;
+  --group-intro-ink: #FF7840;
+  --group-writing-ink: #C3A5D2;
+  --group-experience-ink: #9CBC91;
+  --group-projects-ink: #D4A078;
+  --group-links-ink: #91B2C5;
+  --group-other-ink: #B99FA7;
+
+  --header-bg: rgba(17, 18, 20, 0.95);
+  --footer-bg: #17191C;
 
   /* Brand colors stay the same in dark mode */
   --linkedin-blue: #0A66C2;

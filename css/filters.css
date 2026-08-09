@@ -161,9 +161,14 @@
   white-space: nowrap;
 }
 
+.content-type-pill[data-value="writing"] { --section-filter-ink: var(--group-writing-ink); }
+.content-type-pill[data-value="experience"] { --section-filter-ink: var(--group-experience-ink); }
+.content-type-pill[data-value="projects"] { --section-filter-ink: var(--group-projects-ink); }
+.content-type-pill[data-value="links"] { --section-filter-ink: var(--group-links-ink); }
+
 .content-type-pill:hover,
 .content-type-pill.active {
-  color: var(--text-primary);
+  color: var(--section-filter-ink, var(--accent-primary));
 }
 
 .content-type-pill::after {
@@ -178,7 +183,7 @@
 
 .content-type-pill.active::after,
 .content-type-pill:focus-visible::after {
-  background: var(--accent-primary);
+  background: var(--section-filter-ink, var(--accent-primary));
 }
 
 .content-type-pill:focus,
@@ -188,7 +193,7 @@
 }
 
 .content-type-pill:focus-visible {
-  color: var(--text-primary);
+  color: var(--section-filter-ink, var(--accent-primary));
 }
 
 .filter-pill:hover {
