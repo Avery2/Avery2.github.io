@@ -249,18 +249,9 @@ function externalLinkAttributes(url) {
   return isInternal ? '' : 'target="_blank" rel="noopener noreferrer"';
 }
 
-function cardSectionLabel(data) {
-  if (data.section_header) return '';
-  if (data.content_type === 'writing' || (data.tags || []).includes('writing')) return 'Writing';
-  if (data.type === 'experience' || data.type === 'education' || data.content_type === 'experience') return 'Experience';
-  if (data.type === 'project' || data.content_type === 'projects') return 'Projects';
-  return '';
-}
-
-function cardFooterHTML(sectionLabel, trailingHTML = '') {
-  if (!sectionLabel && !trailingHTML) return '';
+function cardFooterHTML(trailingHTML = '') {
+  if (!trailingHTML) return '';
   return `<div class="tile-card-footer">
-    <span class="tile-section-label">${sectionLabel}</span>
     <span class="tile-footer-detail">${trailingHTML}</span>
   </div>`;
 }
@@ -316,7 +307,7 @@ function renderProjectTile(data) {
        </div>`
     : '';
 
-  const footerHTML = cardFooterHTML(cardSectionLabel(data), `${starsHTML}${dateHTML}`);
+  const footerHTML = cardFooterHTML(`${starsHTML}${dateHTML}`);
 
   tile.innerHTML = `
     <a href="${data.url}" class="tile-link" ${externalLinkAttributes(data.url)}>
@@ -354,11 +345,9 @@ function renderLinkTile(data) {
   const target = data.open_new_tab ? 'target="_blank" rel="noopener noreferrer"' : '';
 
   // Only include description if it exists
-  const isWriting = data.content_type === 'writing' || (data.tags || []).includes('writing');
   const descriptionHTML = data.description
-    ? `<p class="tile-description">${data.description}${isWriting ? ' <span class="tile-read-more">Read more <span aria-hidden="true">→</span></span>' : ''}</p>`
+    ? `<p class="tile-description">${data.description}</p>`
     : '';
-  const footerHTML = cardFooterHTML(cardSectionLabel(data));
 
   tile.innerHTML = `
     <a href="${data.url}" class="tile-link" ${target}>
@@ -366,7 +355,6 @@ function renderLinkTile(data) {
       <div class="tile-content">
         <h3 class="tile-title">${iconHTML}${data.title}</h3>
         ${descriptionHTML}
-        ${footerHTML}
       </div>
     </a>
   `;

@@ -150,11 +150,6 @@
   -webkit-line-clamp: 3;
 }
 
-.tile-read-more {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
 .tile-stars {
   display: flex;
   align-items: center;
@@ -164,16 +159,12 @@
 .tile-card-footer {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 1rem;
   min-height: 1rem;
   margin-top: 0.75rem;
   color: var(--text-tertiary);
   font-size: 0.75rem;
-}
-
-.tile-section-label {
-  flex: 0 0 auto;
 }
 
 .tile-footer-detail {
