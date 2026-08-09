@@ -43,8 +43,8 @@
 .header-filter-wrapper {
   position: absolute;
   top: 100%;
-  left: 12rem;
-  right: 12rem;
+  left: var(--site-shell-gutter);
+  right: var(--site-shell-gutter);
   z-index: 50;
   opacity: 0;
   visibility: hidden;
@@ -246,11 +246,6 @@
 
 /* Responsive filters */
 @media (max-width: 900px) {
-  .header-filter-wrapper {
-    left: 4rem;
-    right: 4rem;
-  }
-
   .filter-groups-row {
     gap: 1rem;
   }
@@ -271,11 +266,6 @@
 }
 
 @media (max-width: 600px) {
-  .header-filter-wrapper {
-    left: 1rem;
-    right: 1rem;
-  }
-
   .filter-controls {
     padding: 1rem;
   }
