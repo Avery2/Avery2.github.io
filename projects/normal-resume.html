@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normal Resume - Avery</title>
+  <meta name="description" content="Version control for my resume">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .project-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .project-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .project-tagline { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+    .project-stats { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .project-stats span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .project-stats i { color: var(--text-tertiary); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .project-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: border-color 0.2s ease; }
+    .project-link-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .readme-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; overflow-wrap: break-word; }
+    .readme-content h1, .readme-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    .readme-content h3, .readme-content h4, .readme-content h5, .readme-content h6 { margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .readme-content p { margin-bottom: 1.25rem; }
+    .readme-content ul, .readme-content ol { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .readme-content li { margin-bottom: 0.5rem; }
+    .readme-content a { color: var(--accent-primary); }
+    .readme-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .readme-content video { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 1.25rem; }
+    .readme-content details { margin-bottom: 1.25rem; }
+    .readme-content summary { cursor: pointer; padding: 0.4rem 0; color: var(--text-secondary); }
+    .readme-content summary svg { vertical-align: middle; fill: currentColor; }
+    .readme-content .dropdown-caret { display: none; }
+    .readme-content code { background: var(--bg-secondary); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    .readme-content pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+    .readme-content pre code { background: none; padding: 0; }
+    .readme-content blockquote { margin: 0 0 1.25rem; padding-left: 1rem; border-left: 3px solid var(--border-color); color: var(--text-secondary); }
+    .readme-content table { border-collapse: collapse; margin-bottom: 1.25rem; display: block; overflow-x: auto; }
+    .readme-content th, .readme-content td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+    .readme-content hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+    .project-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="project-container">
+    <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="project-header">
+      <h1 class="project-title">Normal Resume</h1>
+      <p class="project-tagline">Version control for my resume</p>
+      <div class="project-stats"><span><i class="fas fa-code"></i> HTML</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Jul 2026</span></div>
+      <div class="project-links">
+        <a class="project-link-btn" href="https://github.com/Avery2/normal-resume" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+        <a class="project-link-btn" href="https://www.averychan.site/normal-resume/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i> Live site</a>
+      </div>
+    </div>
+    <div class="readme-content">
+<p dir="auto">Version control for my resume. Now a PDF generates from html so I can vibe code my resume.</p>
+<h2 dir="auto">Making updates (source of truth)</h2>
+<p dir="auto"><code class="notranslate">Justin_Avery_Chan_Resume.html</code> is the single source of truth. Everything else is generated or derived from it.</p>
+<ul dir="auto">
+<li><strong>Content</strong> → edit <code class="notranslate">Justin_Avery_Chan_Resume.html</code></li>
+<li><strong>Styling/layout</strong> → edit <code class="notranslate">print.css</code></li>
+<li><code class="notranslate">generate-pdf.js</code> (Playwright) renders the HTML + <code class="notranslate">print.css</code> into <code class="notranslate">Justin_Avery_Chan_Resume.pdf</code> — do not edit the PDF by hand</li>
+<li><code class="notranslate">index.html</code> is just a web viewer that embeds the generated PDF; no resume content lives there</li>
+</ul>
+<p dir="auto"><strong>Flow to ship an update:</strong> edit the HTML (and <code class="notranslate">print.css</code> if needed) → commit → push to <code class="notranslate">main</code>. GitHub Actions regenerates <code class="notranslate">Justin_Avery_Chan_Resume.pdf</code> and commits it back, which updates the live links below. To preview locally first, run <code class="notranslate">npm run generate</code>.</p>
+<h2 dir="auto">Ops</h2>
+<p dir="auto">GitHub README and personal website both point to the file <code class="notranslate">Justin_Avery_Chan_Resume.pdf</code>.</p>
+<ul dir="auto">
+<li>You need to keep the pages environment up for the link to the file to work</li>
+<li>Link to file: <a href="https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf" rel="nofollow">https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf</a></li>
+</ul>
+<p dir="auto">Record where I add links here incase I ever change url again. Linked to from:</p>
+<ul dir="auto">
+<li>[Website] About page</li>
+<li>[Website] Resume nav link</li>
+<li>[GitHub README] Badge</li>
+<li>LinkedIn Profile</li>
+</ul>
+<h2 dir="auto">Dev</h2>
+<h3 dir="auto">Resume Generator</h3>
+<p dir="auto"><strong>Local PDF generation:</strong></p>
+<div class="highlight highlight-source-shell" dir="auto"><pre class="notranslate">npm run setup    <span class="pl-c"><span class="pl-c">#</span> First time only</span>
+npm run generate <span class="pl-c"><span class="pl-c">#</span> Create Justin_Avery_Chan_Resume.pdf</span>
+npm run preview  <span class="pl-c"><span class="pl-c">#</span> View at localhost:3000</span></pre></div>
+<p dir="auto"><strong>GitHub Actions:</strong> Auto-generates PDF on push to main/html-workflow or manual dispatch. PDF commits back to repo for GitHub Pages.</p></div>
+    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

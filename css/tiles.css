@@ -187,8 +187,7 @@
 }
 
 .tile-language,
-.tile-stars,
-.tile-visitors {
+.tile-stars {
   display: flex;
   align-items: center;
   gap: 0.35rem;

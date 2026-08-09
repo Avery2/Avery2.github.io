@@ -47,7 +47,7 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          if git diff --quiet data/github-projects.yml data/resume-tiles.yml data/resume-details.yml writing/experience/ writing/education/; then
+          if git diff --quiet data/ writing/experience/ writing/education/ projects/ && [ -z "$(git status --porcelain data/ projects/)" ]; then
             echo "changes=false" >> $GITHUB_OUTPUT
           else
             echo "changes=true" >> $GITHUB_OUTPUT
@@ -58,7 +58,7 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
-          git add data/github-projects.yml data/resume-tiles.yml data/resume-details.yml writing/experience/ writing/education/
+          git add -A data/ writing/experience/ writing/education/ projects/
           git commit -m "Auto-update: GitHub projects and resume metadata"
           git push
 

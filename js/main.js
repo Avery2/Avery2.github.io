@@ -22,12 +22,13 @@ async function init() {
 
   try {
     // Load all data files in parallel
-    const [siteConfig, githubProjects, manualTiles, resumeTiles, filterGroups] = await Promise.all([
+    const [siteConfig, githubProjects, manualTiles, resumeTiles, filterGroups, readmeIndex] = await Promise.all([
       loadData('data/site-config.yml'),
       loadData('data/github-projects.yml'),
       loadData('data/manual-tiles.yml'),
       loadData('data/resume-tiles.yml').catch(() => ({ tiles: [] })), // Graceful fallback
-      loadData('data/filter-groups.yml')
+      loadData('data/filter-groups.yml'),
+      loadData('data/readme-search-index.yml').catch(() => ({ readmes: {} })) // Graceful fallback
     ]);
 
     console.log('Data loaded successfully:', {
@@ -42,6 +43,14 @@ async function init() {
 
     // Merge manual tiles with auto-generated projects and resume tiles
     const allTiles = mergeData(githubProjects.projects, manualTiles.tiles, resumeTiles.tiles);
+
+    // Attach pre-computed README text so search can match on project content
+    const readmes = readmeIndex.readmes || {};
+    allTiles.forEach(tile => {
+      if (readmes[tile.id]) {
+        tile.readme_text = readmes[tile.id];
+      }
+    });
 
     console.log(`Total tiles: ${allTiles.length}`);
 

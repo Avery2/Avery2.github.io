@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simplereadme - Avery</title>
+  <meta name="description" content="A template for a clean README (the special repository).">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .project-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .project-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .project-tagline { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+    .project-stats { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .project-stats span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .project-stats i { color: var(--text-tertiary); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .project-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: border-color 0.2s ease; }
+    .project-link-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .readme-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; overflow-wrap: break-word; }
+    .readme-content h1, .readme-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    .readme-content h3, .readme-content h4, .readme-content h5, .readme-content h6 { margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .readme-content p { margin-bottom: 1.25rem; }
+    .readme-content ul, .readme-content ol { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .readme-content li { margin-bottom: 0.5rem; }
+    .readme-content a { color: var(--accent-primary); }
+    .readme-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .readme-content video { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 1.25rem; }
+    .readme-content details { margin-bottom: 1.25rem; }
+    .readme-content summary { cursor: pointer; padding: 0.4rem 0; color: var(--text-secondary); }
+    .readme-content summary svg { vertical-align: middle; fill: currentColor; }
+    .readme-content .dropdown-caret { display: none; }
+    .readme-content code { background: var(--bg-secondary); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    .readme-content pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+    .readme-content pre code { background: none; padding: 0; }
+    .readme-content blockquote { margin: 0 0 1.25rem; padding-left: 1rem; border-left: 3px solid var(--border-color); color: var(--text-secondary); }
+    .readme-content table { border-collapse: collapse; margin-bottom: 1.25rem; display: block; overflow-x: auto; }
+    .readme-content th, .readme-content td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+    .readme-content hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+    .project-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="project-container">
+    <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="project-header">
+      <h1 class="project-title">Simplereadme</h1>
+      <p class="project-tagline">A template for a clean README (the special repository).</p>
+      <div class="project-stats"><span><i class="fas fa-code"></i> JavaScript</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Aug 2021</span></div>
+      <div class="project-links">
+        <a class="project-link-btn" href="https://github.com/Avery2/SimpleReadme" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+        
+      </div>
+    </div>
+    <div class="readme-content">
+<blockquote>
+<p dir="auto">You can add a README to your GitHub profile to tell other people about yourself. (<a href="https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme">docs</a>)</p>
+</blockquote>
+<p dir="auto">SimpleReadme helps you make a simple yet good looking README. You can use it online <a href="http://www.averychan.site/SimpleReadme/" rel="nofollow">here</a> to generate the text for you.</p>
+<details open="">
+<summary>Example Output:</summary>
+<hr/>
+<h1 dir="auto">Hi, I’m Avery 👋</h1>
+<p dir="auto">I’m currently a computer science and data science double major at the University of Wisconsin-Madison. This summer I am working as a developer intern at <a href="https://www.halo.science/" rel="nofollow">Halo Science</a>.</p>
+<div align="center" dir="auto">
+
+
+
+
+</div><br/>
+<hr/>
+</details>
+<details>
+<summary>Example Source:</summary>
+<pre class="notranslate"><code class="notranslate"># Hi, I’m Avery 👋
+
+I’m currently a computer science and data science double major at the University of Wisconsin-Madison. This summer I am working as a developer intern at [Halo Science](https://www.halo.science/).
+
+&lt;div align="center"&gt;
+  &lt;a href="https://www.linkedin.com/in/avery2"&gt;&lt;img alt="LinkedIn" src="https://img.shields.io/badge/Justin_Chan-%230077B5.svg?style=flat&amp;logo=linkedin&amp;logoColor=white"/&gt;&lt;/a&gt;
+  &lt;a href="mailto:justinaverychan@gmail.com"&gt;&lt;img alt="Email" src="https://img.shields.io/badge/justinaverychan@gmail.com-D14836?style=flat&amp;logo=gmail&amp;logoColor=white"/&gt;&lt;/a&gt;
+  &lt;a href="https://www.averychan.site"&gt;&lt;img alt="Website" src="https://img.shields.io/website?down_color=lightgrey&amp;down_message=offline&amp;label=averychan.site&amp;up_color=green&amp;up_message=online&amp;url=https%3A%2F%2Fwww.averychan.site"/&gt;&lt;/a&gt;
+    &lt;a href="https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf"&gt;&lt;img alt="Resume" src="https://img.shields.io/badge/Resume_(last_updated)-Jul_2021-green"/&gt;&lt;/a&gt;
+&lt;/div&gt;&lt;br/&gt;
+</code></pre>
+</details>
+<p dir="auto">See <a href="https://github.com/Avery2">my profile</a> in this style.</p>
+<h2 dir="auto">Instructions (Automatic)</h2>
+<ol dir="auto">
+<li>Create a repository that is the same as your github username <em>(for example: GitHubUser/GitHubUser)</em></li>
+<li>Create a README.md in that repository</li>
+<li>Use the autogenerator <a href="http://www.averychan.site/SimpleReadme/" rel="nofollow">here</a> to generate the README text.</li>
+<li>Paste the text into your README</li>
+<li>Done! You can also make any edits you want.</li>
+</ol>
+<blockquote>
+<p dir="auto">Note: If the link to the tool is ever down you can still use it by downloading this repo and opening index.html locally.</p>
+</blockquote>
+<h2 dir="auto">Instructions (Manual)</h2>
+<ol dir="auto">
+<li>Create a repository that is the same as your github username <em>(for example: GitHubUser/GitHubUser)</em></li>
+<li>Create a README.md in that repository</li>
+<li>Add the following text (in "Raw Text"), and make replacements as described below (in "Replacement Instructions")</li>
+<li>Add your Resume to the respository <em>(optional)</em></li>
+<li>Replace the bio placeholder</li>
+<li>Done! It should show up at your profile.</li>
+</ol>
+<details>
+<summary>Raw Text</summary>
+<pre class="notranslate"><code class="notranslate"># Hi, I'm FIRST_LAST 👋
+
+**(BIO GOES HERE)**
+
+&lt;div align="center"&gt;
+  &lt;a href="LINKED_IN_PROFILE_LINK"&gt;&lt;img alt="LinkedIn" src="https://img.shields.io/badge/FIRST_LAST-%230077B5.svg?style=flat&amp;logo=linkedin&amp;logoColor=white"/&gt;&lt;/a&gt;
+  &lt;a href="mailto:MY_EMAIL@gmail.com"&gt;&lt;img alt="Email" src="https://img.shields.io/badge/MY_EMAIL@gmail.com-D14836?style=flat&amp;logo=gmail&amp;logoColor=white"/&gt;&lt;/a&gt;
+  &lt;a href="MY_WEBSITE_URL"&gt;&lt;img alt="Website" src="https://img.shields.io/website?down_color=lightgrey&amp;down_message=offline&amp;label=MY_WEBSITE_URL&amp;up_color=green&amp;up_message=online&amp;url=MY_WEBSITE_URL"/&gt;&lt;/a&gt;
+  &lt;a href="./PATH_TO_RESUME.pdf"&gt;&lt;img alt="Resume" src="https://img.shields.io/badge/Resume_(last_updated)-TIME_LAST_UPDATED-green"/&gt;&lt;/a&gt;
+&lt;/div&gt;&lt;br/&gt;
+</code></pre>
+</details>
+<details>
+<summary>Replacement Instructions</summary>
+<p dir="auto">Replace the following text. Count included to make sure you get each one.</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Text to replace</th>
+<th>Count</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FIRST_LAST</td>
+<td>3</td>
+<td>Your name</td>
+</tr>
+<tr>
+<td>LINKED_IN_PROFILE_LINK</td>
+<td>1</td>
+<td>Link to your LinkedIn profile</td>
+</tr>
+<tr>
+<td>MY_EMAIL</td>
+<td>2</td>
+<td>Your email (assumes Gmail extension)</td>
+</tr>
+<tr>
+<td>MY_WEBSITE_URL</td>
+<td>3</td>
+<td>Your website URL</td>
+</tr>
+<tr>
+<td>PATH_TO_RESUME</td>
+<td>1</td>
+<td>The path to your resume file (you can add it to this repo)</td>
+</tr>
+<tr>
+<td>TIME_LAST_UPDATED</td>
+<td>1</td>
+<td>Last time your Resume was updated. (Ex: "Jun 2001")</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+</details>
+<h2 dir="auto">Resources</h2>
+<details>
+<summary>Tools for this README</summary>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Tool</th>
+<th align="right">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sheilds.io for the badges</td>
+<td align="right"><a href="https://shields.io" rel="nofollow">link</a></td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+</details>
+<details>
+<summary>Other Cool Resources</summary>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>Tool</th>
+<th align="right">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Profile-readme for recent activity</td>
+<td align="right"><a href="https://github.com/actions-js/profile-readme">link</a></td>
+</tr>
+<tr>
+<td>Github-readme-stats for the GitHub stats summary</td>
+<td align="right"><a href="https://github.com/anuraghazra/github-readme-stats">link</a></td>
+</tr>
+<tr>
+<td>Productive-box for pinned gist (below) of commit times</td>
+<td align="right"><a href="https://github.com/maxam2017/productive-box">link</a></td>
+</tr>
+<tr>
+<td>List of many tools and examples</td>
+<td align="right"><a href="https://github.com/abhisheknaiidu/awesome-github-profile-readme">link</a></td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+</details></div>
+    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

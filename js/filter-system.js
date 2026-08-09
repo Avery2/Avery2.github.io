@@ -15,6 +15,10 @@ let activeFilters = {
 let allTiles = [];
 let filterConfig = null;
 
+// README text is too bulky to stash on the tile elements themselves, so it
+// lives here keyed by element id and is looked up during search scoring.
+let readmeWordsByTileId = new Map();
+
 /**
  * Initialize the filter system
  * @param {Array} tiles - Array of tile elements or data
@@ -23,6 +27,15 @@ let filterConfig = null;
 export function initFilterSystem(tilesData, config) {
   allTiles = tilesData;
   filterConfig = config;
+
+  // Tokenized once at startup: READMEs are long enough that re-splitting
+  // them on every keystroke would be wasteful, and deduping shrinks each
+  // one to a couple hundred distinct words.
+  readmeWordsByTileId = new Map(
+    tilesData
+      .filter(tile => tile.readme_text)
+      .map(tile => [`tile-${tile.id}`, [...new Set(toWords(tile.readme_text))]])
+  );
 
   // Set default sort
   if (config.filters) {
@@ -419,14 +432,18 @@ function bestWordScore(queryWord, words) {
  * not a full-text subsequence match, so it won't fire on letters scattered
  * across an unrelated paragraph.
  * @param {string} query - Lowercased search query
- * @param {Array<{text: string, weight: number}>} fields - Fields to search
+ * @param {Array<{text?: string, words?: string[], weight: number}>} fields -
+ *   Fields to search; `words` skips tokenization for pre-split fields
  * @returns {number} combined score, or -1 if any query word finds no match
  */
 function fuzzyScoreFields(query, fields) {
   const queryWords = query.split(/\s+/).filter(Boolean);
   if (queryWords.length === 0) return -1;
 
-  const fieldWordLists = fields.map(({ text, weight }) => ({ words: toWords(text), weight }));
+  const fieldWordLists = fields.map(({ text, words, weight }) => ({
+    words: words || toWords(text),
+    weight
+  }));
 
   let total = 0;
   for (const queryWord of queryWords) {
@@ -477,7 +494,10 @@ function evaluateTile(tileData) {
       { text: tileData.title, weight: 3 },
       { text: [...(tileData.tags || []), ...(tileData.topics || [])].join(' '), weight: 2 },
       { text: tileData.description, weight: 1 },
-      { text: tileData.date, weight: 1 }
+      { text: tileData.date, weight: 1 },
+      // README body ranks below every curated field: it makes a project
+      // findable by its contents without outranking a real title match.
+      { words: tileData.readmeWords, weight: 0.5 }
     ]);
 
     if (score < 0) return { isMatch: false, score: 0 };
@@ -647,7 +667,8 @@ function getTileDataFromElement(tileEl) {
     stars: parseInt(tileEl.dataset.stars || '0'),
     tags: JSON.parse(tileEl.dataset.tags || '[]'),
     topics: JSON.parse(tileEl.dataset.topics || '[]'),
-    priority: parseInt(tileEl.dataset.priority || '0')
+    priority: parseInt(tileEl.dataset.priority || '0'),
+    readmeWords: readmeWordsByTileId.get(tileEl.id)
   };
 }
 

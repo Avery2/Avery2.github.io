@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Things3 Mcp Tools - Avery</title>
+  <meta name="description" content="Things3 MCP server and automation toolkit.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .project-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .project-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .project-tagline { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+    .project-stats { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .project-stats span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .project-stats i { color: var(--text-tertiary); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .project-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: border-color 0.2s ease; }
+    .project-link-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .readme-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; overflow-wrap: break-word; }
+    .readme-content h1, .readme-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    .readme-content h3, .readme-content h4, .readme-content h5, .readme-content h6 { margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .readme-content p { margin-bottom: 1.25rem; }
+    .readme-content ul, .readme-content ol { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .readme-content li { margin-bottom: 0.5rem; }
+    .readme-content a { color: var(--accent-primary); }
+    .readme-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .readme-content video { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 1.25rem; }
+    .readme-content details { margin-bottom: 1.25rem; }
+    .readme-content summary { cursor: pointer; padding: 0.4rem 0; color: var(--text-secondary); }
+    .readme-content summary svg { vertical-align: middle; fill: currentColor; }
+    .readme-content .dropdown-caret { display: none; }
+    .readme-content code { background: var(--bg-secondary); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    .readme-content pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+    .readme-content pre code { background: none; padding: 0; }
+    .readme-content blockquote { margin: 0 0 1.25rem; padding-left: 1rem; border-left: 3px solid var(--border-color); color: var(--text-secondary); }
+    .readme-content table { border-collapse: collapse; margin-bottom: 1.25rem; display: block; overflow-x: auto; }
+    .readme-content th, .readme-content td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+    .readme-content hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+    .project-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="project-container">
+    <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="project-header">
+      <h1 class="project-title">Things3 Mcp Tools</h1>
+      <p class="project-tagline">Things3 MCP server and automation toolkit.</p>
+      <div class="project-stats"><span><i class="fas fa-code"></i> Python</span><span><i class="fas fa-star"></i> 1</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Jan 2026</span></div>
+      <div class="project-links">
+        <a class="project-link-btn" href="https://github.com/Avery2/things3-mcp-tools" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+        
+      </div>
+    </div>
+    <div class="readme-content">
+<p dir="auto">Except for specific skills and scripts that I added, I would recommend this MCP instead: <a href="https://github.com/hald/things-mcp">https://github.com/hald/things-mcp</a></p>
+<hr/>
+<p dir="auto">Model Context Protocol (MCP) tools for Things3 task management with optional Notion integration. Provides comprehensive automation for Things3 via AppleScript and direct SQLite access, with Claude Code skills for workflow guidance.</p>
+<h2 dir="auto">Demo</h2>
+<a href="https://github.com/Avery2/things3-mcp-tools#readme" rel="noopener noreferrer" target="_blank">View this media on GitHub</a>
+<h2 dir="auto">What This Provides</h2>
+<p dir="auto"><strong>MCP Tools for Things3:</strong></p>
+<ul dir="auto">
+<li>Complete task management (create, read, update, delete, search)</li>
+<li>Direct SQLite access for fast search across titles and notes</li>
+<li>AppleScript integration for reliable task manipulation</li>
+<li>Bulk operations (tagging, moving, completing tasks)</li>
+<li>Project and area management</li>
+</ul>
+<p dir="auto"><strong>Optional Notion Integration:</strong></p>
+<ul dir="auto">
+<li>Migrate Things3 inbox items to Notion</li>
+<li>Cross-system workflow patterns via Claude skills</li>
+</ul>
+<p dir="auto"><strong>Claude Code Skills:</strong></p>
+<ul dir="auto">
+<li>Auto-loading workflow guidance for productivity tasks</li>
+<li>Personal taxonomy integration for work contexts</li>
+<li>Best practices and automation patterns</li>
+</ul>
+<h2 dir="auto">Repository Structure</h2>
+<pre class="notranslate"><code class="notranslate">.
+├── .claude/skills/          # Claude Code auto-loading skills
+│   ├── things3-productivity/    # Things3 workflows and patterns
+│   ├── notion-workflows/        # Notion organization patterns
+│   └── productivity-integration/ # Cross-system workflows
+├── tooling/                 # MCP server and tools
+│   ├── mcp-server/             # MCP server configuration
+│   └── scripts/                # Tool implementations
+└── private-prefs.example.json  # Template for personal preferences
+</code></pre>
+<h2 dir="auto">Setup</h2>
+<h3 dir="auto">Prerequisites</h3>
+<ul dir="auto">
+<li>macOS with Things3 installed</li>
+<li>Python 3.11+</li>
+<li>Claude Code (for skills integration)</li>
+<li>Optional: Notion account (for Notion integration features)</li>
+</ul>
+<h3 dir="auto">Installation</h3>
+<ol dir="auto">
+<li>
+<p dir="auto"><strong>Install dependencies:</strong></p>
+<div class="highlight highlight-source-shell" dir="auto"><pre class="notranslate"><span class="pl-c1">cd</span> tooling
+pip install -r requirements.txt</pre></div>
+</li>
+<li>
+<p dir="auto"><strong>Configure MCP server in Claude Code:</strong><br/>
+Add to your Claude Code MCP settings:</p>
+<div class="highlight highlight-source-json" dir="auto"><pre class="notranslate">{
+  <span class="pl-ent">"mcpServers"</span>: {
+    <span class="pl-ent">"things3-notion"</span>: {
+      <span class="pl-ent">"command"</span>: <span class="pl-s"><span class="pl-pds">"</span>node<span class="pl-pds">"</span></span>,
+      <span class="pl-ent">"args"</span>: [<span class="pl-s"><span class="pl-pds">"</span>/path/to/tooling/mcp-server/build/index.js<span class="pl-pds">"</span></span>],
+      <span class="pl-ent">"env"</span>: {
+        <span class="pl-ent">"SCRIPTS_DIR"</span>: <span class="pl-s"><span class="pl-pds">"</span>/path/to/tooling/scripts<span class="pl-pds">"</span></span>
+      }
+    }
+  }
+}</pre></div>
+</li>
+<li>
+<p dir="auto"><strong>Optional: Set up personal preferences:</strong></p>
+<div class="highlight highlight-source-shell" dir="auto"><pre class="notranslate">cp private-prefs.example.json private-prefs/personal-taxonomy.json
+<span class="pl-c"><span class="pl-c">#</span> Edit with your tags, areas, and preferences</span></pre></div>
+</li>
+</ol>
+<h3 dir="auto">Adding Notion MCP (Optional)</h3>
+<p dir="auto">You can use both Things3 and Notion MCP tools together in Claude Code. You can read about the Notion MCP <a href="https://developers.notion.com/docs/mcp" rel="nofollow">here</a>.</p>
+<h2 dir="auto">Available Tools</h2>
+<h3 dir="auto">Task Management</h3>
+<ul dir="auto">
+<li><strong><code class="notranslate">read_tasks</code></strong> - List and filter tasks by list, area, project, tags, priority, or status</li>
+<li><strong><code class="notranslate">search_tasks</code></strong> - Fast SQLite search across task titles and notes</li>
+<li><strong><code class="notranslate">create_task</code></strong> - Create new tasks with tags, scheduling, and project assignment</li>
+<li><strong><code class="notranslate">edit_task</code></strong> - Modify existing tasks (title, notes, tags, scheduling, completion)</li>
+<li><strong><code class="notranslate">delete_tasks</code></strong> - Move tasks to trash (with confirmation)</li>
+<li><strong><code class="notranslate">complete_tasks</code></strong> - Mark tasks as completed</li>
+<li><strong><code class="notranslate">move_tasks</code></strong> - Move tasks between lists (Today, Anytime, Someday, etc.)</li>
+</ul>
+<h3 dir="auto">Organization</h3>
+<ul dir="auto">
+<li><strong><code class="notranslate">add_tags</code></strong> / <strong><code class="notranslate">remove_tags</code></strong> - Bulk tag management</li>
+<li><strong><code class="notranslate">list_areas</code></strong> / <strong><code class="notranslate">list_projects</code></strong> / <strong><code class="notranslate">list_tags</code></strong> - Browse organizational structure</li>
+<li><strong><code class="notranslate">create_project</code></strong> / <strong><code class="notranslate">create_area</code></strong> - Create new organizational containers</li>
+<li><strong><code class="notranslate">get_project_tasks</code></strong> - View all tasks within a project</li>
+<li><strong><code class="notranslate">get_selected</code></strong> - Get currently selected tasks from Things3 UI</li>
+</ul>
+<h3 dir="auto">Integration</h3>
+<ul dir="auto">
+<li><strong><code class="notranslate">migrate_inbox_to_notion</code></strong> - Transfer Things3 inbox items to Notion blocks</li>
+</ul>
+<h2 dir="auto">Usage Examples</h2>
+<h3 dir="auto">Search for tasks</h3>
+<div class="highlight highlight-source-python" dir="auto"><pre class="notranslate"><span class="pl-c"># Find task by partial title</span>
+<span class="pl-en">search_tasks</span>(<span class="pl-s1">query</span><span class="pl-c1">=</span><span class="pl-s">"meeting"</span>, <span class="pl-s1">when</span><span class="pl-c1">=</span><span class="pl-s">"today"</span>)
+
+<span class="pl-c"># Search with filters</span>
+<span class="pl-en">search_tasks</span>(<span class="pl-s1">query</span><span class="pl-c1">=</span><span class="pl-s">"bug"</span>, <span class="pl-s1">area</span><span class="pl-c1">=</span><span class="pl-s">"Work"</span>, <span class="pl-s1">tags</span><span class="pl-c1">=</span>[<span class="pl-s">"urgent"</span>])</pre></div>
+<h3 dir="auto">Read tasks from a list</h3>
+<div class="highlight highlight-source-python" dir="auto"><pre class="notranslate"><span class="pl-c"># Get today's tasks</span>
+<span class="pl-en">read_tasks</span>(<span class="pl-s1">when</span><span class="pl-c1">=</span><span class="pl-s">"today"</span>)
+
+<span class="pl-c"># Filter by area and priority</span>
+<span class="pl-en">read_tasks</span>(<span class="pl-s1">when</span><span class="pl-c1">=</span><span class="pl-s">"today"</span>, <span class="pl-s1">area</span><span class="pl-c1">=</span><span class="pl-s">"Work"</span>, <span class="pl-s1">min_priority</span><span class="pl-c1">=</span><span class="pl-c1">7</span>)
+
+<span class="pl-c"># List projects in an area</span>
+<span class="pl-en">read_tasks</span>(<span class="pl-s1">area</span><span class="pl-c1">=</span><span class="pl-s">"Work"</span>, <span class="pl-s1">list_projects</span><span class="pl-c1">=</span><span class="pl-c1">True</span>)</pre></div>
+<h3 dir="auto">Create and manage tasks</h3>
+<div class="highlight highlight-source-python" dir="auto"><pre class="notranslate"><span class="pl-c"># Create a task</span>
+<span class="pl-en">create_task</span>(
+    <span class="pl-s1">title</span><span class="pl-c1">=</span><span class="pl-s">"Review PR"</span>,
+    <span class="pl-s1">notes</span><span class="pl-c1">=</span><span class="pl-s">"Check for test coverage"</span>,
+    <span class="pl-s1">when</span><span class="pl-c1">=</span><span class="pl-s">"today"</span>,
+    <span class="pl-s1">tags</span><span class="pl-c1">=</span>[<span class="pl-s">"code-review"</span>],
+    <span class="pl-s1">area</span><span class="pl-c1">=</span><span class="pl-s">"Work"</span>
+)
+
+<span class="pl-c"># Edit a task</span>
+<span class="pl-en">edit_task</span>(
+    <span class="pl-s1">task_uuid</span><span class="pl-c1">=</span><span class="pl-s">"abc-123"</span>,
+    <span class="pl-s1">tags</span><span class="pl-c1">=</span>[<span class="pl-s">"urgent"</span>, <span class="pl-s">"code-review"</span>],
+    <span class="pl-s1">when</span><span class="pl-c1">=</span><span class="pl-s">"today"</span>
+)
+
+<span class="pl-c"># Bulk operations</span>
+<span class="pl-en">complete_tasks</span>(<span class="pl-s1">task_uuids</span><span class="pl-c1">=</span>[<span class="pl-s">"abc-123"</span>, <span class="pl-s">"def-456"</span>])
+<span class="pl-en">add_tags</span>(<span class="pl-s1">task_uuids</span><span class="pl-c1">=</span>[<span class="pl-s">"abc-123"</span>], <span class="pl-s1">tags</span><span class="pl-c1">=</span>[<span class="pl-s">"waiting"</span>])</pre></div>
+<h2 dir="auto">Personal Preferences (Optional but Recommended)</h2>
+<p dir="auto">The tools support personal taxonomy for automatic context injection. Create <code class="notranslate">private-prefs/personal-taxonomy.json</code> based on the example template to define:</p>
+<ul dir="auto">
+<li><strong>Work tags</strong>: Your work identification tag (e.g., "WORK", "CLIENT") - tools automatically recognize tasks with this tag as work-related</li>
+<li><strong>Work areas</strong>: Your professional focus areas</li>
+<li><strong>Priority system</strong>: Your 1-9 priority preferences</li>
+<li><strong>Common project patterns</strong>: Typical project structures</li>
+<li><strong>Notion integration mappings</strong>: Block IDs for migration</li>
+</ul>
+<p dir="auto"><strong>Important</strong>: Tools like <code class="notranslate">read_tasks</code> and <code class="notranslate">search_tasks</code> use the <code class="notranslate">work_tag</code> from your personal preferences to identify work tasks. Without preferences, they default to looking for a "WORK" tag.</p>
+<p dir="auto">Example <code class="notranslate">private-prefs/personal-taxonomy.json</code>:</p>
+<div class="highlight highlight-source-json" dir="auto"><pre class="notranslate">{
+  <span class="pl-ent">"things3"</span>: {
+    <span class="pl-ent">"work_classification"</span>: {
+      <span class="pl-ent">"work_tag"</span>: <span class="pl-s"><span class="pl-pds">"</span>YOUR_WORK_TAG<span class="pl-pds">"</span></span>,
+      <span class="pl-ent">"work_areas"</span>: [<span class="pl-s"><span class="pl-pds">"</span>Your Work Area<span class="pl-pds">"</span></span>]
+    }
+  }
+}</pre></div>
+<p dir="auto">Personal preferences are automatically loaded by tools when available, but all tools work without them using sensible defaults.</p>
+<h2 dir="auto">Claude Code Skills</h2>
+<p dir="auto">Skills in <code class="notranslate">.claude/skills/</code> provide auto-loading workflow guidance:</p>
+<ul dir="auto">
+<li><strong>things3-productivity</strong> - Task management patterns, query strategies, automation workflows</li>
+<li><strong>notion-workflows</strong> - Workspace organization, content reuse patterns</li>
+<li><strong>productivity-integration</strong> - Cross-system automation strategies</li>
+<li><strong>inbox-processing.example</strong> - Example workflow for batch inbox processing (see directory for customization guide)</li>
+</ul>
+<p dir="auto">Skills reference personal preferences automatically to provide contextual guidance.</p>
+<p dir="auto"><strong>Note</strong>: You may have private skills in <code class="notranslate">.claude/skills/</code> that are gitignored (e.g., <code class="notranslate">inbox-processing/</code> with personal workflow patterns). These won't appear in the repository but will be available locally for your use.</p>
+<h2 dir="auto">Development</h2>
+<h3 dir="auto">Running Tools Directly</h3>
+<p dir="auto">Tools can be executed from command line for testing:</p>
+<div class="highlight highlight-source-shell" dir="auto"><pre class="notranslate"><span class="pl-c1">cd</span> tooling/scripts
+python3 read_tasks.py --when today --json
+python3 search_tasks.py <span class="pl-s"><span class="pl-pds">"</span>meeting<span class="pl-pds">"</span></span> --when today
+python3 create_task.py --title <span class="pl-s"><span class="pl-pds">"</span>Test task<span class="pl-pds">"</span></span> --when today</pre></div>
+<h3 dir="auto">Adding New Tools</h3>
+<ol dir="auto">
+<li>Create script in <code class="notranslate">tooling/scripts/</code></li>
+<li>Add tool definition to <code class="notranslate">tooling/mcp-server/tools-manifest.json</code></li>
+<li>Restart Claude Code MCP server</li>
+</ol>
+<h2 dir="auto">Architecture</h2>
+<ul dir="auto">
+<li><strong>AppleScript layer</strong>: Reliable task manipulation via Things3's native API</li>
+<li><strong>things.py</strong>: Direct SQLite access for fast search operations</li>
+<li><strong>MCP server</strong>: Standard interface for Claude Code integration</li>
+<li><strong>Skills</strong>: Auto-loading workflow guidance and personal context</li>
+</ul></div>
+    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggl Analysis - Avery</title>
+  <meta name="description" content="I tracked all my worked hours for over a year.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .project-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .project-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .project-tagline { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+    .project-stats { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .project-stats span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .project-stats i { color: var(--text-tertiary); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .project-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: border-color 0.2s ease; }
+    .project-link-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .readme-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; overflow-wrap: break-word; }
+    .readme-content h1, .readme-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    .readme-content h3, .readme-content h4, .readme-content h5, .readme-content h6 { margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .readme-content p { margin-bottom: 1.25rem; }
+    .readme-content ul, .readme-content ol { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .readme-content li { margin-bottom: 0.5rem; }
+    .readme-content a { color: var(--accent-primary); }
+    .readme-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .readme-content video { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 1.25rem; }
+    .readme-content details { margin-bottom: 1.25rem; }
+    .readme-content summary { cursor: pointer; padding: 0.4rem 0; color: var(--text-secondary); }
+    .readme-content summary svg { vertical-align: middle; fill: currentColor; }
+    .readme-content .dropdown-caret { display: none; }
+    .readme-content code { background: var(--bg-secondary); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    .readme-content pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+    .readme-content pre code { background: none; padding: 0; }
+    .readme-content blockquote { margin: 0 0 1.25rem; padding-left: 1rem; border-left: 3px solid var(--border-color); color: var(--text-secondary); }
+    .readme-content table { border-collapse: collapse; margin-bottom: 1.25rem; display: block; overflow-x: auto; }
+    .readme-content th, .readme-content td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+    .readme-content hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+    .project-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="project-container">
+    <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="project-header">
+      <h1 class="project-title">Toggl Analysis</h1>
+      <p class="project-tagline">I tracked all my worked hours for over a year.</p>
+      <div class="project-stats"><span><i class="fas fa-code"></i> HTML</span><span><i class="fas fa-star"></i> 1</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Mar 2026</span></div>
+      <div class="project-links">
+        <a class="project-link-btn" href="https://github.com/Avery2/Toggl-Analysis" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+        <a class="project-link-btn" href="https://www.averychan.site/Toggl-Analysis/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i> Live site</a>
+      </div>
+    </div>
+    <div class="readme-content">
+<p dir="auto">I tracked all my worked hours for over a year. This (will be) an analysis of that.</p>
+<p dir="auto"><a href="https://www.averychan.site/Toggl-Analysis/" rel="nofollow">https://www.averychan.site/Toggl-Analysis/</a></p>
+<h2 dir="auto">Places to do more</h2>
+<p dir="auto">I want to try to run a classification algorithm on the times to see if it's able to pick up any patterns in schedules.</p>
+<p dir="auto">I eventually want to cross reference with other sources of information. I used google calendar daily. I also have an app Qbserve that automatically tracks and categorizes computer usage.</p>
+<p dir="auto">For personal reference, I also have journal entries of varying detail to reference to see what effects my productivity or to see what interesting patterns there are.</p>
+<h2 dir="auto">Update March 20, 2026</h2>
+<p dir="auto">Since we now have the superpowers of AI, I had Claude run on this again and it had interesting outputs:</p>
+<p dir="auto">Here's the surprise: <strong>your data shows the exact opposite of what you expected.</strong></p>
+<h2 dir="auto">The Key Finding</h2>
+<p dir="auto">You hypothesized negative autocorrelation — "work 12 hours, crash the next day." But your data shows <strong>strong positive autocorrelation</strong>: r = +0.37, p &lt; 0.000001. High days are followed by high days, and low days are followed by low days.<br/>
+This <strong>persists</strong> after controlling for day-of-week (β = +0.374, p = 0.00007), so it's not just a weekday/weekend artifact. The day-of-week controls barely changed the coefficient at all (0.371 → 0.374), meaning your weekly schedule isn't driving this — it's a real momentum/persistence effect.</p>
+<h2 dir="auto">What the Numbers Mean</h2>
+<p dir="auto">For every extra hour you work today beyond your day-of-week average, you tend to work <strong>0.37 more hours</strong> tomorrow (not fewer). Your work comes in <em>streaks</em> — productive periods cluster together, and low periods cluster together. Look at the time series plot: you can see extended runs of high activity (especially spring 2020) and extended lulls.<br/>
+Even <strong>two days ago</strong> predicts today (β = 0.16, p = 0.006 in the two-lag model), reinforcing the streak interpretation.</p>
+<h2 dir="auto">Why Your Perception Might Differ</h2>
+<p dir="auto">A few things could explain why you <em>feel</em> a crash after a 12-hour day even though the statistics don't support it:<br/>
+The outlier days you remember most vividly (the 12+ hour days) might genuinely be followed by drops — but those are rare events, and the <strong>overall pattern</strong> across 514 days is dominated by momentum. You can see this in the scatter plot: the huge mass of points in the 0–8 hour range all trend upward. A few dramatic crash episodes are memorable but don't define the statistical trend.<br/>
+It's also possible the rebound effect is real but operates on a <em>weekly</em> timescale (you push hard for a week, then have a lighter week), which would show up at lag 7 rather than lag 1. The ACF plot shows significant positive autocorrelation at lag 7 too — so even at the weekly level, it's momentum, not compensation.</p>
+<h2 dir="auto">The Rigorous Statement You Can Make</h2>
+<blockquote>
+<p dir="auto">"Daily work hours exhibited significant positive lag-1 autocorrelation (r = 0.371, p &lt; 0.001, n = 514), indicating that above-average work days tended to be followed by above-average work days. This persistence effect held after controlling for day-of-week fixed effects (β = 0.374, SE = 0.093, p &lt; 0.001, HC1 robust SEs), and was present in both 2020 (r = 0.339) and 2021 (r = 0.276) individually. A two-lag model found that hours from two days prior also positively predicted today's hours (β = 0.164, p = 0.006), consistent with multi-day momentum in work patterns."<br/>
+One note: you have some entries over 24 hours in a single day (max looks like ~35h), likely from timers that started before midnight. You might want to clean those if you re-run this — though they're rare enough that they probably aren't driving the result.</p>
+</blockquote>
+<a href="https://github.com/Avery2/Toggl-Analysis#readme" rel="noopener noreferrer" target="_blank"><a href="https://github.com/Avery2/Toggl-Analysis#readme" rel="noopener noreferrer" target="_blank">View this media on GitHub</a></a></div>
+    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

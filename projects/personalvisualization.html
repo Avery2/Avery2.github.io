@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personalvisualization - Avery</title>
+  <meta name="description" content="Visualization of time tracking data for 2020. I will NOT do any stats on this.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .project-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .project-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .project-tagline { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+    .project-stats { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .project-stats span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .project-stats i { color: var(--text-tertiary); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .project-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: border-color 0.2s ease; }
+    .project-link-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .readme-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; overflow-wrap: break-word; }
+    .readme-content h1, .readme-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    .readme-content h3, .readme-content h4, .readme-content h5, .readme-content h6 { margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .readme-content p { margin-bottom: 1.25rem; }
+    .readme-content ul, .readme-content ol { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .readme-content li { margin-bottom: 0.5rem; }
+    .readme-content a { color: var(--accent-primary); }
+    .readme-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .readme-content video { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 1.25rem; }
+    .readme-content details { margin-bottom: 1.25rem; }
+    .readme-content summary { cursor: pointer; padding: 0.4rem 0; color: var(--text-secondary); }
+    .readme-content summary svg { vertical-align: middle; fill: currentColor; }
+    .readme-content .dropdown-caret { display: none; }
+    .readme-content code { background: var(--bg-secondary); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    .readme-content pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+    .readme-content pre code { background: none; padding: 0; }
+    .readme-content blockquote { margin: 0 0 1.25rem; padding-left: 1rem; border-left: 3px solid var(--border-color); color: var(--text-secondary); }
+    .readme-content table { border-collapse: collapse; margin-bottom: 1.25rem; display: block; overflow-x: auto; }
+    .readme-content th, .readme-content td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+    .readme-content hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+    .project-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="project-container">
+    <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="project-header">
+      <h1 class="project-title">Personalvisualization</h1>
+      <p class="project-tagline">Visualization of time tracking data for 2020. I will NOT do any stats on this.</p>
+      <div class="project-stats"><span><i class="fas fa-code"></i> HTML</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Nov 2022</span></div>
+      <div class="project-links">
+        <a class="project-link-btn" href="https://github.com/Avery2/PersonalVisualization" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+        <a class="project-link-btn" href="https://www.averychan.site/PersonalVisualization/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i> Live site</a>
+      </div>
+    </div>
+    <div class="readme-content"><h1 dir="auto">Work Visualization</h1>
+<p dir="auto">The data visualized here is my time spent doing various things (mostly work) that I collected using <a href="https://toggl.com/track/" rel="nofollow">Toggl</a> over a year. The visuals were created using <a href="https://observablehq.com/@avery2" rel="nofollow">Observable</a> and <a href="https://d3js.org/" rel="nofollow">d3.js</a>. Data parsing and exploration was done in R.</p>
+<p dir="auto">For best viewing experience view online <a href="https://www.averychan.site/PersonalVisualization/" rel="nofollow">here</a>. Source on <a href="https://github.com/Avery2/PersonalVisualization">github</a>.</p>
+<p dir="auto">Nov 14, 2022 4:20:28 PM TODO: note on how this conditioned me to work</p>
+<h2 dir="auto">Quick description</h2>
+<p dir="auto">The bubble chart kind of looks cool but it honestly doesn't tell me much.</p>
+<p dir="auto">The radix chart is the most interesting because it shows cyclical data such as extended periods of low or high work. It also shows patterns in the types of work done. Note that there were some 30 hour days when I started a timer close to midnight.</p>
+<p dir="auto">While the radix chart was the most interesting, I found the tree map to be most useful. It doesn't give great insight but it shows the relative proportions of each category well as well as giving me an idea of how much work one specific task took out of a year of work. Mostly, this informs me on how I should label an collect my data going forward.</p>
+<h2 dir="auto">Bubble Chart Year</h2>
+<p dir="auto"><a href="https://github.com/Avery2/PersonalVisualization/blob/main/Data/images/bubblechartkey.png" rel="noopener noreferrer" target="_blank"><img alt="Bubble Chart Key" loading="lazy" src="https://raw.githubusercontent.com/Avery2/PersonalVisualization/main/Data/images/bubblechartkey.png" style="max-width: 100%;"/></a><br/>
+<a href="https://github.com/Avery2/PersonalVisualization/blob/main/Data/images/bubblechartyear.svg" rel="noopener noreferrer" target="_blank"><img alt="Bubble Chart Year" loading="lazy" src="https://raw.githubusercontent.com/Avery2/PersonalVisualization/main/Data/images/bubblechartyear.svg" style="max-width: 100%;"/></a></p>
+<h2 dir="auto">Radix Year</h2>
+<p dir="auto"><a href="https://github.com/Avery2/PersonalVisualization/blob/main/Data/images/radixyear.svg" rel="noopener noreferrer" target="_blank"><img alt="Radix Year" loading="lazy" src="https://raw.githubusercontent.com/Avery2/PersonalVisualization/main/Data/images/radixyear.svg" style="max-width: 100%;"/></a></p>
+<h2 dir="auto">Tree Map Year</h2>
+<p dir="auto"><a href="https://github.com/Avery2/PersonalVisualization/blob/main/Data/images/treemapkey.png" rel="noopener noreferrer" target="_blank"><img alt="Tree Map Key" loading="lazy" src="https://raw.githubusercontent.com/Avery2/PersonalVisualization/main/Data/images/treemapkey.png" style="max-width: 100%;"/></a><br/>
+<a href="https://github.com/Avery2/PersonalVisualization/blob/main/Data/images/treemapyear.svg" rel="noopener noreferrer" target="_blank"><img alt="Tree Map Year" loading="lazy" src="https://raw.githubusercontent.com/Avery2/PersonalVisualization/main/Data/images/treemapyear.svg" style="max-width: 100%;"/></a></p></div>
+    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

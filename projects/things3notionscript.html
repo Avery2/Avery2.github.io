@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Things3Notionscript - Avery</title>
+  <meta name="description" content="Script that migrates todos in Things3 to Notion page or block.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .project-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .project-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .project-tagline { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+    .project-stats { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .project-stats span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .project-stats i { color: var(--text-tertiary); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .project-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: border-color 0.2s ease; }
+    .project-link-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .readme-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; overflow-wrap: break-word; }
+    .readme-content h1, .readme-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    .readme-content h3, .readme-content h4, .readme-content h5, .readme-content h6 { margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .readme-content p { margin-bottom: 1.25rem; }
+    .readme-content ul, .readme-content ol { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .readme-content li { margin-bottom: 0.5rem; }
+    .readme-content a { color: var(--accent-primary); }
+    .readme-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .readme-content video { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 1.25rem; }
+    .readme-content details { margin-bottom: 1.25rem; }
+    .readme-content summary { cursor: pointer; padding: 0.4rem 0; color: var(--text-secondary); }
+    .readme-content summary svg { vertical-align: middle; fill: currentColor; }
+    .readme-content .dropdown-caret { display: none; }
+    .readme-content code { background: var(--bg-secondary); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    .readme-content pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+    .readme-content pre code { background: none; padding: 0; }
+    .readme-content blockquote { margin: 0 0 1.25rem; padding-left: 1rem; border-left: 3px solid var(--border-color); color: var(--text-secondary); }
+    .readme-content table { border-collapse: collapse; margin-bottom: 1.25rem; display: block; overflow-x: auto; }
+    .readme-content th, .readme-content td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+    .readme-content hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+    .project-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="project-container">
+    <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="project-header">
+      <h1 class="project-title">Things3Notionscript</h1>
+      <p class="project-tagline">Script that migrates todos in Things3 to Notion page or block.</p>
+      <div class="project-stats"><span><i class="fas fa-code"></i> Python</span><span><i class="fas fa-star"></i> 15</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Jun 2025</span></div>
+      <div class="project-links">
+        <a class="project-link-btn" href="https://github.com/Avery2/things3notionscript" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+        
+      </div>
+    </div>
+    <div class="readme-content"><h3 dir="auto">Description</h3>
+<p dir="auto">Things3 to Notion workflow to migrate Things3 "notes" (items in the inbox with no title) to Notion. It will migrate notes in the inbox with no title or notes with the <code class="notranslate">migrate to notion</code> tag.</p>
+<h3 dir="auto">Setup</h3>
+<h4 dir="auto">Library installs</h4>
+<ul dir="auto">
+<li><code class="notranslate">pip3 install things.py</code></li>
+<li><code class="notranslate">pip3 install python-dotenv</code></li>
+<li><code class="notranslate">pip3 install notion-client</code></li>
+<li><code class="notranslate">pip3 install pyobjc</code></li>
+</ul>
+<h4 dir="auto"><code class="notranslate">.env</code> setup</h4>
+<ul dir="auto">
+<li>Setup the <code class="notranslate">.env</code> file, then you can use the scripts.
+<ul dir="auto">
+<li>Get a <a href="https://developers.notion.com/docs/authorization" rel="nofollow">secret token</a> from an <a href="https://www.notion.so/help/create-integrations-with-the-notion-api" rel="nofollow">Notion integration</a> <a href="https://www.notion.so/profile/integrations" rel="nofollow">here</a>.</li>
+<li>Set variable <code class="notranslate">NOTION_TOKEN</code> equal to your secret token.</li>
+</ul>
+</li>
+</ul>
+<p dir="auto">You can use this template</p>
+<pre class="notranslate"><code class="notranslate">DB_ID=""
+NOTION_TOKEN=""
+ALFRED_FILEPATH=""
+MOMENT_PAGE_CAPTURE_ID=""
+MOMENT_PAGE_WORK_ID=""
+</code></pre>
+<h3 dir="auto">Scripts</h3>
+<p dir="auto"><code class="notranslate">empty_things3_inbox_to_notion.py</code>: Takes a block id (i.e. <code class="notranslate">bf14e6e54b74464db2d2483e114455a6</code>) and migrates the things3 inbox items to that block (or page). You can get this link with <code class="notranslate">command + L</code> or from the end of the Notion URL.</p>
+<ul dir="auto">
+<li>Setup Instructions
+<ul dir="auto">
+<li>Enable permissions for the script: <code class="notranslate">chmod a+x empty_things3_inbox_to_notion.py</code></li>
+<li>Run the script: <code class="notranslate">python3 empty_things3_inbox_to_notion.py [block ID]</code>
+<ul dir="auto">
+<li>If no <code class="notranslate">block ID</code> given, it will try to infer from last used block ID</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 dir="auto">Debug</h3>
+<ul dir="auto">
+<li>Make sure your Things3 is up to date. This broke the Things3 python library for me before</li>
+</ul>
+<h3 dir="auto">References</h3>
+<ul dir="auto">
+<li><a href="https://github.com/thingsapi/things.py#documentation">Things3 python library</a></li>
+<li><a href="https://developers.notion.com/docs/getting-started" rel="nofollow">Notion API docs</a></li>
+<li><a href="https://github.com/ramnes/notion-sdk-py">Notion python sdk</a></li>
+<li>Why I like <a href="https://culturedcode.com/things/support/articles/2249437/" rel="nofollow">quick capture</a>: to <a href="https://notes.andymatuschak.org/z8d4eJNaKrVDGTFpqRnQUPRkexB7K6XbcffAV" rel="nofollow">Close open loops</a></li>
+<li><a href="https://culturedcode.com/things/support/articles/2803572/" rel="nofollow">Things3's Applescript Support</a></li>
+</ul></div>
+    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

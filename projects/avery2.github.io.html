@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avery2.Github.Io - Avery</title>
+  <meta name="description" content="My personal website.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .project-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .project-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .project-tagline { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+    .project-stats { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .project-stats span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .project-stats i { color: var(--text-tertiary); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .project-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: border-color 0.2s ease; }
+    .project-link-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .readme-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; overflow-wrap: break-word; }
+    .readme-content h1, .readme-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    .readme-content h3, .readme-content h4, .readme-content h5, .readme-content h6 { margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .readme-content p { margin-bottom: 1.25rem; }
+    .readme-content ul, .readme-content ol { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .readme-content li { margin-bottom: 0.5rem; }
+    .readme-content a { color: var(--accent-primary); }
+    .readme-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .readme-content video { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 1.25rem; }
+    .readme-content details { margin-bottom: 1.25rem; }
+    .readme-content summary { cursor: pointer; padding: 0.4rem 0; color: var(--text-secondary); }
+    .readme-content summary svg { vertical-align: middle; fill: currentColor; }
+    .readme-content .dropdown-caret { display: none; }
+    .readme-content code { background: var(--bg-secondary); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    .readme-content pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+    .readme-content pre code { background: none; padding: 0; }
+    .readme-content blockquote { margin: 0 0 1.25rem; padding-left: 1rem; border-left: 3px solid var(--border-color); color: var(--text-secondary); }
+    .readme-content table { border-collapse: collapse; margin-bottom: 1.25rem; display: block; overflow-x: auto; }
+    .readme-content th, .readme-content td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+    .readme-content hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+    .project-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="project-container">
+    <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="project-header">
+      <h1 class="project-title">Avery2.Github.Io</h1>
+      <p class="project-tagline">My personal website.</p>
+      <div class="project-stats"><span><i class="fas fa-code"></i> JavaScript</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 1</span><span><i class="fas fa-clock"></i> Updated Aug 2026</span></div>
+      <div class="project-links">
+        <a class="project-link-btn" href="https://github.com/Avery2/Avery2.github.io" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+        <a class="project-link-btn" href="https://www.averychan.site" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i> Live site</a>
+      </div>
+    </div>
+    <div class="readme-content"><h1 align="center" dir="auto">Personal Website</h1>
+<div align="center" dir="auto">
+
+
+</div><br/>
+<p dir="auto">A modern, automated personal website built with vanilla HTML, CSS, and JavaScript. Features automatic GitHub project integration, resume data extraction, and a responsive masonry grid layout.</p>
+<p dir="auto"><strong>Visit:</strong> <a href="https://www.averychan.site" rel="nofollow">https://www.averychan.site</a></p>
+<h2 dir="auto">✨ Features</h2>
+<ul dir="auto">
+<li>🎨 <strong>No Framework</strong> - Pure HTML/CSS/JavaScript, no build step required</li>
+<li>🔄 <strong>Auto-sync GitHub Projects</strong> - Automatically fetches and displays your repositories</li>
+<li>📄 <strong>Resume Integration</strong> - Extracts experience and education from your resume HTML</li>
+<li>🎯 <strong>Masonry Grid Layout</strong> - True CSS masonry with responsive columns</li>
+<li>🌓 <strong>Dark/Light Theme</strong> - Auto-detects system preference with manual override</li>
+<li>🔍 <strong>Search &amp; Filter</strong> - Filter projects by language, tags, and text search</li>
+<li>🚀 <strong>GitHub Actions</strong> - Automated metadata generation and deployment</li>
+</ul>
+<h2 dir="auto">🚀 Quick Start</h2>
+<p dir="auto">Visit <a href="https://github.com/Avery2/Avery2.github.io/blob/main/docs/FORKING.md" rel="noopener noreferrer">docs/FORKING.md</a> for detailed setup instructions.</p>
+<div class="highlight highlight-source-shell" dir="auto"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 1. Fork this repository</span>
+<span class="pl-c"><span class="pl-c">#</span> 2. Edit data/site-config.yml with your info</span>
+<span class="pl-c"><span class="pl-c">#</span> 3. Enable GitHub Actions and Pages</span>
+<span class="pl-c"><span class="pl-c">#</span> 4. Done! Your site is live</span></pre></div>
+<h2 dir="auto">🌐 Domain &amp; Uptime</h2>
+<ul dir="auto">
+<li><strong>Domain:</strong> <code class="notranslate">averychan.site</code> is registered and DNS-managed at <strong><a href="https://www.name.com" rel="nofollow">Name.com</a></strong>. If the site goes offline, check the DNS records there first — the custom domain (<code class="notranslate">www</code> CNAME → <code class="notranslate">avery2.github.io</code>, apex <code class="notranslate">A</code> records → <code class="notranslate">185.199.108–111.153</code>) can get reset to a registrar parking IP after a renewal.</li>
+<li><strong>Uptime alert:</strong> <a href="https://github.com/Avery2/Avery2.github.io/blob/main/.github/workflows/uptime.yml" rel="noopener noreferrer"><code class="notranslate">.github/workflows/uptime.yml</code></a> pings <code class="notranslate">https://www.averychan.site</code> every 6 hours. If it's down, the job fails and GitHub automatically emails the repo owner (its built-in workflow-failure notification — no secrets or email config required).</li>
+</ul>
+<h2 dir="auto">📚 Documentation</h2>
+<ul dir="auto">
+<li><a href="https://github.com/Avery2/Avery2.github.io/blob/main/docs/FORKING.md" rel="noopener noreferrer">Forking Guide</a> - How to make this your own</li>
+<li><a href="https://github.com/Avery2/Avery2.github.io/blob/main/docs/ARCHITECTURE.md" rel="noopener noreferrer">Architecture</a> - How the system works</li>
+<li><a href="https://github.com/Avery2/Avery2.github.io/blob/main/docs/TILE_GUIDE.md" rel="noopener noreferrer">Tile Guide</a> - Creating custom tiles</li>
+<li><a href="https://github.com/Avery2/Avery2.github.io/blob/main/docs/DEVELOPMENT.md" rel="noopener noreferrer">Development</a> - Local development setup</li>
+</ul></div>
+    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

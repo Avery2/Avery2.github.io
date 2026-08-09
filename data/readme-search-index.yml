@@ -1,0 +1,346 @@
+metadata:
+  generated_at: '2026-08-09T03:37:38.702773+00:00'
+  total_entries: 29
+readmes:
+  639-Final-Project: Link to interactive website source To run software run
+  Antibiotic-Visualization: This is a static visualization that communicates this
+    antibiotics data . View the final visualization here . View an incomplete but
+    dynamic version here . Technology R for data exploration , data manipulation,
+    and variable creation. Tableau for parallel visualization prototyping and then
+    heavy lifing of design. Final touches in Figma . Journey I started with just building
+    some context for the data. I aimed to visualize "how effective are these antibiotics."
+    After a quick google search, I learned a low minimum inhibitory concentration
+    (MIC) value means the antibiotic was more effective, and that was enough context
+    for the data to get going. I started exploring the data in R. I got a rough summary
+    of the data and found I needed to do some data manipulation. I needed to pivot
+    the data to facet it by and . Once I got this done and did some fiddling with
+    a faceted dot plot, I had a rough idea that I wanted to encode by value faceted
+    by . This new graph would aim to communicate which antibiotic was generally more
+    effective (across the 16 bacteria). The "faceted dot plot" and first Tableau visual
+    After these initial visuals, I noticed that it was still hard to compare the effectiveness
+    of each antibiotic. A large part of this is because I had chosen to facet by ,
+    it was hard to compare the value for the same across the faceted data. I would
+    have the same issue (but worse) if I had faceted instead, so I decided to encode
+    this comparison with color. To do this, I went back to R to generate a new variable
+    called that encoded an 's performance compared to the others for a given . took
+    on a value of with meaning it had the lowest MIC and meaning it had the most MIC.
+    Additionally, within each facet, I sorted by which to make it easier to compare
+    in aggregate the different facets. After these initial visuals, I noticed that
+    it was still hard to compare the effectiveness of each antibiotic. A large part
+    of this is because I had chosen to facet by , it was hard to compare the value
+  Avery2.github.io: 'Personal Website A modern, automated personal website built with
+    vanilla HTML, CSS, and JavaScript. Features automatic GitHub project integration,
+    resume data extraction, and a responsive masonry grid layout. Visit: https://www.averychan.site
+    ✨ Features 🎨 No Framework - Pure HTML/CSS/JavaScript, no build step required 🔄
+    Auto-sync GitHub Projects - Automatically fetches and displays your repositories
+    📄 Resume Integration - Extracts experience and education from your resume HTML
+    🎯 Masonry Grid Layout - True CSS masonry with responsive columns 🌓 Dark/Light
+    Theme - Auto-detects system preference with manual override 🔍 Search & Filter
+    - Filter projects by language, tags, and text search 🚀 GitHub Actions - Automated
+    metadata generation and deployment 🚀 Quick Start Visit docs/FORKING.md for detailed
+    setup instructions. 🌐 Domain & Uptime Domain: is registered and DNS-managed at
+    Name.com . If the site goes offline, check the DNS records there first — the custom
+    domain ( CNAME → , apex records → ) can get reset to a registrar parking IP after
+    a renewal. Uptime alert: pings every 6 hours. If it''s down, the job fails and
+    GitHub automatically emails the repo owner (its built-in workflow-failure notification
+    — no secrets or email config required). 📚 Documentation Forking Guide - How to
+    make this your own Architecture - How the system works Tile Guide - Creating custom
+    tiles Development - Local development setup'
+  Backpropagation-Neural-Network: 'Backpropagation-Nueral-Network Wrote this program
+    the summer after graduating high school. It was the cumulation of basic programming
+    skills I had into my first big project. This project was to make a neural network
+    from scratch without libraries. It learned to classify handwritten digits from
+    the MNIST database. I didn''t know how to use git correctly so its currently broken.
+    At some point it learned to have about 15-20% accurancy which is better than the
+    10% you would get from guessing but is still pretty bad. I used the following
+    sources to learn: MNIST database for handwritten digits Amazing videos on neural
+    networks by Grant Sanderson on his website and YouTube Channel Khan Acedemy Multivariable
+    Calculus Class (also taught by Grant Sanderson) Wikipedia'
+  ClassifyTerms: Classifying terms (from my google search data) with the Google Cloud
+    Natural Language API
+  Just-Read-Less-Features: 'Just Read Just Read makes it easy to view web articles
+    in a more readable, attractive, and custom format - like a read mode, but better.
+    It removes the distractions like ads, modals, and navigation from vision, letting
+    the user just read the content. Learn more about it by watching this video . Premium
+    features can be enabled by purchasing Just Read Premium . Please note that this
+    extension is meant to format article-type pages only . It is not built to reformat
+    other types of websites and is liable to not perform as one might expect. Installation:
+    Chrome / Brave / Opera / Edge Firefox Edge You can even use Just Read on your
+    smart phone through mobile browsers that support extensions such as Dolphin (iOS
+    or Android), Kiwi (Android), or Yandex (iOS or Android). For more information,
+    see the mobile installation instructions . Note that some of Just Read''s features
+    may not work on mobile devices. The story behind Just Read Hi, I''m Zach. I made
+    Just Read because I was tired of terribly hard to read web articles, especially
+    news sites. Before I made JR, I would manually use Chrome''s developer tools to
+    make a page more readable. Then at the UGA Hacks Fall 2015 hackathon, I decided
+    to make a reader mode for Chrome and ended up with the first version of Just Read
+    after 16 hours of work. After sharing it on Chrome''s web store, others seemed
+    to like it as well, and I''ve been working on it in my free time ever since. Privacy
+    statement Just Read collects zero data from users by default. If you sign up for
+    an account with Just Read, only your email address is stored. Just Read sends
+    analytics to no one else. Any data that Just Read stores is safely secured and
+    private. End-user license agreement (EULA) By using Just Read, you are agreeing
+    to Just Read''s EULA . FAQ Note: Any time you change something in Just Read''s
+    options page, you must restart any Just Read instances for the change to work.
+    Using Just Read features How can I start Just Read? On a desktop or laptop Start
+    Just Re'
+  PersonalVisualization: 'Work Visualization The data visualized here is my time spent
+    doing various things (mostly work) that I collected using Toggl over a year. The
+    visuals were created using Observable and d3.js . Data parsing and exploration
+    was done in R. For best viewing experience view online here . Source on github
+    . Nov 14, 2022 4:20:28 PM TODO: note on how this conditioned me to work Quick
+    description The bubble chart kind of looks cool but it honestly doesn''t tell
+    me much. The radix chart is the most interesting because it shows cyclical data
+    such as extended periods of low or high work. It also shows patterns in the types
+    of work done. Note that there were some 30 hour days when I started a timer close
+    to midnight. While the radix chart was the most interesting, I found the tree
+    map to be most useful. It doesn''t give great insight but it shows the relative
+    proportions of each category well as well as giving me an idea of how much work
+    one specific task took out of a year of work. Mostly, this informs me on how I
+    should label an collect my data going forward. Bubble Chart Year Radix Year Tree
+    Map Year'
+  Qbserve-Blocker: 'I was unable to find an app that blocks apps based on time-usage.
+    This is an attempt to see what I can do on my own. Notes in: https://www.notion.so/avery2/QbserveBlocker-883a2b8652eb45b4a0d0b07477871d93
+    . Gave up once I found a suitable solution using Freedom to schedule blocks on
+    certain applications. I still want a time-based block as well, but this was good
+    enough to the end project. Future work would use: Qbserve ''s scheduled exports
+    to track time usage Freedom ''s ability to block apps (using Selenium or Beautiful
+    Soup to make it automatic) Some system of scripts and mac automator to run the
+    script periodically possible resource'
+  Qbserve-data: Personal data of app usage recorded by Qbserve . View (incomplete)
+    analysis here .
+  SimpleReadme: 'You can add a README to your GitHub profile to tell other people
+    about yourself. ( docs ) SimpleReadme helps you make a simple yet good looking
+    README. You can use it online here to generate the text for you. Example Output:
+    Hi, I’m Avery 👋 I’m currently a computer science and data science double major
+    at the University of Wisconsin-Madison. This summer I am working as a developer
+    intern at Halo Science . Example Source: See my profile in this style. Instructions
+    (Automatic) Create a repository that is the same as your github username (for
+    example: GitHubUser/GitHubUser) Create a README.md in that repository Use the
+    autogenerator here to generate the README text. Paste the text into your README
+    Done! You can also make any edits you want. Note: If the link to the tool is ever
+    down you can still use it by downloading this repo and opening index.html locally.
+    Instructions (Manual) Create a repository that is the same as your github username
+    (for example: GitHubUser/GitHubUser) Create a README.md in that repository Add
+    the following text (in "Raw Text"), and make replacements as described below (in
+    "Replacement Instructions") Add your Resume to the respository (optional) Replace
+    the bio placeholder Done! It should show up at your profile. Raw Text Replacement
+    Instructions Replace the following text. Count included to make sure you get each
+    one. Text to replace Count Description FIRST_LAST 3 Your name LINKED_IN_PROFILE_LINK
+    1 Link to your LinkedIn profile MY_EMAIL 2 Your email (assumes Gmail extension)
+    MY_WEBSITE_URL 3 Your website URL PATH_TO_RESUME 1 The path to your resume file
+    (you can add it to this repo) TIME_LAST_UPDATED 1 Last time your Resume was updated.
+    (Ex: "Jun 2001") Resources Tools for this README Tool Link Sheilds.io for the
+    badges link Other Cool Resources Tool Link Profile-readme for recent activity
+    link Github-readme-stats for the GitHub stats summary link Productive-box for
+    pinned gist (below) of commit times link List of many tools and examples link'
+  SpotifyDataAnalysis: 240 Final Project View online here . Data from here . The final
+    project for a statistics class (STAT 240) analyzing Spotify data from kaggle.
+    Created with R Markdown.
+  Toggl-Analysis: 'I tracked all my worked hours for over a year. This (will be) an
+    analysis of that. https://www.averychan.site/Toggl-Analysis/ Places to do more
+    I want to try to run a classification algorithm on the times to see if it''s able
+    to pick up any patterns in schedules. I eventually want to cross reference with
+    other sources of information. I used google calendar daily. I also have an app
+    Qbserve that automatically tracks and categorizes computer usage. For personal
+    reference, I also have journal entries of varying detail to reference to see what
+    effects my productivity or to see what interesting patterns there are. Update
+    March 20, 2026 Since we now have the superpowers of AI, I had Claude run on this
+    again and it had interesting outputs: Here''s the surprise: your data shows the
+    exact opposite of what you expected. The Key Finding You hypothesized negative
+    autocorrelation — "work 12 hours, crash the next day." But your data shows strong
+    positive autocorrelation : r = +0.37, p < 0.000001. High days are followed by
+    high days, and low days are followed by low days. This persists after controlling
+    for day-of-week (β = +0.374, p = 0.00007), so it''s not just a weekday/weekend
+    artifact. The day-of-week controls barely changed the coefficient at all (0.371
+    → 0.374), meaning your weekly schedule isn''t driving this — it''s a real momentum/persistence
+    effect. What the Numbers Mean For every extra hour you work today beyond your
+    day-of-week average, you tend to work 0.37 more hours tomorrow (not fewer). Your
+    work comes in streaks — productive periods cluster together, and low periods cluster
+    together. Look at the time series plot: you can see extended runs of high activity
+    (especially spring 2020) and extended lulls. Even two days ago predicts today
+    (β = 0.16, p = 0.006 in the two-lag model), reinforcing the streak interpretation.
+    Why Your Perception Might Differ A few things could explain why you feel a crash
+    after a 12-hour day even though the statistics don''t support it: The outlier'
+  automate-exalidraw: Screen.Recording.2022-09-25.at.2.52.47.PM.mov The reason for
+    putting in exalidraw is to be able to share with non-technical people a script
+    that creates something for them in an editable form.
+  controller-input-canvas: 'Game Controller Input Skeleton App This skeleton app provides
+    a starting point for building your 2D game using controller inputs. It offers
+    a simple HTML and JavaScript tech stack, allowing you to leverage gamepad functionality
+    to create an interactive game experience. Introduction This skeleton app is a
+    foundation for developing games that utilize game controller inputs. It demonstrates
+    the integration of gamepad functionality into a web-based application and provides
+    a starting point for implementing your game mechanics and features. Google.Chrome-Xbox.Controller.Game-2023-06-29-000986.mp4
+    Features Gamepad Input: The app captures various inputs from game controllers,
+    such as joystick movements, button presses, bumper clicks, and trigger interactions.
+    Canvas Rendering: The app provides a basic rendering system using HTML5 canvas,
+    allowing you to draw and animate game elements. Controller Mapping: The app maps
+    button indices to their corresponding actions, providing a starting point for
+    handling different gamepad inputs. Game Loop: The app utilizes a mechanism to
+    update and render the game state at a consistent frame rate. Getting Started To
+    use this skeleton app as a starting point for your game development: Clone or
+    download the repository to your local machine. Open the file in a web browser
+    that supports the Gamepad API. Connect a compatible gamepad to your computer,
+    preferably an Xbox controller. The app will automatically detect the connected
+    gamepad and capture its input. Use the provided code structure and functions as
+    a foundation for your game development. Customize and expand the app to create
+    game mechanics, levels, and interactions using game controller inputs. Usage and
+    Customization Update the function in to handle specific gamepad inputs and implement
+    your desired game logic. Modify the rendering code in the function to draw your
+    game elements, animations, and user interface on the canvas. Extend the functionality
+    by adding new functions, objects, an'
+  git-message-helper: 'Takes the output from (list of commits) and organizes the output
+    by file. Then it styles the output for GitHub, optionally leveraging for expandable
+    content. Works best with conventional commits . It''s like a bad gitlens . How
+    to run Command to take the last commits, filtered for authors with in their name:
+    For me, in other directories: There are also optional flags in > that you can
+    edit by editing the script locally. Example Command: Console output: Output in
+    GitHub: with commits a03beaf Update README.md cd211b5 docs: update README 8465c43
+    Update README.md 665047e Update README.md 95797eb Update README.md 98b5031 Update
+    README.md 394f360 Update README.md 851a015 Update README.md 28c1fab Update README.md
+    cc94819 Update README.md 2dd0560 docs: Update README.md de3b482 docs: Create README.md
+    with commits 0bb4618 feat: take input from stdin instead of from a file 56c4f5e
+    feat: show number of changes and sort bb9af5e docs: update comments 6c52f66 style:
+    update prints f126fd8 fix: work with commit hashes of smaller sizes 001f363 feat:
+    strip AMP messages 89272ad feat: add code styling da30be6 feat: add detail and
+    file shortening options 5da75f5 style: refactor into function 1ce8a08 initial
+    commit 🚀 with commits 1ce8a08 initial commit 🚀 with commits 1ce8a08 initial commit
+    🚀 The commit hashes will be styled in comments:'
+  graffiti-template-generator: 'NOTE: If you like this, this tool is just better:
+    https://www.vectorizer.io/ Example Before + After (combined) Example Video Google.Chrome-Graffiti.Template.Generator-2023-11-18-001535.mp4
+    Then Trace template on screen Cut out Use as graffiti template'
+  life-to-24h: https://www.averychan.site/life-to-24h/
+  netflix-data-clean: netflix-data Just looking at netflix data.
+  normal-resume: 'Version control for my resume. Now a PDF generates from html so
+    I can vibe code my resume. Making updates (source of truth) is the single source
+    of truth. Everything else is generated or derived from it. Content → edit Styling/layout
+    → edit (Playwright) renders the HTML + into — do not edit the PDF by hand is just
+    a web viewer that embeds the generated PDF; no resume content lives there Flow
+    to ship an update: edit the HTML (and if needed) → commit → push to . GitHub Actions
+    regenerates and commits it back, which updates the live links below. To preview
+    locally first, run . Ops GitHub README and personal website both point to the
+    file . You need to keep the pages environment up for the link to the file to work
+    Link to file: https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf
+    Record where I add links here incase I ever change url again. Linked to from:
+    [Website] About page [Website] Resume nav link [GitHub README] Badge LinkedIn
+    Profile Dev Resume Generator Local PDF generation: GitHub Actions: Auto-generates
+    PDF on push to main/html-workflow or manual dispatch. PDF commits back to repo
+    for GitHub Pages.'
+  rdojowebapp: 'Rdojo Kombat Timer A timer app for scoring Rdojo Kombat sparring matches.
+    Site https://www.rdojo.com/kombat Rules https://docs.google.com/document/d/e/2PACX-1vS5HqSPO-t3bE6pGpcyaTLcQhC8TH3K7YTmBZieiyzm5mFa_mLykbsV6GbQS0ueL6WGN0_bJz5daIgi/pub
+    Quick Start Use Online: www.averychan.site/rdojowebapp/ Use Locally: Download
+    this folder and open in your web browser (Chrome, Firefox, Safari, etc.) How to
+    Use Before Starting Click Settings (or press S ) Enter fighter names (optional)
+    Click Save Changes During the Match Click Start Match (or press Space ) Use the
+    control buttons or arrow keys to mark who has control: ← or 1 = Fighter A has
+    control ↓ or 2 = No control (neutral) → or 3 = Fighter B has control Watch the
+    countdown in each fighter''s card - points award automatically every 3 seconds
+    Ending a Round Click Submission or Stoppage , then choose which fighter won Or
+    let the timer run out for a decision Other Controls Space = Pause/Resume S = Open
+    settings Reset = Start over from any round Important Notes The app auto-saves
+    your match - you can refresh without losing anything On mobile, scores and timer
+    stay visible at the top while scrolling Customize round durations and points in
+    if needed Support For rule details, see the official Rdojo Kombat rulebook PDF.'
+  rename-contacts: To just copy the code go to 🪤.app/Contents/Resources/Scripts
+  slack-duck-message-generator: Screen.Recording.2022-09-26.at.5.46.11.PM.mov See
+    folder for raw files to add to Slack as custom emojis. Some emojis made with pixilart.com
+    .
+  steam-hours: Analyzing data pulled from steam API to see how many hours I've played.
+    Use python to do API requests and output a csv file. Read csv with the Rmd file
+    to do analysis. Output to gh-pages. Go to your steam profile and copy the number
+    in the url. Replace the variable in the python file to fetch your information.
+    Links https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_.28v0001.29
+    https://docs.python-requests.org/en/latest/user/quickstart/ https://steamidfinder.com/
+    https://www.w3schools.com/python/python_json.asp https://partner.steamgames.com/doc/webapi/ISteamApps#GetAppList
+    https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html
+  sun-calendar: '☀️ Automatically updated sunrise/sunset calendar (ICS) A simple ICS
+    calendar that shows daily sunrise & sunset times in San Francisco . Github: https://github.com/Avery2/sun-calendar
+    🗓️ Usage Subscribe to this link ("by URL") in your calendar app: 👆 If you fork
+    it for yourself, your URL will be different Sunrise and Sunset times for the current
+    week should appear in your calendar like this: View this media on GitHub View
+    this media on GitHub 💻 Dev Usage + Notes To generate the isc file, run Uses this
+    awesome free sun API: https://sunrise-sunset.org/api Uses isc python library https://icspy.readthedocs.io/en/stable/
+    The isc file is exposed by hosting on GH pages Location is set to San Francisco
+    by default If you want to use a different location, change the lat and long coordinates
+    in You can get the lat and long coordinates from google maps by right clicking
+    If you want it to auto-update, you''ll have to fork this and host it on your own
+    github pages. You''ll have to update the workflow file to point to your repo too.
+    This only loads data for a week and it runs a cron job every three days to stay
+    updated using GitHub workflows.'
+  text-to-spooch: 'Install To run follow the following installation instructions:
+    pydub simpleaudio Run Run (bad) recording: Screen.Recording.2021-07-28.at.7.30.13.PM.mov
+    Other Audio from here pydub speed change stackoverflow link pydub remove silences
+    stackoverflow link'
+  things3-mcp-tools: 'Except for specific skills and scripts that I added, I would
+    recommend this MCP instead: https://github.com/hald/things-mcp Model Context Protocol
+    (MCP) tools for Things3 task management with optional Notion integration. Provides
+    comprehensive automation for Things3 via AppleScript and direct SQLite access,
+    with Claude Code skills for workflow guidance. Demo View this media on GitHub
+    What This Provides MCP Tools for Things3: Complete task management (create, read,
+    update, delete, search) Direct SQLite access for fast search across titles and
+    notes AppleScript integration for reliable task manipulation Bulk operations (tagging,
+    moving, completing tasks) Project and area management Optional Notion Integration:
+    Migrate Things3 inbox items to Notion Cross-system workflow patterns via Claude
+    skills Claude Code Skills: Auto-loading workflow guidance for productivity tasks
+    Personal taxonomy integration for work contexts Best practices and automation
+    patterns Repository Structure Setup Prerequisites macOS with Things3 installed
+    Python 3.11+ Claude Code (for skills integration) Optional: Notion account (for
+    Notion integration features) Installation Install dependencies: Configure MCP
+    server in Claude Code: Add to your Claude Code MCP settings: Optional: Set up
+    personal preferences: Adding Notion MCP (Optional) You can use both Things3 and
+    Notion MCP tools together in Claude Code. You can read about the Notion MCP here
+    . Available Tools Task Management - List and filter tasks by list, area, project,
+    tags, priority, or status - Fast SQLite search across task titles and notes -
+    Create new tasks with tags, scheduling, and project assignment - Modify existing
+    tasks (title, notes, tags, scheduling, completion) - Move tasks to trash (with
+    confirmation) - Mark tasks as completed - Move tasks between lists (Today, Anytime,
+    Someday, etc.) Organization / - Bulk tag management / / - Browse organizational
+    structure / - Create new organizational containers - View all tasks within a projec'
+  things3notionscript: 'Description Things3 to Notion workflow to migrate Things3
+    "notes" (items in the inbox with no title) to Notion. It will migrate notes in
+    the inbox with no title or notes with the tag. Setup Library installs setup Setup
+    the file, then you can use the scripts. Get a secret token from an Notion integration
+    here . Set variable equal to your secret token. You can use this template Scripts
+    : Takes a block id (i.e. ) and migrates the things3 inbox items to that block
+    (or page). You can get this link with or from the end of the Notion URL. Setup
+    Instructions Enable permissions for the script: Run the script: If no given, it
+    will try to infer from last used block ID Debug Make sure your Things3 is up to
+    date. This broke the Things3 python library for me before References Things3 python
+    library Notion API docs Notion python sdk Why I like quick capture : to Close
+    open loops Things3''s Applescript Support'
+  wordle-helper: 'Words lists from 3b1b . Warning: Docs are out of date. Everything
+    below is correct but there are undocumented features. Usage (calls under the hood)
+    Type the response for each wordle guess. Press the same character multiple times
+    to change it''s color. Press enter to lock in that character. usage: : Characters
+    with known positions as a string of length 5 with as placeholders such as . :
+    Characters that are included in the word but in unkown location in the form .
+    Use if there are none. : Characters that are excluded in the word in the form
+    . Use if there are none. : Characters with known positinois where they do not
+    exist with seperating each position such as Examples example Example of wordle
+    and matching command: example'
+  xv6_memoryencrypt: 'Memory Encryption in xv6 Project for my OS class 537 (p5). Enables
+    memory encryption for the xv6 operating system. Required understanding virtual
+    memory, page tables, and trap handlers. Also required modifying page table entries
+    and the trap handler that handles page faults. xv6 NOTE: we have stopped maintaining
+    the x86 version of xv6, and switched our efforts to the RISC-V version ( https://github.com/mit-pdos/xv6-riscv.git
+    ) xv6 is a re-implementation of Dennis Ritchie''s and Ken Thompson''s Unix Version
+    6 (v6). xv6 loosely follows the structure and style of v6, but is implemented
+    for a modern x86-based multiprocessor using ANSI C. ACKNOWLEDGMENTS xv6 is inspired
+    by John Lions''s Commentary on UNIX 6th Edition (Peer to Peer Communications;
+    ISBN: 1-57398-013-7; 1st edition (June 14, 2000)). See also https://pdos.csail.mit.edu/6.828/
+    , which provides pointers to on-line resources for v6. xv6 borrows code from the
+    following sources: JOS (asm.h, elf.h, mmu.h, bootasm.S, ide.c, console.c, and
+    others) Plan 9 (entryother.S, mp.h, mp.c, lapic.c) FreeBSD (ioapic.c) NetBSD (console.c)
+    The following people have made contributions: Russ Cox (context switching, locking),
+    Cliff Frey (MP), Xiao Yu (MP), Nickolai Zeldovich, and Austin Clements. We are
+    also grateful for the bug reports and patches contributed by Silas Boyd-Wickizer,
+    Anton Burtsev, Cody Cutler, Mike CAT, Tej Chajed, eyalz800, Nelson Elhage, Saar
+    Ettinger, Alice Ferrazzi, Nathaniel Filardo, Peter Froehlich, Yakir Goaron,Shivam
+    Handa, Bryan Henry, Jim Huang, Alexander Kapshuk, Anders Kaseorg, kehao95, Wolfgang
+    Keller, Eddie Kohler, Austin Liew, Imbar Marinescu, Yandong Mao, Matan Shabtay,
+    Hitoshi Mitake, Carmi Merimovich, Mark Morrissey, mtasm, Joel Nider, Greg Price,
+    Ayan Shafqat, Eldar Sehayek, Yongming Shen, Cam Tenny, tyfkda, Rafael Ubal, Warren
+    Toomey, Stephen Tu, Pablo Ventura, Xi Wang, Keiichi Watanabe, Nicolas Wolovick,
+    wxdao, Grant Wu, Jindong Zhang, Icenowy Zheng, and Zou Chang Wei. The code in
+    the files that '

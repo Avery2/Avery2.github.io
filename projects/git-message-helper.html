@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Message Helper - Avery</title>
+  <meta name="description" content="Generates text for PR descriptions that groups commits by file and makes it pretty.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .project-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .project-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .project-tagline { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+    .project-stats { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .project-stats span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .project-stats i { color: var(--text-tertiary); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .project-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: border-color 0.2s ease; }
+    .project-link-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .readme-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; overflow-wrap: break-word; }
+    .readme-content h1, .readme-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    .readme-content h3, .readme-content h4, .readme-content h5, .readme-content h6 { margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .readme-content p { margin-bottom: 1.25rem; }
+    .readme-content ul, .readme-content ol { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .readme-content li { margin-bottom: 0.5rem; }
+    .readme-content a { color: var(--accent-primary); }
+    .readme-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .readme-content video { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 1.25rem; }
+    .readme-content details { margin-bottom: 1.25rem; }
+    .readme-content summary { cursor: pointer; padding: 0.4rem 0; color: var(--text-secondary); }
+    .readme-content summary svg { vertical-align: middle; fill: currentColor; }
+    .readme-content .dropdown-caret { display: none; }
+    .readme-content code { background: var(--bg-secondary); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    .readme-content pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+    .readme-content pre code { background: none; padding: 0; }
+    .readme-content blockquote { margin: 0 0 1.25rem; padding-left: 1rem; border-left: 3px solid var(--border-color); color: var(--text-secondary); }
+    .readme-content table { border-collapse: collapse; margin-bottom: 1.25rem; display: block; overflow-x: auto; }
+    .readme-content th, .readme-content td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+    .readme-content hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+    .project-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="project-container">
+    <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="project-header">
+      <h1 class="project-title">Git Message Helper</h1>
+      <p class="project-tagline">Generates text for PR descriptions that groups commits by file and makes it pretty.</p>
+      <div class="project-stats"><span><i class="fas fa-code"></i> Python</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Oct 2022</span></div>
+      <div class="project-links">
+        <a class="project-link-btn" href="https://github.com/Avery2/git-message-helper" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+        
+      </div>
+    </div>
+    <div class="readme-content">
+<p dir="auto">Takes the output from <code class="notranslate">git log --name-only --oneline</code> (list of commits) and organizes the output by file. Then it styles the output for GitHub, optionally leveraging <a href="https://gist.github.com/scmx/eca72d44afee0113ceb0349dd54a84a2"><code class="notranslate">&lt;details&gt;</code> <code class="notranslate">&lt;summary&gt;</code></a> for expandable content. Works best with <a href="https://www.conventionalcommits.org/en/v1.0.0/" rel="nofollow">conventional commits</a>. It's like a bad <a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens" rel="nofollow">gitlens</a>.</p>
+<h2 dir="auto">How to run</h2>
+<p dir="auto">Command to take the last <code class="notranslate">n=10</code> commits, filtered for authors with <code class="notranslate">"avery"</code> in their name:</p>
+<pre class="notranslate"><code class="notranslate">git log --name-only --oneline -n 10 --author="avery" | python3 organize.py
+</code></pre>
+<p dir="auto">For me, in other directories:</p>
+<pre class="notranslate"><code class="notranslate">git log --name-only --oneline -n 10 --author="avery" | python3 /Users/avery.chan/Desktop/organize_pr/organize.py
+</code></pre>
+<p dir="auto">There are also optional flags in <code class="notranslate">organize.py</code> &gt; <code class="notranslate">def printableVersion</code> that you can edit by editing the script locally.</p>
+<h2 dir="auto">Example</h2>
+<h3 dir="auto">Command:</h3>
+<pre class="notranslate"><code class="notranslate">git log --name-only --oneline -n 24 | python3 /Users/avery.chan/Desktop/organize_pr/organize.py
+</code></pre>
+<h3 dir="auto">Console output:</h3>
+<pre class="notranslate"><code class="notranslate">&lt;details&gt;&lt;summary&gt;&lt;code&gt;README.md&lt;/code&gt; with &lt;code&gt;12&lt;/code&gt; commits&lt;/summary&gt;
+
+- a03beaf Update README.md
+- cd211b5 docs: update README
+- 8465c43 Update README.md
+- 665047e Update README.md
+- 95797eb Update README.md
+- 98b5031 Update README.md
+- 394f360 Update README.md
+- 851a015 Update README.md
+- 28c1fab Update README.md
+- cc94819 Update README.md
+- 2dd0560 docs: Update README.md
+- de3b482 docs: Create README.md
+
+&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;&lt;code&gt;organize.py&lt;/code&gt; with &lt;code&gt;10&lt;/code&gt; commits&lt;/summary&gt;
+
+- 0bb4618 feat: take input from stdin instead of from a file
+- 56c4f5e feat: show number of changes and sort
+- bb9af5e docs: update comments
+- 6c52f66 style: update prints
+- f126fd8 fix: work with commit hashes of smaller sizes
+- 001f363 feat: strip AMP messages
+- 89272ad feat: add code styling
+- da30be6 feat: add detail and file shortening options
+- 5da75f5 style: refactor into function
+- 1ce8a08 initial commit 🚀
+
+&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;&lt;code&gt;.gitignore&lt;/code&gt; with &lt;code&gt;1&lt;/code&gt; commits&lt;/summary&gt;
+
+- 1ce8a08 initial commit 🚀
+
+&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;&lt;code&gt;organize.ipynb&lt;/code&gt; with &lt;code&gt;1&lt;/code&gt; commits&lt;/summary&gt;
+
+- 1ce8a08 initial commit 🚀
+
+&lt;/details&gt;
+</code></pre>
+<h3 dir="auto">Output in GitHub:</h3>
+<details><summary><code class="notranslate">README.md</code> with <code class="notranslate">12</code> commits</summary>
+<ul dir="auto">
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/a03beafc2b5fcec38b2c4a8ff97a5dece1a37e95/hovercard" href="https://github.com/Avery2/git-message-helper/commit/a03beafc2b5fcec38b2c4a8ff97a5dece1a37e95"><tt>a03beaf</tt></a> Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/cd211b5b113e78ec3ba3ae2689be2c084d50057b/hovercard" href="https://github.com/Avery2/git-message-helper/commit/cd211b5b113e78ec3ba3ae2689be2c084d50057b"><tt>cd211b5</tt></a> docs: update README</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/8465c4375f1d55bc802aec2b0060a3271dbc132e/hovercard" href="https://github.com/Avery2/git-message-helper/commit/8465c4375f1d55bc802aec2b0060a3271dbc132e"><tt>8465c43</tt></a> Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/665047e7f866fe198d11da8f9a4e0294cf53f030/hovercard" href="https://github.com/Avery2/git-message-helper/commit/665047e7f866fe198d11da8f9a4e0294cf53f030"><tt>665047e</tt></a> Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/95797eb664f76de786b5cb38aac82ad99154361c/hovercard" href="https://github.com/Avery2/git-message-helper/commit/95797eb664f76de786b5cb38aac82ad99154361c"><tt>95797eb</tt></a> Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/98b50318957889e5ada8af39894c39a5374670fe/hovercard" href="https://github.com/Avery2/git-message-helper/commit/98b50318957889e5ada8af39894c39a5374670fe"><tt>98b5031</tt></a> Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/394f360a19ee3559b3b5979e9532d8186f5dc9d0/hovercard" href="https://github.com/Avery2/git-message-helper/commit/394f360a19ee3559b3b5979e9532d8186f5dc9d0"><tt>394f360</tt></a> Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/851a01526eafcfe8cf0050c2405cbbe264202ebd/hovercard" href="https://github.com/Avery2/git-message-helper/commit/851a01526eafcfe8cf0050c2405cbbe264202ebd"><tt>851a015</tt></a> Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/28c1fab9e21ebb2432e86aad9db73711bce32167/hovercard" href="https://github.com/Avery2/git-message-helper/commit/28c1fab9e21ebb2432e86aad9db73711bce32167"><tt>28c1fab</tt></a> Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/cc94819e4b4350923eaec44cdda7420c26200d71/hovercard" href="https://github.com/Avery2/git-message-helper/commit/cc94819e4b4350923eaec44cdda7420c26200d71"><tt>cc94819</tt></a> Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/2dd0560d5324f262dcb79b18f4911c6bd1a73a34/hovercard" href="https://github.com/Avery2/git-message-helper/commit/2dd0560d5324f262dcb79b18f4911c6bd1a73a34"><tt>2dd0560</tt></a> docs: Update README.md</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/de3b4822f7e297277e99c76dcf2b5e2adfc5ca84/hovercard" href="https://github.com/Avery2/git-message-helper/commit/de3b4822f7e297277e99c76dcf2b5e2adfc5ca84"><tt>de3b482</tt></a> docs: Create README.md</li>
+</ul>
+</details>
+<details><summary><code class="notranslate">organize.py</code> with <code class="notranslate">10</code> commits</summary>
+<ul dir="auto">
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/0bb4618e82961f8da3d7d33e3ffa3e56ba9f3b6c/hovercard" href="https://github.com/Avery2/git-message-helper/commit/0bb4618e82961f8da3d7d33e3ffa3e56ba9f3b6c"><tt>0bb4618</tt></a> feat: take input from stdin instead of from a file</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/56c4f5e565f0a888bf4af88f2f459fb6a6d7b56d/hovercard" href="https://github.com/Avery2/git-message-helper/commit/56c4f5e565f0a888bf4af88f2f459fb6a6d7b56d"><tt>56c4f5e</tt></a> feat: show number of changes and sort</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/bb9af5eb360de45278f8fd14ff47821ad9247b1f/hovercard" href="https://github.com/Avery2/git-message-helper/commit/bb9af5eb360de45278f8fd14ff47821ad9247b1f"><tt>bb9af5e</tt></a> docs: update comments</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/6c52f66103d3fc9016cd77734cd1a89d3e2d9ecd/hovercard" href="https://github.com/Avery2/git-message-helper/commit/6c52f66103d3fc9016cd77734cd1a89d3e2d9ecd"><tt>6c52f66</tt></a> style: update prints</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/f126fd88f93d77bc8d8ecf5d51641634af1991ba/hovercard" href="https://github.com/Avery2/git-message-helper/commit/f126fd88f93d77bc8d8ecf5d51641634af1991ba"><tt>f126fd8</tt></a> fix: work with commit hashes of smaller sizes</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/001f3639af871542c815566b7c8cdef2233bbfc3/hovercard" href="https://github.com/Avery2/git-message-helper/commit/001f3639af871542c815566b7c8cdef2233bbfc3"><tt>001f363</tt></a> feat: strip AMP messages</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/89272adb4a6a92f7b04d3363adbf0e37b69c0259/hovercard" href="https://github.com/Avery2/git-message-helper/commit/89272adb4a6a92f7b04d3363adbf0e37b69c0259"><tt>89272ad</tt></a> feat: add code styling</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/da30be6d5f4c507a6d4f72777501085a441d3be6/hovercard" href="https://github.com/Avery2/git-message-helper/commit/da30be6d5f4c507a6d4f72777501085a441d3be6"><tt>da30be6</tt></a> feat: add detail and file shortening options</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/5da75f59db32d6010ff019cd340777fdaf6bce32/hovercard" href="https://github.com/Avery2/git-message-helper/commit/5da75f59db32d6010ff019cd340777fdaf6bce32"><tt>5da75f5</tt></a> style: refactor into function</li>
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/1ce8a085ea359af694f9b71130ff973ebc2d6334/hovercard" href="https://github.com/Avery2/git-message-helper/commit/1ce8a085ea359af694f9b71130ff973ebc2d6334"><tt>1ce8a08</tt></a> initial commit 🚀</li>
+</ul>
+</details>
+<details><summary><code class="notranslate">.gitignore</code> with <code class="notranslate">1</code> commits</summary>
+<ul dir="auto">
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/1ce8a085ea359af694f9b71130ff973ebc2d6334/hovercard" href="https://github.com/Avery2/git-message-helper/commit/1ce8a085ea359af694f9b71130ff973ebc2d6334"><tt>1ce8a08</tt></a> initial commit 🚀</li>
+</ul>
+</details>
+<details><summary><code class="notranslate">organize.ipynb</code> with <code class="notranslate">1</code> commits</summary>
+<ul dir="auto">
+<li><a class="commit-link" data-hovercard-type="commit" data-hovercard-url="https://github.com/Avery2/git-message-helper/commit/1ce8a085ea359af694f9b71130ff973ebc2d6334/hovercard" href="https://github.com/Avery2/git-message-helper/commit/1ce8a085ea359af694f9b71130ff973ebc2d6334"><tt>1ce8a08</tt></a> initial commit 🚀</li>
+</ul>
+</details>
+<p dir="auto">The commit hashes will be styled in comments:</p>
+<p dir="auto"><a href="https://user-images.githubusercontent.com/53503018/193481457-3a8dc408-41d7-4c05-8847-72d80e476913.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="image" loading="lazy" src="https://user-images.githubusercontent.com/53503018/193481457-3a8dc408-41d7-4c05-8847-72d80e476913.png" style="max-width: 100%;" width="931"/></a></p></div>
+    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

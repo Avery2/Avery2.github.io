@@ -227,6 +227,17 @@ function applyCommonTileAttributes(element, tileData) {
 }
 
 /**
+ * Pages generated onto this site (project READMEs, resume detail pages) stay
+ * in the current tab; anything pointing off-site opens in a new one.
+ * @param {string} url - Destination URL
+ * @returns {string} Anchor target/rel attributes
+ */
+function externalLinkAttributes(url) {
+  const isInternal = /^(\.{0,2}\/|#)/.test(url || '');
+  return isInternal ? '' : 'target="_blank" rel="noopener noreferrer"';
+}
+
+/**
  * Render a project tile (GitHub repository)
  * @param {Object} data - Project data
  * @returns {HTMLElement} Article element
@@ -280,10 +291,7 @@ function renderProjectTile(data) {
 
   // Build metadata HTML — only rendered if there's actually something to show
   const metaItems = [
-    languageLabel ? `<span class="tile-language">${languageLabel}</span>` : '',
-    data.traffic && data.traffic.unique_visitors_14d
-      ? `<span class="tile-visitors"><i class="fas fa-eye"></i> ${data.traffic.unique_visitors_14d}</span>`
-      : ''
+    languageLabel ? `<span class="tile-language">${languageLabel}</span>` : ''
   ].filter(Boolean);
   const metaHTML = metaItems.length > 0
     ? `<div class="tile-meta">${metaItems.join('')}</div>`
@@ -304,7 +312,7 @@ function renderProjectTile(data) {
     : '';
 
   tile.innerHTML = `
-    <a href="${data.url}" class="tile-link" target="_blank" rel="noopener noreferrer">
+    <a href="${data.url}" class="tile-link" ${externalLinkAttributes(data.url)}>
       ${imageHTML}
       <div class="tile-content">
         <h3 class="tile-title">${data.title || data.name}</h3>

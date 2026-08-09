@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antibiotic Visualization - Avery</title>
+  <meta name="description" content="A static visualization that effectively communicates antibiotics data.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    .project-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .project-header { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+    .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .project-tagline { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
+    .project-stats { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .project-stats span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .project-stats i { color: var(--text-tertiary); }
+    .project-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .project-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: border-color 0.2s ease; }
+    .project-link-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; margin-bottom: 2rem; font-size: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+    .readme-content { color: var(--text-primary); line-height: 1.7; font-size: 1rem; overflow-wrap: break-word; }
+    .readme-content h1, .readme-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    .readme-content h3, .readme-content h4, .readme-content h5, .readme-content h6 { margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .readme-content p { margin-bottom: 1.25rem; }
+    .readme-content ul, .readme-content ol { margin-left: 2rem; margin-bottom: 1.25rem; }
+    .readme-content li { margin-bottom: 0.5rem; }
+    .readme-content a { color: var(--accent-primary); }
+    .readme-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .readme-content video { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 1.25rem; }
+    .readme-content details { margin-bottom: 1.25rem; }
+    .readme-content summary { cursor: pointer; padding: 0.4rem 0; color: var(--text-secondary); }
+    .readme-content summary svg { vertical-align: middle; fill: currentColor; }
+    .readme-content .dropdown-caret { display: none; }
+    .readme-content code { background: var(--bg-secondary); padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    .readme-content pre { background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+    .readme-content pre code { background: none; padding: 0; }
+    .readme-content blockquote { margin: 0 0 1.25rem; padding-left: 1rem; border-left: 3px solid var(--border-color); color: var(--text-secondary); }
+    .readme-content table { border-collapse: collapse; margin-bottom: 1.25rem; display: block; overflow-x: auto; }
+    .readme-content th, .readme-content td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+    .readme-content hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+    .project-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="header-main">
+        <div class="header-left"><a href="../" class="site-title">Avery</a></div>
+        <div class="header-right">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="project-container">
+    <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="project-header">
+      <h1 class="project-title">Antibiotic Visualization</h1>
+      <p class="project-tagline">A static visualization that effectively communicates antibiotics data.</p>
+      <div class="project-stats"><span><i class="fas fa-code"></i> HTML</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Oct 2021</span></div>
+      <div class="project-links">
+        <a class="project-link-btn" href="https://github.com/Avery2/Antibiotic-Visualization" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+        <a class="project-link-btn" href="https://www.averychan.site/Antibiotic-Visualization/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i> Live site</a>
+      </div>
+    </div>
+    <div class="readme-content"><p dir="auto">This is a static visualization that communicates this <a href="https://github.com/Avery2/Antibiotic-Visualization/blob/main/antibiotics_data.csv">antibiotics data</a>.</p>
+<ul dir="auto">
+<li>View the final visualization <a href="http://www.averychan.site/Antibiotic-Visualization/img/Tableau-Antibiotics.pdf" rel="nofollow">here</a>.</li>
+<li>View an incomplete but dynamic version <a href="https://www.averychan.site/Antibiotic-Visualization/dynamic.html" rel="nofollow">here</a>.</li>
+</ul>
+<h2 dir="auto">Technology</h2>
+<ul dir="auto">
+<li><strong>R</strong> for <a href="https://www.averychan.site/Antibiotic-Visualization/Exploration.html" rel="nofollow">data exploration</a>, data manipulation, and variable creation.</li>
+<li><strong>Tableau</strong> for parallel visualization prototyping and then heavy lifing of design.</li>
+<li>Final touches in <strong>Figma</strong>.</li>
+</ul>
+<h2 dir="auto">Journey</h2>
+<p dir="auto">I started with just building some context for the data. I aimed to visualize "how effective are these antibiotics." After a quick google search, I learned a low minimum inhibitory concentration (MIC) value means the antibiotic was more effective, and that was enough context for the data to get going.</p>
+<p dir="auto">I started exploring the data in R. I got a rough summary of the data and found I needed to do some data manipulation. I needed to pivot the data to facet it by <code class="notranslate">Antibiotic</code> and <code class="notranslate">Bacteria</code>. Once I got this done and did some fiddling with a faceted dot plot, I had a rough idea that I wanted to encode <code class="notranslate">Bacteria</code> by <code class="notranslate">MIC</code> value faceted by <code class="notranslate">Antibiotic</code>. This new graph would aim to communicate which antibiotic was generally more effective (across the 16 bacteria).</p>
+<div align="center" dir="auto">
+<a href="https://user-images.githubusercontent.com/53503018/134571056-65974510-a182-4885-a305-97c05fc90da9.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="R analysis" loading="lazy" src="https://user-images.githubusercontent.com/53503018/134571056-65974510-a182-4885-a305-97c05fc90da9.png" style="max-width: 100%;" width="45%"/></a>
+<a href="https://user-images.githubusercontent.com/53503018/134572692-e51a218b-d588-47d7-8076-cd8df011495d.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="a" loading="lazy" src="https://user-images.githubusercontent.com/53503018/134572692-e51a218b-d588-47d7-8076-cd8df011495d.png" style="max-width: 100%;" width="45%"/></a>
+<p dir="auto">The "faceted dot plot" and first Tableau visual</p>
+</div>
+<p dir="auto">After these initial visuals, I noticed that it was still hard to compare the effectiveness of each antibiotic. A large part of this is because I had chosen to facet by <code class="notranslate">Antibiotic</code>, it was hard to compare the <code class="notranslate">MIC</code> value for the same <code class="notranslate">Bacteria</code> across the faceted data. I would have the same issue (but worse) if I had faceted <code class="notranslate">Bacteria</code> instead, so I decided to encode this comparison with color. To do this, I went back to R to generate a new variable called <code class="notranslate">Relative Scores</code> that encoded an <code class="notranslate">Antibiotic</code>'s performance compared to the others for a given <code class="notranslate">Bacteria</code>. <code class="notranslate">Relative Scores</code> took on a value of <code class="notranslate">[1, 2, 3]</code> with <code class="notranslate">1</code> meaning it had the lowest MIC and <code class="notranslate">3</code> meaning it had the most MIC. Additionally, within each facet, I sorted by <code class="notranslate">MIC</code> which to make it easier to compare in aggregate the different <code class="notranslate">Antibiotic</code> facets.</p>
+<p dir="auto">After these initial visuals, I noticed that it was still hard to compare the effectiveness of each antibiotic. A large part of this is because I had chosen to facet by <code class="notranslate">Antibiotic</code>, it was hard to compare the <code class="notranslate">MIC</code> value for the same <code class="notranslate">Bacteria</code> across the faceted data. I would have the same issue (but worse) if I had faceted <code class="notranslate">Bacteria</code> instead, so I decided to encode this comparison with color. To do this, I went back to R to generate a new variable called <code class="notranslate">Relative Scores</code> that encoded an <code class="notranslate">Antibiotic</code>'s performance compared to the others for a given <code class="notranslate">Bacteria</code>. <code class="notranslate">Relative Scores</code> took on a value of <code class="notranslate">[1, 2, 3]</code> with <code class="notranslate">1</code> meaning it had the lowest MIC and <code class="notranslate">3</code> meaning it had the most MIC. Additionally, within each facet, I sorted by <code class="notranslate">MIC</code> which to make it easier to compare in aggregate the different <code class="notranslate">Antibiotic</code> facets.</p>
+<div align="center" dir="auto">
+<a href="https://user-images.githubusercontent.com/53503018/134572706-cb135732-34c5-49c8-ba77-c5001f5c4f74.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="d" loading="lazy" src="https://user-images.githubusercontent.com/53503018/134572706-cb135732-34c5-49c8-ba77-c5001f5c4f74.png" style="max-width: 100%;" width="45%"/></a>
+<a href="https://user-images.githubusercontent.com/53503018/134572707-cc223bd1-f31b-443b-9e13-b0548eaa3cab.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="e" loading="lazy" src="https://user-images.githubusercontent.com/53503018/134572707-cc223bd1-f31b-443b-9e13-b0548eaa3cab.png" style="max-width: 100%;" width="45%"/></a>
+<p dir="auto">Two charts that used the new <code class="notranslate">Relative Scores</code></p>
+</div>
+<div align="center" dir="auto">
+<a href="https://user-images.githubusercontent.com/53503018/134573798-1ed1a0f2-80a8-4cee-b40b-312543c800ec.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="failedbar" loading="lazy" src="https://user-images.githubusercontent.com/53503018/134573798-1ed1a0f2-80a8-4cee-b40b-312543c800ec.png" style="max-width: 100%;" width="45%"/></a>
+<p dir="auto">Experimenting with adding a bar chart summary for <code class="notranslate">Relative Scores</code></p>
+</div>
+<p dir="auto">At this point, there was a lot of information not yet immediately visible, so I made a few changes. I changed the y-axis to use symbols because it was hard to read the vertical bacteria names, especially since sorting by MIC shuffled them. I also changed the color scheme because the <code class="notranslate">Relative Score</code> is an ordinal variable, so an ordinal color scheme (shades of blue) makes more sense than one that is more suited for nominal variables (stoplight colors).</p>
+<p dir="auto">I then added a dot plot below the bar chart for <code class="notranslate">Relative Score</code> since it was difficult to compare the aggregate <code class="notranslate">Relative Score</code> for each <code class="notranslate">Antibiotic</code>. This dual encodes <code class="notranslate">Relative Score</code> with color and position. Positioning encodes this much better, especially since sorting <code class="notranslate">MIC</code> led to a slight clustering effect in the dot plot.</p>
+<p dir="auto">Lastly, I realized the original choice I made to encode <code class="notranslate">Bacteria</code> faceted by <code class="notranslate">Antibiotics</code> on the x-axis meant that it was still really hard to do `Bacteria`-based queries like "What is the Best <code class="notranslate">Antibiotic</code> for (<code class="notranslate">Bacteria</code>)?" To solve this, I added a table to the <code class="notranslate">Bacteria</code> symbol legend to aid with this. It's probably a design sin, but luckily I'm not a designer.</p>
+<div align="center" dir="auto">
+<a href="https://user-images.githubusercontent.com/53503018/134572708-84f7a3ca-82d0-4a47-b0eb-1978adddc3d6.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="f" loading="lazy" src="https://user-images.githubusercontent.com/53503018/134572708-84f7a3ca-82d0-4a47-b0eb-1978adddc3d6.png" style="max-width: 100%;" width="45%"/></a>
+<a href="https://user-images.githubusercontent.com/53503018/134573801-ae30a384-002a-4960-84dc-24f10ff081a2.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="addchart" loading="lazy" src="https://user-images.githubusercontent.com/53503018/134573801-ae30a384-002a-4960-84dc-24f10ff081a2.png" style="max-width: 100%;" width="45%"/></a>
+<p dir="auto">Adding symbols to encode bacteria and a secondary lookup table for bacteria-based queries</p>
+<a href="https://user-images.githubusercontent.com/53503018/134781365-fcf9bc80-915b-4cd1-9d27-5aedff2c858f.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="addcolorchart" loading="lazy" src="https://user-images.githubusercontent.com/53503018/134781365-fcf9bc80-915b-4cd1-9d27-5aedff2c858f.png" style="max-width: 100%;" width="85%"/></a>
+<p dir="auto">Final visualization (<a href="http://www.averychan.site/Antibiotic-Visualization/img/Tableau-Antibiotics.pdf" rel="nofollow">updated version here</a>)</p>
+</div>
+<h2 dir="auto">Rationale</h2>
+<p dir="auto">With this visual, I attempted to answer two high-level questions: What is the relative effectiveness of each antibiotic in general? What is the comparative effectiveness of each antibiotic for each bacteria? I had four visualizations that composed the final visual. Three shared an x-axis: A bar chart of the MIC measure, a dot plot of relative MIC variable, and a bar chart of the relative MIC score count. Additionally, there was a table of the best antibiotics for each bacteria. The first three visuals answer the first high-level question by allowing comparisons between the three antibiotics overall. The last visual answers the second high-level question directly. Contextually I was uncertain where Gram Staining fit into the story I was trying to tell, so I encoded it throughout the four visuals. I will go through these four visuals sequentially.</p>
+<p dir="auto">The first bar chart was the visual that encoded the raw quantitative data of the MIC measure. On the y-axis with a log scale are the MIC scores (encoded through length). On the x-axis, the data is bacteria grouped by an antibiotic. I chose to encode the MIC measure in this way because length encodes quantitative data well. The bars have color according to a variable I created that represents the MIC needed for an antibiotic compared to the others with a value of <code class="notranslate">[1, 2, 3]</code> or equivalently <code class="notranslate">[Least, Middle, Most]</code>. Lastly, I added the total and average MIC for each antibiotic and sorted within each antibiotic group by MIC score.</p>
+<p dir="auto">The second visualization was a dot plot encoding the relative MIC variable (through position) on the y-axis and shared the x-axis with the first bar chart. The reason for encoding information already encoded in the color of the first chart is because position is a better channel than color to encode an ordinal variable. Also encoded here in symbols (checkmark or 'X') is the gram-straining. Note that the y-axis encodes the bacteria using symbols rather than words because each bacteria occurs three times, making it difficult to read particularly when oriented vertically. The third visual is a simple bar chart to summarize the count of this same variable.</p>
+<p dir="auto">The last visual is separate from the rest. It is a table of the bacteria names with three columns that correspond to each antibiotic. There is a symbol in each cell where an antibiotic is the best for a particular bacteria. This table also doubles as a key for the bacteria symbols. I chose to make this table because specific queries like "what antibiotic is best for bacteria X?" were hard to make using the first three visualizations. You would have to decode the bacteria symbol three times spread over the x-axis and compare the colors of the corresponding bars. This table does require decoding symbols since it doubles as a key and encodes the best antibiotic directly. Additionally, the gram staining information is encoded here for similar reasons.</p></div>
+    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+  </main>
+  <script type="module">
+    import { initTheme } from '../js/theme.js';
+    initTheme();
+  </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-08-09T02:52:54.158893+00:00'
+  generated_at: '2026-08-09T03:37:38.685516+00:00'
   source_api: https://api.github.com/users/Avery2/repos
   total_repos: 29
 projects:
@@ -8,7 +8,8 @@ projects:
   name: things3notionscript
   title: Things3Notionscript
   description: Script that migrates todos in Things3 to Notion page or block.
-  url: https://github.com/Avery2/things3notionscript
+  url: ./projects/things3notionscript.html
+  repo_url: https://github.com/Avery2/things3notionscript
   homepage: ''
   image: ./assets/images/projects/things3notionscript.jpg
   language: Python
@@ -33,7 +34,8 @@ projects:
   name: Qbserve-data
   title: Qbserve Data
   description: Personal data of app usage recorded by Qbserve.
-  url: https://github.com/Avery2/Qbserve-data
+  url: ./projects/qbserve-data.html
+  repo_url: https://github.com/Avery2/Qbserve-data
   homepage: http://www.averychan.site/Qbserve-data/
   image: ./assets/images/projects/Qbserve-data.jpg
   language: HTML
@@ -60,7 +62,8 @@ projects:
   name: sun-calendar
   title: Sun Calendar
   description: isc calendar with sunrise and sunset times ☀️🗓️
-  url: https://github.com/Avery2/sun-calendar
+  url: ./projects/sun-calendar.html
+  repo_url: https://github.com/Avery2/sun-calendar
   homepage: https://www.averychan.site/sun-calendar/
   image: ''
   language: Python
@@ -89,7 +92,8 @@ projects:
   name: Avery2.github.io
   title: Avery2.Github.Io
   description: My personal website.
-  url: https://github.com/Avery2/Avery2.github.io
+  url: ./projects/avery2.github.io.html
+  repo_url: https://github.com/Avery2/Avery2.github.io
   homepage: https://www.averychan.site
   image: ./assets/images/projects/Avery2.github.io.jpg
   language: JavaScript
@@ -100,8 +104,8 @@ projects:
   - jekyll
   - liquid
   created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2026-08-09T02:52:44Z'
-  pushed_at: '2026-08-09T02:52:40Z'
+  updated_at: '2026-08-09T03:25:53Z'
+  pushed_at: '2026-08-09T03:25:50Z'
   priority: 21
   tags:
   - javascript
@@ -111,12 +115,35 @@ projects:
   featured: true
   span_columns: 1
   span_rows: 1
+- id: rdojowebapp
+  type: project
+  name: rdojowebapp
+  title: Rdojowebapp
+  description: To track fights
+  url: ./projects/rdojowebapp.html
+  repo_url: https://github.com/Avery2/rdojowebapp
+  homepage: http://www.averychan.site/rdojowebapp/
+  image: ''
+  language: JavaScript
+  stars: 0
+  forks: 0
+  topics: []
+  created_at: '2025-12-30T19:44:02Z'
+  updated_at: '2026-08-09T02:53:14Z'
+  pushed_at: '2026-08-09T02:53:10Z'
+  priority: 21
+  tags:
+  - javascript
+  featured: false
+  span_columns: 1
+  span_rows: 1
 - id: normal-resume
   type: project
   name: normal-resume
   title: Normal Resume
   description: Version control for my resume
-  url: https://github.com/Avery2/normal-resume
+  url: ./projects/normal-resume.html
+  repo_url: https://github.com/Avery2/normal-resume
   homepage: https://www.averychan.site/normal-resume/
   image: ''
   language: HTML
@@ -139,7 +166,8 @@ projects:
   name: Toggl-Analysis
   title: Toggl Analysis
   description: I tracked all my worked hours for over a year.
-  url: https://github.com/Avery2/Toggl-Analysis
+  url: ./projects/toggl-analysis.html
+  repo_url: https://github.com/Avery2/Toggl-Analysis
   homepage: https://www.averychan.site/Toggl-Analysis/
   image: ./assets/images/projects/Toggl-Analysis.jpg
   language: HTML
@@ -166,7 +194,8 @@ projects:
   name: things3-mcp-tools
   title: Things3 Mcp Tools
   description: Things3 MCP server and automation toolkit.
-  url: https://github.com/Avery2/things3-mcp-tools
+  url: ./projects/things3-mcp-tools.html
+  repo_url: https://github.com/Avery2/things3-mcp-tools
   homepage: ''
   image: ''
   language: Python
@@ -193,7 +222,8 @@ projects:
   name: wordle-helper
   title: Wordle Helper
   description: Wordle is too hard for me
-  url: https://github.com/Avery2/wordle-helper
+  url: ./projects/wordle-helper.html
+  repo_url: https://github.com/Avery2/wordle-helper
   homepage: ''
   image: ./assets/images/projects/wordle-helper.jpg
   language: Python
@@ -217,7 +247,8 @@ projects:
   title: Text To Spooch
   description: A command-line app that creates audio from text like those charlie
     brown adults but they're aliens (which is to say badly)
-  url: https://github.com/Avery2/text-to-spooch
+  url: ./projects/text-to-spooch.html
+  repo_url: https://github.com/Avery2/text-to-spooch
   homepage: ''
   image: ''
   language: Python
@@ -237,33 +268,13 @@ projects:
   featured: false
   span_columns: 1
   span_rows: 1
-- id: rdojowebapp
-  type: project
-  name: rdojowebapp
-  title: Rdojowebapp
-  description: To track fights
-  url: https://github.com/Avery2/rdojowebapp
-  homepage: http://www.averychan.site/rdojowebapp/
-  image: ''
-  language: JavaScript
-  stars: 0
-  forks: 0
-  topics: []
-  created_at: '2025-12-30T19:44:02Z'
-  updated_at: '2026-01-06T05:31:43Z'
-  pushed_at: '2026-01-07T07:15:44Z'
-  priority: 6
-  tags:
-  - javascript
-  featured: false
-  span_columns: 1
-  span_rows: 1
 - id: slack-duck-message-generator
   type: project
   name: slack-duck-message-generator
   title: Slack Duck Message Generator
   description: it makes a string you can copy paste into slack
-  url: https://github.com/Avery2/slack-duck-message-generator
+  url: ./projects/slack-duck-message-generator.html
+  repo_url: https://github.com/Avery2/slack-duck-message-generator
   homepage: ''
   image: ./assets/images/projects/slack-duck-message-generator.gif
   language: Python
@@ -291,7 +302,8 @@ projects:
   title: Steam Hours
   description: Analyzing data pulled from steam API to see how many hours I used to
     play.
-  url: https://github.com/Avery2/steam-hours
+  url: ./projects/steam-hours.html
+  repo_url: https://github.com/Avery2/steam-hours
   homepage: ''
   image: ./assets/images/projects/steam-hours.jpg
   language: HTML
@@ -316,7 +328,8 @@ projects:
   name: life-to-24h
   title: Life To 24H
   description: Map Lifetime to 24-hour Day
-  url: https://github.com/Avery2/life-to-24h
+  url: ./projects/life-to-24h.html
+  repo_url: https://github.com/Avery2/life-to-24h
   homepage: https://www.averychan.site/life-to-24h/
   image: ''
   language: HTML
@@ -339,7 +352,8 @@ projects:
   name: rename-contacts
   title: Rename Contacts
   description: renames all your contacts by adding nickname field
-  url: https://github.com/Avery2/rename-contacts
+  url: ./projects/rename-contacts.html
+  repo_url: https://github.com/Avery2/rename-contacts
   image: ''
   language: Rich Text Format
   stars: 0
@@ -360,7 +374,8 @@ projects:
   title: Personalvisualization
   description: Visualization of time tracking data for 2020. I will NOT do any stats
     on this.
-  url: https://github.com/Avery2/PersonalVisualization
+  url: ./projects/personalvisualization.html
+  repo_url: https://github.com/Avery2/PersonalVisualization
   homepage: https://www.averychan.site/PersonalVisualization/
   image: ./assets/images/projects/PersonalVisualization.jpg
   language: HTML
@@ -390,7 +405,8 @@ projects:
   title: Controller Input Canvas
   description: I made this with ChatGPT. Controller input skeleton + simple html and
     js
-  url: https://github.com/Avery2/controller-input-canvas
+  url: ./projects/controller-input-canvas.html
+  repo_url: https://github.com/Avery2/controller-input-canvas
   image: ''
   language: JavaScript
   stars: 0
@@ -411,7 +427,8 @@ projects:
   title: Xv6 Memoryencrypt
   description: Project for my OS class 537. Enables memory encryption for the xv6
     operating system.
-  url: https://github.com/Avery2/xv6_memoryencrypt
+  url: ./projects/xv6_memoryencrypt.html
+  repo_url: https://github.com/Avery2/xv6_memoryencrypt
   homepage: ''
   image: ''
   language: C
@@ -438,7 +455,8 @@ projects:
   name: netflix-data-clean
   title: Netflix Data Clean
   description: Just looking at netflix data.
-  url: https://github.com/Avery2/netflix-data-clean
+  url: ./projects/netflix-data-clean.html
+  repo_url: https://github.com/Avery2/netflix-data-clean
   homepage: ''
   image: ./assets/images/projects/netflix-data-clean.jpg
   language: HTML
@@ -464,7 +482,8 @@ projects:
   title: Git Message Helper
   description: Generates text for PR descriptions that groups commits by file and
     makes it pretty.
-  url: https://github.com/Avery2/git-message-helper
+  url: ./projects/git-message-helper.html
+  repo_url: https://github.com/Avery2/git-message-helper
   homepage: ''
   image: ./assets/images/projects/git-message-helper.jpg
   language: Python
@@ -492,7 +511,8 @@ projects:
   title: Qbserve Blocker
   description: Query local Qbserve database to check usage of app. Hopefully able
     to then block the app?
-  url: https://github.com/Avery2/Qbserve-Blocker
+  url: ./projects/qbserve-blocker.html
+  repo_url: https://github.com/Avery2/Qbserve-Blocker
   homepage: ''
   image: ''
   language: Jupyter Notebook
@@ -517,7 +537,8 @@ projects:
   name: automate-exalidraw
   title: Automate Exalidraw
   description: overengineering
-  url: https://github.com/Avery2/automate-exalidraw
+  url: ./projects/automate-exalidraw.html
+  repo_url: https://github.com/Avery2/automate-exalidraw
   homepage: ''
   image: ./assets/images/projects/automate-exalidraw.gif
   language: Python
@@ -542,7 +563,8 @@ projects:
   name: Just-Read-Less-Features
   title: Just Read Less Features
   description: Fork of just read made simple
-  url: https://github.com/Avery2/Just-Read-Less-Features
+  url: ./projects/just-read-less-features.html
+  repo_url: https://github.com/Avery2/Just-Read-Less-Features
   homepage: https://justread.link/
   image: ''
   language: JavaScript
@@ -567,7 +589,8 @@ projects:
   name: 639-Final-Project
   title: 639 Final Project
   description: Interactive data visualization of global data.
-  url: https://github.com/Avery2/639-Final-Project
+  url: ./projects/639-final-project.html
+  repo_url: https://github.com/Avery2/639-Final-Project
   homepage: https://www.averychan.site/639-Final-Project/
   image: ''
   language: JavaScript
@@ -594,7 +617,8 @@ projects:
   name: Antibiotic-Visualization
   title: Antibiotic Visualization
   description: A static visualization that effectively communicates antibiotics data.
-  url: https://github.com/Avery2/Antibiotic-Visualization
+  url: ./projects/antibiotic-visualization.html
+  repo_url: https://github.com/Avery2/Antibiotic-Visualization
   homepage: https://www.averychan.site/Antibiotic-Visualization/
   image: ./assets/images/projects/Antibiotic-Visualization.jpg
   language: HTML
@@ -625,7 +649,8 @@ projects:
   name: SpotifyDataAnalysis
   title: Spotifydataanalysis
   description: Analyzing Spotify data from Kaggle. Created with R Markdown.
-  url: https://github.com/Avery2/SpotifyDataAnalysis
+  url: ./projects/spotifydataanalysis.html
+  repo_url: https://github.com/Avery2/SpotifyDataAnalysis
   homepage: ''
   image: ./assets/images/projects/SpotifyDataAnalysis.jpg
   language: HTML
@@ -653,7 +678,8 @@ projects:
   title: Classifyterms
   description: Classifying terms (from my google search data) with the Google Cloud
     Natural Language API
-  url: https://github.com/Avery2/ClassifyTerms
+  url: ./projects/classifyterms.html
+  repo_url: https://github.com/Avery2/ClassifyTerms
   homepage: ''
   image: ''
   language: Java
@@ -678,7 +704,8 @@ projects:
   name: Backpropagation-Neural-Network
   title: Backpropagation Neural Network
   description: A (bad) feed-forward neural network that learns with back propagation.
-  url: https://github.com/Avery2/Backpropagation-Neural-Network
+  url: ./projects/backpropagation-neural-network.html
+  repo_url: https://github.com/Avery2/Backpropagation-Neural-Network
   homepage: ''
   image: ''
   language: Java
@@ -703,7 +730,8 @@ projects:
   name: SimpleReadme
   title: Simplereadme
   description: A template for a clean README (the special repository).
-  url: https://github.com/Avery2/SimpleReadme
+  url: ./projects/simplereadme.html
+  repo_url: https://github.com/Avery2/SimpleReadme
   homepage: ''
   image: ./assets/images/projects/SimpleReadme.jpg
   language: JavaScript
@@ -728,7 +756,8 @@ projects:
   name: graffiti-template-generator
   title: Graffiti Template Generator
   description: ''
-  url: https://github.com/Avery2/graffiti-template-generator
+  url: ./projects/graffiti-template-generator.html
+  repo_url: https://github.com/Avery2/graffiti-template-generator
   homepage: http://www.averychan.site/graffiti-template-generator/
   image: ''
   language: JavaScript
