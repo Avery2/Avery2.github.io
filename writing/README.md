@@ -46,3 +46,18 @@ Adjust `priority` to control tile position:
 ## Example
 
 See `harm-reduction.md` and `harm-reduction.html` for a working example.
+
+## Linked notes prototype
+
+The concept-note system lives in `writing/notes/`:
+
+- `corpus.mjs` is the editable public content model. Links use `[[slug|label]]` syntax.
+- `generate-pages.mjs` creates real HTML routes so every note works without the enhanced interface.
+- `notes.js` progressively enhances those routes into a spatial reading stack.
+- Private concepts include public title/status metadata only. Do not add private prose to `corpus.mjs`.
+
+After changing the corpus, run:
+
+```bash
+node writing/notes/generate-pages.mjs
+```

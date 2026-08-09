@@ -25,6 +25,15 @@ tiles:
     style:
       border_color: "#6B7280"
 
+  - id: "linked-notes-demo"
+    type: "link"
+    title: "Seeing and navigating information"
+    description: "An interactive linked-notes experiment about color, maps, reading, attention, and the web. The ideas are real; the small corpus is demo writing built to test a spatial way of reading. → Explore the notes"
+    url: "./writing/notes/seeing-information.html"
+    open_new_tab: false
+    priority: 140
+    tags: ["writing", "design", "prototype"]
+
   # More projects on GitHub (second-to-last tile)
   - id: "github-more"
     type: "link"
