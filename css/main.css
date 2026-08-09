@@ -12,6 +12,16 @@
 
 /* Additional global styles that don't fit in other files */
 
+/* Keep the asynchronous shell visually stable until header data and tiles exist. */
+html[data-app-ready="false"] .header-right,
+html[data-app-ready="false"] .site-footer {
+  visibility: hidden;
+}
+
+html[data-app-ready="false"] .grid-container .loading-spinner {
+  min-height: calc(100dvh - 110px);
+}
+
 /* Smooth scrolling for anchor links */
 html {
   scroll-padding-top: 80px; /* Account for sticky header */

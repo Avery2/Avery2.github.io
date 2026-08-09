@@ -57,6 +57,7 @@ async function init() {
     // Render tiles into grid
     const gridContainer = document.querySelector('.grid-container');
     renderAllTiles(allTiles, gridContainer);
+    document.documentElement.dataset.appReady = 'true';
 
     // Initialize filtering system
     initFilterSystem(allTiles, filterGroups);
@@ -75,6 +76,7 @@ async function init() {
   } catch (error) {
     console.error('Failed to initialize:', error);
     showErrorMessage(config.ERRORS.DATA_LOAD_FAILED);
+    document.documentElement.dataset.appReady = 'true';
   }
 }
 

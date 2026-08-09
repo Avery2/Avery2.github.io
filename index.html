@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" data-app-ready="false">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +15,13 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <title>Avery</title>
+
+  <script>
+    try {
+      const override = sessionStorage.getItem('site-theme-override');
+      document.documentElement.dataset.theme = override || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    } catch (_) {}
+  </script>
 
   <!-- Favicon -->
   <link rel="icon" href="./assets/images/profile/face.jpg" type="image/jpeg">
@@ -111,10 +118,9 @@
 
         <!-- Tile Grid (CSS Grid masonry layout) -->
         <div class="grid-container" id="grid-container" data-loading="true">
-          <!-- Loading spinner -->
+          <!-- Quiet loading surface; the text remains available to assistive technology. -->
           <div class="loading-spinner">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p>Loading projects...</p>
+            <p class="sr-only">Loading projects…</p>
           </div>
 
           <!-- All tiles will be rendered here by JavaScript -->
