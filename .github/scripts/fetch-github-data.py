@@ -773,7 +773,7 @@ def write_project_reading_graph(repo_root: str):
         'body': f'<p>This is the same project collection as the portfolio grid, arranged as a linked reading list.</p><ul>{project_links}</ul>',
         'project_stats_html': '',
         'project_actions_html': '',
-        'provenance_html': 'Generated from the portfolio’s curated project data.',
+        'provenance_html': 'Generated from the portfolio’s <a href="https://github.com/Avery2/Avery2.github.io/blob/main/data/site-config.yml">curated project configuration</a>.',
         'unavailable': False,
         'priority': 10_000
     }
@@ -796,7 +796,7 @@ def write_project_reading_graph(repo_root: str):
         homepage_link='',
         tagline='',
         synced_on=synced_on,
-        provenance='Generated from the portfolio’s curated project data.'
+        provenance='Generated from the portfolio’s <a href="https://github.com/Avery2/Avery2.github.io/blob/main/data/site-config.yml">curated project configuration</a>.'
     )
     with open(os.path.join(repo_root, PROJECT_PAGE_DIR, 'index.html'), 'w', encoding='utf-8') as f:
         f.write(index_html)
