@@ -302,6 +302,14 @@ html[data-grouped-layout] .tile[data-section-header="true"] .tile-title {
   box-shadow: 3px 3px 0 color-mix(in srgb, var(--layout-region-ink) 72%, transparent);
   font-size: clamp(1.45rem, 1.15rem + 0.8vw, 2rem);
   line-height: 1.05;
+  transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+html[data-grouped-layout] .tile[data-section-header="true"]:hover .tile-title,
+html[data-grouped-layout] .tile[data-section-header="true"]:focus-within .tile-title {
+  background: var(--tile-hover-bg);
+  box-shadow: 5px 5px 0 color-mix(in srgb, var(--layout-region-ink) 82%, transparent);
+  transform: translate(-1px, -1px);
 }
 
 html[data-grouped-layout] .tile[data-section-header="true"] .tile-description {
@@ -329,6 +337,10 @@ html[data-grouped-layout] .profile-tile.section-spotlight.tile-visible:hover {
   transform: none;
 }
 
+html[data-grouped-layout] .profile-tile.section-spotlight:has(.spotlight-link) {
+  cursor: pointer;
+}
+
 html[data-grouped-layout] .profile-tile.section-spotlight .profile-tile-title {
   display: inline-block;
   width: fit-content;
@@ -343,6 +355,14 @@ html[data-grouped-layout] .profile-tile.section-spotlight .profile-tile-title {
   font-size: clamp(1.45rem, 1.15rem + 0.8vw, 2rem);
   font-weight: 700;
   line-height: 1.05;
+  transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+html[data-grouped-layout] .profile-tile.section-spotlight:has(.spotlight-link):hover .profile-tile-title,
+html[data-grouped-layout] .profile-tile.section-spotlight:has(.spotlight-link):focus-within .profile-tile-title {
+  background: var(--tile-hover-bg);
+  box-shadow: 5px 5px 0 color-mix(in srgb, var(--layout-region-ink) 82%, transparent);
+  transform: translate(-1px, -1px);
 }
 
 html[data-grouped-layout] .profile-tile.section-spotlight .spotlight-content {
