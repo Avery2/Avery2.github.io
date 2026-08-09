@@ -144,26 +144,31 @@ html[data-layout-debug="true"] .grid-container { isolation: isolate; }
 
 html[data-layout-debug="true"] .tile[data-layout-group] {
   position: relative;
-  box-shadow: 0 0 0 11px var(--layout-region-fill);
+  /*
+   * The desktop grid gap is 20px. A 16px spread from both neighboring
+   * cards overlaps by 12px, so rounded silhouettes read as one region
+   * instead of merely meeting at a narrow seam.
+   */
+  box-shadow: 0 0 0 16px var(--layout-region-fill);
 }
 
 html[data-layout-debug="true"] .tile[data-layout-group="intro"] {
-  --layout-region-fill: color-mix(in srgb, #f07a24 14%, var(--bg-primary));
+  --layout-region-fill: color-mix(in srgb, #ff7a1a 32%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="writing"] {
-  --layout-region-fill: color-mix(in srgb, #b46cff 18%, var(--bg-primary));
+  --layout-region-fill: color-mix(in srgb, #b75cff 38%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="experience"] {
-  --layout-region-fill: color-mix(in srgb, #42b8a4 18%, var(--bg-primary));
+  --layout-region-fill: color-mix(in srgb, #28c7ad 36%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="projects"] {
-  --layout-region-fill: color-mix(in srgb, #5b8def 17%, var(--bg-primary));
+  --layout-region-fill: color-mix(in srgb, #4d8cff 36%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="links"] {
-  --layout-region-fill: color-mix(in srgb, #e0a83b 17%, var(--bg-primary));
+  --layout-region-fill: color-mix(in srgb, #f0b52f 36%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="navigation"] {
-  --layout-region-fill: color-mix(in srgb, #999 14%, var(--bg-primary));
+  --layout-region-fill: color-mix(in srgb, #aaa 28%, var(--bg-primary));
 }
 
 @media (max-width: 900px) {
