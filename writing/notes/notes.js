@@ -6,6 +6,8 @@ const initialSlug = app?.dataset.initialNote;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let panes = [];
 let expandedDepth = 0;
+let expandedPinned = false;
+let historyExpanded = false;
 let resizeFrame;
 
 initTheme();
@@ -16,10 +18,12 @@ function enhance() {
   const statePath = validPath(history.state?.notePath) || [initialSlug];
   panes = statePath.map(makePane);
   expandedDepth = validExpandedDepth(history.state?.expandedDepth, panes.length);
+  expandedPinned = Boolean(history.state?.expandedPinned);
+  historyExpanded = false;
   app.classList.add('is-enhanced');
   app.innerHTML = `<div class="stack-viewport" aria-label="Reading path"><div class="stack-track"></div></div>`;
   render({ focus: false, announce: false });
-  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth }, '', location.href);
+  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth, expandedPinned }, '', location.href);
   addEventListener('popstate', onPopState);
   addEventListener('resize', () => {
     cancelAnimationFrame(resizeFrame);
@@ -32,7 +36,7 @@ function validPath(path) {
 }
 
 function validExpandedDepth(depth, length) {
-  if (length < 2) return 0;
+  if (length < 2 || depth === null) return null;
   return Number.isInteger(depth) && depth >= 0 && depth < length - 1 ? depth : length - 2;
 }
 
@@ -48,24 +52,50 @@ function computePresentation() {
   const compact = mobile ? 34 : 40;
   const currentIndex = panes.length - 1;
   expandedDepth = validExpandedDepth(expandedDepth, panes.length);
-  const hasPair = panes.length > 1 && !mobile;
-  const compactCount = hasPair ? Math.max(0, panes.length - 2) : Math.max(0, panes.length - 1);
-  const minimumReader = mobile ? Math.max(280, viewport - compact) : 440;
-  const availableForReaders = viewport - compactCount * compact;
-  const readerWidth = hasPair ? Math.max(minimumReader, availableForReaders / 2) : Math.max(minimumReader, viewport - compactCount * compact);
+  const hasPair = panes.length > 1 && expandedDepth !== null && !mobile;
 
   panes.forEach((pane, index) => {
     pane.active = index === currentIndex;
     pane.expanded = pane.active || (hasPair && index === expandedDepth);
     pane.presentationMode = pane.expanded ? 'full' : 'compact';
-    pane.width = pane.expanded ? readerWidth : compact;
+    pane.groupEnd = null;
+    pane.width = pane.expanded ? 0 : compact;
   });
+
+  if (!historyExpanded) condenseCompactRuns(compact);
+  const compactWidth = panes.reduce((sum, pane) => sum + (pane.expanded ? 0 : pane.width), 0);
+  const minimumReader = mobile ? Math.max(280, viewport - compact) : 440;
+  const availableForReaders = viewport - compactWidth;
+  const readerWidth = hasPair ? Math.max(minimumReader, availableForReaders / 2) : Math.max(minimumReader, viewport - compactWidth);
+
+  panes.forEach((pane) => { if (pane.expanded) pane.width = readerWidth; });
   let offset = 0;
   panes.forEach((pane) => {
     pane.offset = offset;
     offset += pane.width;
   });
   return { trackWidth: Math.max(viewport, offset), mobile };
+}
+
+function condenseCompactRuns(compactWidth) {
+  let runStart = null;
+  const flush = (end) => {
+    if (runStart === null || end - runStart + 1 <= 3) return;
+    for (let index = runStart + 1; index < end; index++) {
+      panes[index].presentationMode = index === runStart + 1 ? 'group' : 'hidden';
+      panes[index].width = index === runStart + 1 ? compactWidth : 0;
+      panes[index].groupEnd = end - 1;
+    }
+  };
+  panes.forEach((pane, index) => {
+    if (!pane.expanded) {
+      if (runStart === null) runStart = index;
+    } else {
+      flush(index - 1);
+      runStart = null;
+    }
+  });
+  flush(panes.length - 1);
 }
 
 function render({ focus = false, announce = true } = {}) {
@@ -75,6 +105,9 @@ function render({ focus = false, announce = true } = {}) {
   const trackEl = app.querySelector('.stack-track');
   trackEl.style.width = `${trackWidth}px`;
   trackEl.innerHTML = panes.map(paneHTML).join('');
+  if (historyExpanded && panes.filter((pane) => !pane.expanded).length > 3) {
+    trackEl.insertAdjacentHTML('beforeend', '<button class="history-density-toggle" type="button" data-collapse-history>Condense history</button>');
+  }
   bindInteractions();
   const active = panes.at(-1);
   viewportEl.scrollLeft = Math.max(0, active.offset + active.width - viewportEl.clientWidth);
@@ -86,13 +119,20 @@ function render({ focus = false, announce = true } = {}) {
 function paneHTML(pane) {
   const note = noteBySlug.get(pane.noteId);
   const activeClass = pane.active ? ' stack-pane--active' : '';
+  if (pane.presentationMode === 'hidden') {
+    return `<section class="stack-pane stack-pane--hidden" data-pane-depth="${pane.depth}" style="--pane-left:${pane.offset}px;--pane-width:0px;--pane-z:${pane.depth + 1}" aria-hidden="true"></section>`;
+  }
+  if (pane.presentationMode === 'group') {
+    return `<section class="stack-pane stack-pane--group" data-pane-depth="${pane.depth}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-width:${pane.width}px;--pane-z:${pane.depth + 1}"><div class="pane-label" aria-hidden="true"><span class="history-depth">${pane.depth + 1}–${pane.groupEnd + 1}</span><strong>…</strong></div><button class="pane-return" data-expand-history aria-label="Show notes ${pane.depth + 1} through ${pane.groupEnd + 1}"></button></section>`;
+  }
   const paneContent = pane.expanded
     ? articleHTML(note)
     : `<div class="pane-label"><span class="history-depth">${String(pane.depth + 1).padStart(2, '0')}</span><strong>${note.title}</strong></div>`;
   const content = pane.expanded ? paneContent : `<div class="pane-inactive-content" aria-hidden="true">${paneContent}</div>`;
   const returnControl = pane.expanded ? '' : `<button class="pane-return" data-depth="${pane.depth}" aria-label="Open ${note.title} beside the current note, step ${pane.depth + 1} of ${panes.length}"></button>`;
-  const branchControl = pane.expanded && !pane.active ? `<button class="pane-make-current" data-truncate-depth="${pane.depth}">Continue from here</button>` : '';
-  return `<section class="stack-pane stack-pane--${pane.presentationMode}${activeClass}${pane.expanded ? ' stack-pane--expanded' : ''}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-width:${pane.width}px;--pane-z:${pane.depth + 1}" ${pane.active ? 'aria-current="page"' : ''}>${content}${returnControl}${branchControl}</section>`;
+  const collapseControl = pane.expanded && !pane.active ? `<button class="pane-collapse-reader" data-collapse-reader aria-label="Collapse ${note.title}"><span aria-hidden="true">‹</span></button>` : '';
+  const closeControl = pane.depth > 0 ? `<button class="pane-close${pane.expanded ? ' pane-close--expanded' : ' pane-close--compact'}" data-close-depth="${pane.depth}" aria-label="Close ${note.title} and all later notes"><span aria-hidden="true">×</span></button>` : '';
+  return `<section class="stack-pane stack-pane--${pane.presentationMode}${activeClass}${pane.expanded ? ' stack-pane--expanded' : ''}" data-pane-depth="${pane.depth}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-width:${pane.width}px;--pane-z:${pane.depth + 1}" ${pane.active ? 'aria-current="page"' : ''}>${collapseControl}${closeControl}${content}${returnControl}</section>`;
 }
 
 function articleHTML(note) {
@@ -110,7 +150,17 @@ function linkify(body = '') {
 
 function bindInteractions() {
   app.querySelectorAll('.pane-return[data-depth]').forEach((button) => button.addEventListener('click', () => expandPane(Number(button.dataset.depth))));
-  app.querySelectorAll('[data-truncate-depth]').forEach((button) => button.addEventListener('click', () => navigateBack(Number(button.dataset.truncateDepth))));
+  app.querySelector('[data-expand-history]')?.addEventListener('click', expandHistory);
+  app.querySelector('[data-collapse-history]')?.addEventListener('click', collapseHistory);
+  app.querySelector('[data-collapse-reader]')?.addEventListener('click', collapseReader);
+  app.querySelectorAll('[data-close-depth]').forEach((button) => {
+    const depth = Number(button.dataset.closeDepth);
+    button.addEventListener('click', () => closeFromDepth(depth));
+    button.addEventListener('mouseenter', () => previewPrune(depth, true));
+    button.addEventListener('mouseleave', () => previewPrune(depth, false));
+    button.addEventListener('focus', () => previewPrune(depth, true));
+    button.addEventListener('blur', () => previewPrune(depth, false));
+  });
   app.querySelectorAll('[data-note-link]').forEach((link) => link.addEventListener('click', (event) => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
@@ -127,20 +177,59 @@ function bindInteractions() {
 
 function openNote(slug, sourceDepth = panes.length - 1) {
   if (!noteBySlug.has(slug)) return;
+  const openedFromTerminal = sourceDepth === panes.length - 1;
   if (Number.isInteger(sourceDepth) && sourceDepth >= 0 && sourceDepth < panes.length - 1) {
     panes = panes.slice(0, sourceDepth + 1);
   }
   panes.push(makePane(slug, panes.length));
-  expandedDepth = Math.max(0, panes.length - 2);
+  if (!openedFromTerminal || !expandedPinned) expandedDepth = Math.max(0, panes.length - 2);
+  expandedDepth = validExpandedDepth(expandedDepth, panes.length);
+  if (!openedFromTerminal) expandedPinned = false;
+  historyExpanded = false;
   commit(slug, 'forward');
 }
 
 function expandPane(depth) {
   if (!panes[depth] || depth === panes.length - 1) return;
   expandedDepth = depth;
-  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth }, '', location.href);
+  expandedPinned = true;
+  historyExpanded = false;
+  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth, expandedPinned }, '', location.href);
   render({ focus: false, announce: false });
   app.querySelector(`.stack-pane[style*="--pane-z:${depth + 1}"] h1`)?.focus({ preventScroll: true });
+}
+
+function collapseReader() {
+  expandedDepth = null;
+  expandedPinned = true;
+  historyExpanded = false;
+  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth, expandedPinned }, '', location.href);
+  render({ focus: false, announce: false });
+}
+
+function expandHistory() {
+  historyExpanded = true;
+  render({ focus: false, announce: false });
+}
+
+function collapseHistory() {
+  historyExpanded = false;
+  render({ focus: false, announce: false });
+}
+
+function previewPrune(depth, visible) {
+  app.querySelectorAll('[data-pane-depth]').forEach((pane) => {
+    pane.classList.toggle('will-be-removed', visible && Number(pane.dataset.paneDepth) >= depth);
+  });
+}
+
+function closeFromDepth(depth) {
+  if (depth <= 0 || depth >= panes.length) return;
+  panes = panes.slice(0, depth);
+  expandedDepth = validExpandedDepth(undefined, panes.length);
+  expandedPinned = false;
+  historyExpanded = false;
+  commit(panes.at(-1).noteId, 'back');
 }
 
 function navigateBack(depth) {
@@ -148,11 +237,13 @@ function navigateBack(depth) {
   if (!target) return;
   panes = panes.slice(0, depth + 1);
   expandedDepth = Math.max(0, panes.length - 2);
+  expandedPinned = false;
+  historyExpanded = false;
   commit(target.noteId, 'back');
 }
 
 function commit(slug, direction) {
-  history.pushState({ notePath: slugs(), expandedDepth }, '', `./${slug}.html`);
+  history.pushState({ notePath: slugs(), expandedDepth, expandedPinned }, '', `./${slug}.html`);
   app.dataset.direction = direction;
   render({ focus: true });
   if (!reduceMotion.matches) setTimeout(() => delete app.dataset.direction, 380);
@@ -163,6 +254,8 @@ function onPopState(event) {
   const slug = location.pathname.split('/').pop().replace('.html', '') || initialSlug;
   panes = (path || [noteBySlug.has(slug) ? slug : initialSlug]).map(makePane);
   expandedDepth = validExpandedDepth(event.state?.expandedDepth, panes.length);
+  expandedPinned = Boolean(event.state?.expandedPinned);
+  historyExpanded = false;
   app.dataset.direction = 'back';
   render({ focus: true });
 }
