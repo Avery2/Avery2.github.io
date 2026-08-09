@@ -11,15 +11,12 @@ filters:
       # Priority tags - these will be shown first
       - value: "python"
         label: "python"
-        color: "#3776ab"
 
       - value: "javascript"
         label: "javascript"
-        color: "#f7df1e"
 
       - value: "r"
         label: "r"
-        color: "#276dc3"
 
       - value: "data-visualization"
         label: "data-visualization"

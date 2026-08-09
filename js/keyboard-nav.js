@@ -229,11 +229,15 @@ function setupHelpOverlayListeners() {
  */
 function setupKeydownHandler() {
   document.addEventListener('keydown', (e) => {
-    // Priority 1: Cmd/Ctrl+K (ALWAYS active, even during typing)
+    // Priority 1: Cmd/Ctrl+K (ALWAYS active, even during typing) — toggles
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
       e.preventDefault();
-      openSearch();
-      maybeShowHint();
+      if (isSearchExpanded()) {
+        closeSearch();
+      } else {
+        openSearch();
+        maybeShowHint();
+      }
       return;
     }
 

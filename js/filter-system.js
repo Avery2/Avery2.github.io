@@ -185,51 +185,39 @@ function renderMultiSelectFilter(filter) {
   // Get tag frequency for displaying counts
   const tagFrequency = filter.id === 'tags' ? calculateTagFrequency() : new Map();
 
+  const renderPill = (opt, defaultIndex) => {
+    const count = tagFrequency.get(opt.value.toLowerCase()) || 0;
+    const label = filter.id === 'tags' && count > 0 ? `${opt.label} (${count})` : opt.label;
+    return `
+      <button
+        class="filter-pill"
+        data-value="${opt.value}"
+        data-filter-id="${filter.id}"
+        data-default-index="${defaultIndex}"
+        aria-pressed="false"
+      >
+        ${label}
+      </button>
+    `;
+  };
+
   return `
     <div class="filter-group" data-filter-id="${filter.id}">
       <label class="filter-label">${filter.label}</label>
       <div class="filter-options">
-        ${visibleOptions.map(opt => {
-          const count = tagFrequency.get(opt.value.toLowerCase()) || 0;
-          const label = filter.id === 'tags' && count > 0 ? `${opt.label} (${count})` : opt.label;
-          return `
-            <button
-              class="filter-pill"
-              data-value="${opt.value}"
-              data-filter-id="${filter.id}"
-              ${opt.color ? `data-color="${opt.color}" style="--pill-color: ${opt.color}"` : ''}
-              aria-pressed="false"
-            >
-              ${label}
-            </button>
-          `;
-        }).join('')}
+        ${visibleOptions.map((opt, i) => renderPill(opt, i)).join('')}
         ${hiddenOptions.length > 0 ? `
-          <div class="filter-more-container">
-            <button class="filter-more-toggle" aria-label="Show more tags">
-              <span class="more-text">+${hiddenOptions.length} more</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="filter-more-dropdown" style="display: none;">
-              ${hiddenOptions.map(opt => {
-                const count = tagFrequency.get(opt.value.toLowerCase()) || 0;
-                const label = filter.id === 'tags' && count > 0 ? `${opt.label} (${count})` : opt.label;
-                return `
-                  <button
-                    class="filter-pill"
-                    data-value="${opt.value}"
-                    data-filter-id="${filter.id}"
-                    ${opt.color ? `data-color="${opt.color}" style="--pill-color: ${opt.color}"` : ''}
-                    aria-pressed="false"
-                  >
-                    ${label}
-                  </button>
-                `;
-              }).join('')}
-            </div>
-          </div>
+          <button class="filter-more-toggle" aria-label="Show more tags" aria-expanded="false">
+            <span class="more-text">+${hiddenOptions.length} more</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
         ` : ''}
       </div>
+      ${hiddenOptions.length > 0 ? `
+        <div class="filter-more-dropdown" style="display: none;">
+          ${hiddenOptions.map((opt, i) => renderPill(opt, visibleCount + i)).join('')}
+        </div>
+      ` : ''}
     </div>
   `;
 }
@@ -313,15 +301,19 @@ function setupFilterEventListeners() {
     });
   });
 
-  // "Show more" toggle
+  // "Show more" toggle — dropdown is a sibling of .filter-options within
+  // the same .filter-group, not nested under the toggle itself, so it can
+  // flex-basis:100% onto its own full-width row instead of floating.
   document.querySelectorAll('.filter-more-toggle').forEach(toggle => {
     toggle.addEventListener('click', (e) => {
       e.preventDefault();
-      const dropdown = toggle.nextElementSibling;
+      const dropdown = toggle.closest('.filter-group')?.querySelector('.filter-more-dropdown');
+      if (!dropdown) return;
       const isVisible = dropdown.style.display !== 'none';
 
       dropdown.style.display = isVisible ? 'none' : 'flex';
       toggle.classList.toggle('active', !isVisible);
+      toggle.setAttribute('aria-expanded', String(!isVisible));
 
       const icon = toggle.querySelector('i');
       icon.className = isVisible ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
@@ -510,6 +502,67 @@ function compareByActiveSort(dataA, dataB) {
 }
 
 /**
+ * Re-rank tag pills against the active search text: pills whose value
+ * fuzzy-matches the query are highlighted and float to the front (promoted
+ * out of the "+more" section into the visible row if needed); the rest
+ * stay clickable and available, just further back. Doesn't touch which
+ * pills are .active (that's the separate, hard tag-filter selection) —
+ * with no search text this just restores the original priority/frequency
+ * order via each pill's data-default-index.
+ */
+function updateTagAffordances() {
+  const tagsGroup = document.querySelector('.filter-group[data-filter-id="tags"]');
+  if (!tagsGroup) return;
+
+  const optionsContainer = tagsGroup.querySelector('.filter-options');
+  const dropdown = tagsGroup.querySelector('.filter-more-dropdown');
+  const toggle = tagsGroup.querySelector('.filter-more-toggle');
+  if (!optionsContainer) return;
+
+  const query = activeFilters.search;
+  const pills = Array.from(tagsGroup.querySelectorAll('.filter-pill'));
+
+  const ranked = pills.map(pill => {
+    const defaultIndex = parseInt(pill.dataset.defaultIndex || '0', 10);
+    if (!query) return { pill, isMatch: false, score: -1, defaultIndex };
+    const score = fuzzyScoreFields(query, [{ text: pill.dataset.value, weight: 1 }]);
+    return { pill, isMatch: score >= 0, score, defaultIndex };
+  });
+
+  ranked.sort((a, b) => {
+    if (query && a.isMatch !== b.isMatch) return a.isMatch ? -1 : 1;
+    if (query && a.isMatch && b.score !== a.score) return b.score - a.score;
+    return a.defaultIndex - b.defaultIndex;
+  });
+
+  const VISIBLE_COUNT = 8;
+  const visible = ranked.slice(0, VISIBLE_COUNT);
+  const hidden = ranked.slice(VISIBLE_COUNT);
+
+  visible.forEach(({ pill, isMatch }) => {
+    pill.classList.toggle('filter-pill-match', Boolean(query) && isMatch);
+    optionsContainer.insertBefore(pill, toggle || null);
+  });
+
+  hidden.forEach(({ pill, isMatch }) => {
+    pill.classList.toggle('filter-pill-match', Boolean(query) && isMatch);
+    dropdown?.appendChild(pill);
+  });
+
+  if (toggle) {
+    if (hidden.length === 0) {
+      toggle.style.display = 'none';
+      if (dropdown) dropdown.style.display = 'none';
+      toggle.setAttribute('aria-expanded', 'false');
+    } else {
+      toggle.style.display = '';
+      const moreText = toggle.querySelector('.more-text');
+      if (moreText) moreText.textContent = `+${hidden.length} more`;
+    }
+  }
+}
+
+/**
  * Build the divider shown between matches and dimmed non-matches. Reuses
  * the .tile class so the masonry layout pass sizes it like any other tile,
  * but its own styles strip away all the card chrome.
@@ -561,6 +614,8 @@ function applyFilters() {
   if (hasBothGroups) {
     gridContainer.insertBefore(createDividerElement(), evaluated[firstNonMatchIndex].tileEl);
   }
+
+  updateTagAffordances();
 
   // Recalculate masonry layout after reordering (dimmed tiles stay in flow)
   setTimeout(() => {

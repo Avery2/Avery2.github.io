@@ -243,65 +243,46 @@ function renderProjectTile(data) {
     ? `<p class="tile-description">${data.description}</p>`
     : '';
 
-  // Format date - either created_at for projects or dates for experience/education
+  // Format date - either created_at for projects or dates for experience/education.
+  // Shown as a subtle corner note rather than in the main meta row.
   let dateHTML = '';
 
-  // For experience/education tiles, use the dates from meta
   if (data.type === 'experience' || data.type === 'education') {
     if (data.meta && data.meta.dates) {
-      dateHTML = `
-        <span class="tile-created">
-          ${data.meta.dates}
-        </span>
-      `;
+      dateHTML = `<span class="tile-created">${data.meta.dates}</span>`;
     }
   } else if (data.created_at) {
-    // For projects, format created_at as "Mon YYYY"
     try {
       const date = new Date(data.created_at);
       const month = date.toLocaleDateString('en-US', { month: 'short' });
       const year = date.getFullYear();
-      dateHTML = `
-        <span class="tile-created">
-          ${month} ${year}
-        </span>
-      `;
+      dateHTML = `<span class="tile-created">${month} ${year}</span>`;
     } catch (e) {
       // If date parsing fails, skip it
     }
   }
 
-  // For experience/education tiles, show type label instead of language
+  // Experience/education tiles show their type here since they skip the tag
+  // pills below. Project tiles don't repeat their language — it's already
+  // shown as one of the tag pills.
   let languageLabel = '';
   if (data.type === 'experience') {
     languageLabel = 'Experience';
   } else if (data.type === 'education') {
     languageLabel = 'Education';
-  } else if (data.language) {
-    languageLabel = data.language;
   }
 
-  // Build metadata HTML
-  const metaHTML = `
-    <div class="tile-meta">
-      ${languageLabel ? `
-        <span class="tile-language">
-          ${languageLabel}
-        </span>
-      ` : ''}
-      ${data.stars ? `
-        <span class="tile-stars">
-          <i class="fas fa-star"></i> ${data.stars}
-        </span>
-      ` : ''}
-      ${data.traffic && data.traffic.unique_visitors_14d ? `
-        <span class="tile-visitors">
-          <i class="fas fa-eye"></i> ${data.traffic.unique_visitors_14d}
-        </span>
-      ` : ''}
-      ${dateHTML}
-    </div>
-  `;
+  // Build metadata HTML — only rendered if there's actually something to show
+  const metaItems = [
+    languageLabel ? `<span class="tile-language">${languageLabel}</span>` : '',
+    data.stars ? `<span class="tile-stars"><i class="fas fa-star"></i> ${data.stars}</span>` : '',
+    data.traffic && data.traffic.unique_visitors_14d
+      ? `<span class="tile-visitors"><i class="fas fa-eye"></i> ${data.traffic.unique_visitors_14d}</span>`
+      : ''
+  ].filter(Boolean);
+  const metaHTML = metaItems.length > 0
+    ? `<div class="tile-meta">${metaItems.join('')}</div>`
+    : '';
 
   // Build topics HTML - use tags (which include topics + language)
   // Don't show tags for experience/education tiles
@@ -320,6 +301,7 @@ function renderProjectTile(data) {
         ${descriptionHTML}
         ${metaHTML}
         ${topicsHTML}
+        ${dateHTML}
       </div>
     </a>
   `;

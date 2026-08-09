@@ -188,17 +188,19 @@
 
 .tile-language,
 .tile-stars,
-.tile-visitors,
-.tile-created {
+.tile-visitors {
   display: flex;
   align-items: center;
   gap: 0.35rem;
 }
 
+/* Subtle corner note — sits after the tags, right-aligned, out of the way */
 .tile-created {
+  display: block;
   color: var(--text-tertiary);
-  font-size: 0.8rem;
-  margin-left: auto;
+  font-size: 0.75rem;
+  align-self: flex-end;
+  margin-top: 0.5rem;
 }
 
 /* Topics/tags */
