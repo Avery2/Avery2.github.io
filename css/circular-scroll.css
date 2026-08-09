@@ -1,0 +1,46 @@
+/* Hide the scrollbar while the loop is active — a native scrollbar thumb
+   can't coherently represent a page whose scrollable length keeps being
+   extended and snapped back, so showing one would give the loop away
+   immediately regardless of how clean the content jump itself is. Only
+   applied once JS confirms the loop actually initialized, so a page where
+   the feature is disabled/bypassed (e.g. reduced-motion) keeps a normal,
+   honest scrollbar. */
+html.circular-scroll-active {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge */
+}
+
+html.circular-scroll-active::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Edge */
+}
+
+/* The cloned grid is purely a visual loop device — inert already excludes
+   it from interaction/accessibility, this just ensures it never affects
+   layout in ways that would look different from the real grid above it. */
+#circular-scroll-clone {
+  pointer-events: none;
+}
+
+/* Hint icon shown while pulling past the real bottom, before release */
+#circular-scroll-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  color: var(--accent-primary);
+  font-size: 1.25rem;
+  transition: opacity 0.1s linear;
+  z-index: 500;
+}
+
+#circular-scroll-hint.popping {
+  animation: circular-scroll-pop-flash 0.3s ease;
+}
+
+@keyframes circular-scroll-pop-flash {
+  0% { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 1; }
+  60% { transform: translateX(-50%) scale(1.4) rotate(180deg); opacity: 1; }
+  100% { transform: translateX(-50%) scale(1) rotate(360deg); opacity: 0; }
+}

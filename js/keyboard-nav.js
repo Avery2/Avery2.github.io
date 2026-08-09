@@ -301,13 +301,7 @@ function setupKeydownHandler() {
     // Priority 7: g then g (jump to top)
     if (e.key === 'g') {
       if (lastKey === 'g' && (Date.now() - lastKeyTime) < 500) {
-        // window.scrollTo is inert while the circular loop has real
-        // scrolling disabled — redirect to its own position instead.
-        if (window.__circularLoop?.isActive()) {
-          window.__circularLoop.jumpToTop();
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         lastKey = null;
       } else {
         lastKey = 'g';
@@ -318,11 +312,7 @@ function setupKeydownHandler() {
 
     // Priority 8: Shift+G (jump to bottom)
     if (e.key === 'G' && e.shiftKey) {
-      if (window.__circularLoop?.isActive()) {
-        window.__circularLoop.jumpToBottom();
-      } else {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      }
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       lastKey = null;
       return;
     }
