@@ -109,3 +109,43 @@
   justify-content: center;
   gap: 1rem;
 }
+
+.layout-debug-controls {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--header-bg);
+  box-shadow: 0 4px 16px var(--shadow-color);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.layout-debug-controls a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.layout-debug-controls a[aria-current="page"] {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-primary);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25rem;
+}
+
+html[data-layout-debug="true"] .tile[data-layout-group="writing"] { outline: 2px solid #b46cff; }
+html[data-layout-debug="true"] .tile[data-layout-group="experience"] { outline: 2px solid #42b8a4; }
+html[data-layout-debug="true"] .tile[data-layout-group="projects"] { outline: 2px solid #5b8def; }
+html[data-layout-debug="true"] .tile[data-layout-group="links"] { outline: 2px solid #e0a83b; }
+html[data-layout-debug="true"] .tile[data-layout-group="navigation"] { outline: 2px solid #999; }
+
+@media (max-width: 900px) {
+  .layout-debug-controls { display: none; }
+}
