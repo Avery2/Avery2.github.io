@@ -26,6 +26,14 @@
   pointer-events: none;
 }
 
+:root {
+  /* Live-tunable via the dev panel (js/dev-tuning-panel.js) during local
+     testing; these are just the shipped defaults. */
+  --footer-reveal-gap: 0.85rem; /* fixed distance below the message — not animated, just where it sits */
+  --footer-reveal-min-opacity: 1; /* at 1, full opacity shows the instant pulling starts — no fade-in at all */
+  --footer-spring-back-duration: 380ms;
+}
+
 .footer-pull {
   position: relative;
   z-index: 1;
@@ -39,19 +47,23 @@
   margin: 0;
 }
 
-/* Grows in below the permanent message as you pull — real layout space,
-   not a crossfade — so it reads as something opening up underneath rather
-   than replacing what's there. */
+/* Sits absolutely — not in flow — directly under the permanent message,
+   inside the footer's own padding. It fades and slides very slightly into
+   place as you pull, but the page's height never changes because of it:
+   this reads as something revealing in place, not the page growing/
+   scrolling to make room. */
 .footer-back-to-top {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: var(--footer-reveal-gap);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin: 0;
-  margin-top: calc(1.1rem * var(--pull-progress));
-  max-height: calc(3.5rem * var(--pull-progress));
+  transform: translateX(-50%) translateY(calc((1 - var(--pull-progress)) * -6px));
   opacity: var(--pull-progress);
-  overflow: hidden;
+  white-space: nowrap;
   background: none;
   border: none;
   cursor: pointer;
@@ -59,10 +71,19 @@
   font-weight: 500;
   color: var(--text-secondary);
   pointer-events: none;
+  /* Buttons globally get a 0.3s theme-switch transition (themes.css) that
+     would otherwise smear opacity behind the live pull gesture, making it
+     lag the actual scroll input by up to 300ms. Cancel it here;
+     .footer-pull-resetting re-enables it, deliberately, for the spring-back. */
+  transition: none;
 }
 
+/* Once actively pulling, jump straight to a legible floor instead of
+   fading in linearly from zero — otherwise the first several percent of
+   pulling shows nothing and it's unclear anything is happening at all. */
 .footer-pull.footer-pull-active .footer-back-to-top {
   pointer-events: auto;
+  opacity: calc(var(--footer-reveal-min-opacity) + (1 - var(--footer-reveal-min-opacity)) * var(--pull-progress));
 }
 
 .footer-pull-ring {
@@ -105,9 +126,14 @@
 }
 
 /* Spring-back to default state animates smoothly; while actively pulling,
-   updates are instant so it tracks the gesture 1:1 */
+   updates are instant so it tracks the gesture 1:1. Opacity/slide fade out
+   noticeably faster than the ring so the row is basically gone by the time
+   the ring finishes retracting — no synchronized "everything at once" yank. */
 .footer-pull-resetting,
 .footer-pull-resetting .footer-back-to-top,
 .footer-pull-resetting .footer-pull-ring-progress {
-  transition: opacity 0.32s ease, max-height 0.32s ease, margin-top 0.32s ease, stroke-dashoffset 0.32s ease;
+  transition:
+    opacity calc(var(--footer-spring-back-duration) * 0.5) ease-out,
+    transform calc(var(--footer-spring-back-duration) * 0.5) ease-out,
+    stroke-dashoffset var(--footer-spring-back-duration) ease-out;
 }

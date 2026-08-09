@@ -1,25 +1,34 @@
 /**
  * Rubber-Band Footer
  * Once the page is already scrolled to the very bottom, further scroll
- * input grows a "Back to top" reveal in below the permanent footer
- * message, with a ring that fills as you keep pulling — quick initial
- * give that gets harder to push further, like real elastic. The instant
- * the ring completes, it fires (no waiting around for a "release"); if
- * you stop pulling before it's full, it springs back. Never calls
- * preventDefault — the page is already at its scroll limit at that
- * point, so there's nothing to interfere with; this only ever adds
- * behavior, never changes how normal scrolling works anywhere else.
+ * input reveals a "Back to top" button in place, right under the
+ * permanent footer message, with a ring that fills as you keep pulling —
+ * quick initial give that gets harder to push further, like real elastic.
+ * The reveal is an absolutely-positioned overlay, not layout growth, so
+ * the page's scrollable height never changes during the gesture — it
+ * reads as something appearing in place, not the page growing/scrolling
+ * to make room. The instant the ring completes, it fires (no waiting
+ * around for a "release"); if you stop pulling before it's full, it
+ * springs back. Never calls preventDefault — the page is already at its
+ * scroll limit at that point, so there's nothing to interfere with; this
+ * only ever adds behavior, never changes how normal scrolling works
+ * anywhere else.
+ *
+ * TUNING is exported as a single object (values tuned live against a
+ * temporary dev panel, since removed) so it's easy to see and adjust every
+ * tunable in one place.
  */
 
-// Raw input (px) needed to fully arm. Progress = sqrt(rawPull / PULL_DISTANCE),
-// so early pulling shows a lot of visible movement immediately, then it
-// takes progressively more input to fill the last stretch — real tension.
-const PULL_DISTANCE = 2200;
-const SPRING_BACK_IDLE_MS = 140; // wheel has no "end" event — this long a pause with no progress means "let go"
-const BOTTOM_EPSILON = 40; // generous — scrollHeight vs. true max scroll position can drift by ~20px
-const SCROLL_TOP_DURATION = 600;
-const RAPID_TICK_GAP_MS = 30; // wheel ticks firing faster than this look like a momentum train, not intent
-const MIN_MOMENTUM_DAMPING = 0.12; // floor so a sustained fast train still creeps forward, just slowly
+export const TUNING = {
+  pullDistance: 300, // raw px of scroll input needed to fully arm
+  curveExponent: 0.25, // progress = rawPull^curveExponent; 0.5 = sqrt (quick early give, resists near the end)
+  springBackIdleMs: 130, // wheel has no "end" event — this long a pause with no progress means "let go"
+  bottomEpsilon: 40, // generous — scrollHeight vs. true max scroll position can drift by ~20px
+  scrollTopDuration: 2000, // ms for the fast scroll-to-top animation
+  referenceVelocity: 1.3, // px/ms — at or below this, ticks count fully; above it, damping kicks in
+  momentumCurveExponent: 25, // how hard damping crushes ticks past referenceVelocity (higher = more brutal)
+  minMomentumDamping: 0.02 // floor so a sustained fast train still creeps forward, just barely
+};
 
 let footerPull = null;
 let rawPull = 0;
@@ -29,7 +38,6 @@ let isAnimatingScroll = false;
 let idleTimer = null;
 let touchStartY = null;
 let lastWheelTime = 0;
-let restingScrollHeight = null; // snapshot taken at gesture start, since our own reveal grows document height
 let prefersReducedMotion = false;
 
 export function initRubberBandFooter() {
@@ -51,22 +59,12 @@ export function initRubberBandFooter() {
 }
 
 function isAtPageBottom() {
-  // Use the height captured at the start of this gesture, not a fresh
-  // read — the reveal itself grows the footer/document height as it
-  // opens up, which would otherwise make "at bottom" go false mid-pull.
-  const reference = restingScrollHeight ?? document.body.scrollHeight;
-  return window.innerHeight + window.scrollY >= reference - BOTTOM_EPSILON;
-}
-
-function beginGestureIfNeeded() {
-  if (restingScrollHeight === null) {
-    restingScrollHeight = document.body.scrollHeight;
-  }
+  return window.innerHeight + window.scrollY >= document.body.scrollHeight - TUNING.bottomEpsilon;
 }
 
 function progressFromRaw(raw) {
-  const clamped = Math.max(0, Math.min(raw, PULL_DISTANCE));
-  return Math.sqrt(clamped / PULL_DISTANCE);
+  const clamped = Math.max(0, Math.min(raw, TUNING.pullDistance));
+  return Math.pow(clamped / TUNING.pullDistance, TUNING.curveExponent);
 }
 
 function applyProgress(raw) {
@@ -82,18 +80,26 @@ function applyProgress(raw) {
   }
 }
 
+/**
+ * Reads the CSS spring-back duration so the JS cleanup timer always
+ * matches, even though that duration is a live-tunable CSS var (dev panel).
+ */
+function springBackDurationMs() {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue('--footer-spring-back-duration').trim();
+  const ms = raw.endsWith('ms') ? parseFloat(raw) : parseFloat(raw) * 1000;
+  return Number.isFinite(ms) ? ms : 380;
+}
+
 function resetPullState(animate) {
   clearTimeout(idleTimer);
   if (animate) footerPull.classList.add('footer-pull-resetting');
   rawPull = 0;
   progress = 0;
   isArmed = false;
-  lastWheelTime = 0;
-  restingScrollHeight = null;
   footerPull.style.setProperty('--pull-progress', '0');
   footerPull.classList.remove('armed', 'footer-pull-active');
   if (animate) {
-    setTimeout(() => footerPull?.classList.remove('footer-pull-resetting'), 340);
+    setTimeout(() => footerPull?.classList.remove('footer-pull-resetting'), springBackDurationMs() + 30);
   }
 }
 
@@ -127,7 +133,7 @@ function scrollToTopFast() {
   const startTime = performance.now();
 
   function step(now) {
-    const t = Math.min((now - startTime) / SCROLL_TOP_DURATION, 1);
+    const t = Math.min((now - startTime) / TUNING.scrollTopDuration, 1);
     const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
     window.scrollTo({ top: startY * (1 - eased), behavior: 'instant' });
 
@@ -147,42 +153,59 @@ function scheduleIdleSpringBack() {
     if (!isArmed && rawPull > 0) {
       resetPullState(true);
     }
-  }, SPRING_BACK_IDLE_MS);
+  }, TUNING.springBackIdleMs);
 }
 
 /**
  * Wheel events don't expose whether they're from active input or decaying
- * momentum/fling — but momentum trains fire at high, steady frequency,
- * while a deliberate scroll (or a single mouse-wheel notch) has more time
- * between ticks. Scaling contribution by that gap means a fast flick that
- * carries momentum into the bottom barely moves the needle, while
- * deliberate scrolling once things have settled counts close to fully.
+ * momentum/fling — but continuous physical scrolling (trackpad contact)
+ * fires ticks at similar *frequency* whether you're moving gently or
+ * flinging fast, so timing alone can't tell the two apart. What actually
+ * differs is speed: px moved per ms. Below referenceVelocity a tick counts
+ * fully (this is what makes deliberate scrolling at rest feel sensitive);
+ * above it, damping ramps in smoothly, shaped by momentumCurveExponent —
+ * same idea as curveExponent, just for "how fast is too fast" instead of
+ * "how far is full."
  */
-function momentumDamping(now) {
-  const dt = lastWheelTime ? now - lastWheelTime : Infinity;
-  lastWheelTime = now;
-  if (dt >= RAPID_TICK_GAP_MS) return 1;
-  return Math.max(MIN_MOMENTUM_DAMPING, dt / RAPID_TICK_GAP_MS);
+// No timing reference exists for the very first tick of an interaction —
+// rather than giving it a free undamped pass (which, combined with a low
+// pullDistance, would let a single lucky fast tick nearly arm it by
+// itself), judge it by magnitude against this assumed reasonable pace.
+const ASSUMED_FIRST_TICK_DT_MS = 50;
+
+function momentumDamping(deltaY, dt) {
+  const effectiveDt = Number.isFinite(dt) && dt > 0 ? dt : ASSUMED_FIRST_TICK_DT_MS;
+  const velocity = Math.abs(deltaY) / effectiveDt; // px/ms
+  if (velocity <= TUNING.referenceVelocity) return 1;
+
+  const ratio = TUNING.referenceVelocity / velocity; // (0, 1) — smaller the faster you're going
+  const damping = Math.pow(ratio, TUNING.momentumCurveExponent);
+  return Math.max(TUNING.minMomentumDamping, damping);
 }
 
 function handleWheel(e) {
+  // Track timing across every wheel event, not just qualifying ones — a
+  // fast fling's first tick *at* the bottom should still read as fast,
+  // because it's measured against the ticks that scrolled it down to get
+  // there, not treated as a fresh, momentum-free sample.
+  const now = performance.now();
+  const dt = lastWheelTime ? now - lastWheelTime : Infinity;
+  lastWheelTime = now;
+
   if (isAnimatingScroll || !footerPull) return;
 
   if (!isAtPageBottom()) {
     if (rawPull > 0) resetPullState(true);
-    lastWheelTime = 0;
     return;
   }
 
   if (e.deltaY > 0) {
-    const damping = momentumDamping(performance.now());
-    beginGestureIfNeeded();
+    const damping = momentumDamping(e.deltaY, dt);
     footerPull.classList.remove('footer-pull-resetting');
     applyProgress(rawPull + e.deltaY * damping);
     scheduleIdleSpringBack();
   } else if (e.deltaY < 0 && rawPull > 0) {
     resetPullState(true);
-    lastWheelTime = 0;
   }
 }
 
@@ -202,7 +225,6 @@ function handleTouchMove(e) {
   const pulledUpBy = touchStartY - currentY; // finger moving up past the bottom = pulling
 
   if (pulledUpBy > 0) {
-    beginGestureIfNeeded();
     footerPull.classList.remove('footer-pull-resetting');
     applyProgress(pulledUpBy);
   } else if (rawPull > 0) {
