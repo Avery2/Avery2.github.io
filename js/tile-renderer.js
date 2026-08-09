@@ -249,6 +249,22 @@ function externalLinkAttributes(url) {
   return isInternal ? '' : 'target="_blank" rel="noopener noreferrer"';
 }
 
+function cardSectionLabel(data) {
+  if (data.section_header) return '';
+  if (data.content_type === 'writing' || (data.tags || []).includes('writing')) return 'Writing';
+  if (data.type === 'experience' || data.type === 'education' || data.content_type === 'experience') return 'Experience';
+  if (data.type === 'project' || data.content_type === 'projects') return 'Projects';
+  return '';
+}
+
+function cardFooterHTML(sectionLabel, trailingHTML = '') {
+  if (!sectionLabel && !trailingHTML) return '';
+  return `<div class="tile-card-footer">
+    <span class="tile-section-label">${sectionLabel}</span>
+    <span class="tile-footer-detail">${trailingHTML}</span>
+  </div>`;
+}
+
 /**
  * Render a project tile (GitHub repository)
  * @param {Object} data - Project data
@@ -286,27 +302,9 @@ function renderProjectTile(data) {
     }
   }
 
-  // Experience/education tiles show their type here since they skip the tag
-  // pills below. Project tiles don't repeat their language — it's already
-  // shown as one of the tag pills.
-  let languageLabel = '';
-  if (data.type === 'experience') {
-    languageLabel = 'Experience';
-  } else if (data.type === 'education') {
-    languageLabel = 'Education';
-  }
-
   // Stars only get called out once a project has enough to mean something
   const starsHTML = data.stars > 3
     ? `<span class="tile-stars"><i class="fas fa-star"></i> ${data.stars}</span>`
-    : '';
-
-  // Build metadata HTML — only rendered if there's actually something to show
-  const metaItems = [
-    languageLabel ? `<span class="tile-language">${languageLabel}</span>` : ''
-  ].filter(Boolean);
-  const metaHTML = metaItems.length > 0
-    ? `<div class="tile-meta">${metaItems.join('')}</div>`
     : '';
 
   // Build topics HTML - use tags (which include topics + language)
@@ -318,10 +316,7 @@ function renderProjectTile(data) {
        </div>`
     : '';
 
-  // Stars (if notable) and date share a single subtle corner note
-  const cornerNoteHTML = (starsHTML || dateHTML)
-    ? `<div class="tile-corner-note">${starsHTML}${dateHTML}</div>`
-    : '';
+  const footerHTML = cardFooterHTML(cardSectionLabel(data), `${starsHTML}${dateHTML}`);
 
   tile.innerHTML = `
     <a href="${data.url}" class="tile-link" ${externalLinkAttributes(data.url)}>
@@ -329,9 +324,8 @@ function renderProjectTile(data) {
       <div class="tile-content">
         <h3 class="tile-title">${data.title || data.name}</h3>
         ${descriptionHTML}
-        ${metaHTML}
         ${topicsHTML}
-        ${cornerNoteHTML}
+        ${footerHTML}
       </div>
     </a>
   `;
@@ -360,13 +354,11 @@ function renderLinkTile(data) {
   const target = data.open_new_tab ? 'target="_blank" rel="noopener noreferrer"' : '';
 
   // Only include description if it exists
-  const descriptionHTML = data.description
-    ? `<p class="tile-description">${data.description}</p>`
-    : '';
-
   const isWriting = data.content_type === 'writing' || (data.tags || []).includes('writing');
-  const readMoreHTML = isWriting ? '<span class="tile-read-more">Read more <span aria-hidden="true">→</span></span>' : '';
-  const cornerNoteHTML = isWriting ? '<div class="tile-corner-note"><span>Writing</span></div>' : '';
+  const descriptionHTML = data.description
+    ? `<p class="tile-description">${data.description}${isWriting ? ' <span class="tile-read-more">Read more <span aria-hidden="true">→</span></span>' : ''}</p>`
+    : '';
+  const footerHTML = cardFooterHTML(cardSectionLabel(data));
 
   tile.innerHTML = `
     <a href="${data.url}" class="tile-link" ${target}>
@@ -374,8 +366,7 @@ function renderLinkTile(data) {
       <div class="tile-content">
         <h3 class="tile-title">${iconHTML}${data.title}</h3>
         ${descriptionHTML}
-        ${readMoreHTML}
-        ${cornerNoteHTML}
+        ${footerHTML}
       </div>
     </a>
   `;

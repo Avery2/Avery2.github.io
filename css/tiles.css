@@ -152,42 +152,37 @@
 
 .tile-read-more {
   color: var(--text-primary);
-  font-size: 0.875rem;
   font-weight: 600;
-  margin-bottom: 0.25rem;
 }
 
-/* Project-specific metadata */
-.tile-meta {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 0.75rem;
-  font-size: 0.85rem;
-  color: var(--text-tertiary);
-  flex-wrap: wrap;
-}
-
-.tile-language,
 .tile-stars {
   display: flex;
   align-items: center;
   gap: 0.35rem;
 }
 
-/* Subtle corner note (stars if notable, then date) — sits after the tags,
-   right-aligned, out of the way */
-.tile-corner-note {
+.tile-card-footer {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  align-self: flex-end;
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 1rem;
+  margin-top: 0.75rem;
   color: var(--text-tertiary);
+  font-size: 0.75rem;
 }
 
-.tile-corner-note .tile-stars {
-  font-size: 0.75rem;
+.tile-section-label {
+  flex: 0 0 auto;
+}
+
+.tile-footer-detail {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-left: auto;
+  text-align: right;
 }
 
 .tile-created {
