@@ -1,0 +1,39 @@
+#circular-loop-stage {
+  background: var(--bg-primary);
+  cursor: grab;
+}
+
+#circular-loop-stage.dragging {
+  cursor: grabbing;
+}
+
+.circular-loop-copy {
+  pointer-events: auto;
+}
+
+/* Blank spacer tiles square off the ragged bottom of the pack — same real
+   .tile look via the shared class, just empty and non-interactive. */
+.circular-loop-spacer {
+  pointer-events: none;
+}
+
+.circular-loop-ledge {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border-color) 14%,
+    var(--border-color) 86%,
+    transparent
+  );
+}
+
+/* A native scrollbar has nothing to do once real scrolling is disabled. */
+html.circular-loop-active {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html.circular-loop-active::-webkit-scrollbar {
+  display: none;
+}
