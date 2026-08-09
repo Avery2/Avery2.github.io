@@ -199,7 +199,7 @@ const LAYOUT_PRESETS = {
 };
 const BLOB_DEBUG_DEFAULTS = {
   groupGap: 40,
-  halo: 21.33,
+  halo: 21.5,
   color: 90,
   radius: 0,
   dividerX: 0,
