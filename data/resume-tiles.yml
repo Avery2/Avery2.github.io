@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-08-09T06:37:42.408403+00:00'
+  generated_at: '2026-08-09T06:46:02.331351+00:00'
   source: resume
   total_tiles: 4
 tiles:
@@ -8,7 +8,7 @@ tiles:
   name: Amplitude
   title: Amplitude
   description: Senior Software Engineer
-  url: ./writing/experience/amplitude.html
+  url: ./writing/experience/amplitude.html?path=resume~amplitude&open=last&from=portfolio
   tags:
   - experience
   - professional
@@ -26,7 +26,7 @@ tiles:
   name: Halo Science
   title: Halo Science
   description: Developer Intern
-  url: ./writing/experience/halo-science.html
+  url: ./writing/experience/halo-science.html?path=resume~halo-science&open=last&from=portfolio
   tags:
   - experience
   - professional
@@ -44,7 +44,7 @@ tiles:
   name: MAterials Simulation Toolkit Machine Learning (MAST-ML)
   title: MAterials Simulation Toolkit Machine Learning (MAST-ML)
   description: Member
-  url: ./writing/experience/materials-simulation-toolkit-machine-learning-mast-ml.html
+  url: ./writing/experience/materials-simulation-toolkit-machine-learning-mast-ml.html?path=resume~materials-simulation-toolkit-machine-learning-mast-ml&open=last&from=portfolio
   tags:
   - experience
   - professional
@@ -62,7 +62,7 @@ tiles:
   name: University of Wisconsin-Madison
   title: University of Wisconsin-Madison
   description: B.S. Major in Computer Science | B.S. Major in Data Science
-  url: ./writing/education/university-of-wisconsin-madison.html
+  url: ./writing/education/university-of-wisconsin-madison.html?path=resume~university-of-wisconsin-madison&open=last&from=portfolio
   tags:
   - education
   - academic
