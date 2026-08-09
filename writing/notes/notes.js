@@ -16,16 +16,18 @@ initTheme();
 if (app && noteBySlug.has(initialSlug)) enhance();
 
 function enhance() {
-  const statePath = validPath(history.state?.notePath) || [initialSlug];
+  const urlPath = pathFromURL();
+  const statePath = urlPath || validPath(history.state?.notePath) || [initialSlug];
   panes = statePath.map(makePane);
-  expandedDepth = validExpandedDepth(history.state?.expandedDepth, panes.length);
-  expandedPinned = Boolean(history.state?.expandedPinned);
-  currentExpanded = history.state?.currentExpanded !== false;
+  const urlPresentation = urlPath ? presentationFromURL(panes.length) : null;
+  expandedDepth = validExpandedDepth(urlPresentation ? urlPresentation.expandedDepth : history.state?.expandedDepth, panes.length);
+  expandedPinned = urlPresentation ? true : Boolean(history.state?.expandedPinned);
+  currentExpanded = urlPresentation ? urlPresentation.currentExpanded : history.state?.currentExpanded !== false;
   historyExpanded = false;
   app.classList.add('is-enhanced');
   app.innerHTML = `<div class="stack-viewport" aria-label="Reading path"><div class="stack-track"></div></div>`;
   render({ focus: false, announce: false });
-  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth, expandedPinned, currentExpanded }, '', location.href);
+  replaceCurrentState();
   addEventListener('popstate', onPopState);
   addEventListener('resize', () => {
     cancelAnimationFrame(resizeFrame);
@@ -35,6 +37,40 @@ function enhance() {
 
 function validPath(path) {
   return Array.isArray(path) && path.length && path.every((slug) => noteBySlug.has(slug)) ? path : null;
+}
+
+function pathFromURL() {
+  const encoded = new URL(location.href).searchParams.get('path');
+  if (!encoded) return null;
+  const path = encoded.split('~').filter(Boolean);
+  return validPath(path) && path.at(-1) === initialSlug ? path : null;
+}
+
+function presentationFromURL(length) {
+  const encoded = new URL(location.href).searchParams.get('open');
+  if (!encoded) return null;
+  const tokens = encoded.split(',');
+  const currentExpanded = tokens.includes('last');
+  const olderDepth = tokens
+    .map((token) => Number.parseInt(token, 10) - 1)
+    .find((depth) => Number.isInteger(depth) && depth >= 0 && depth < length - 1);
+  return { expandedDepth: olderDepth ?? null, currentExpanded };
+}
+
+function stateURL(slug = panes.at(-1).noteId) {
+  const url = new URL(`./${slug}.html`, location.href);
+  const params = [];
+  if (panes.length > 1) params.push(`path=${slugs().join('~')}`);
+  const open = [];
+  if (expandedDepth !== null) open.push(String(expandedDepth + 1));
+  if (currentExpanded) open.push('last');
+  if (!open.length) open.push('1');
+  params.push(`open=${open.join(',')}`);
+  return `${url.pathname}?${params.join('&')}`;
+}
+
+function replaceCurrentState() {
+  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth, expandedPinned, currentExpanded }, '', stateURL());
 }
 
 function validExpandedDepth(depth, length) {
@@ -212,7 +248,7 @@ function expandPane(depth) {
   else expandedDepth = depth;
   expandedPinned = true;
   historyExpanded = false;
-  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth, expandedPinned, currentExpanded }, '', location.href);
+  replaceCurrentState();
   render({ focus: false, announce: false });
   app.querySelector(`.stack-pane[style*="--pane-z:${depth + 1}"] h1`)?.focus({ preventScroll: true });
 }
@@ -223,7 +259,7 @@ function collapsePane(depth) {
   if (depth === expandedDepth) expandedDepth = null;
   expandedPinned = true;
   historyExpanded = false;
-  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth, expandedPinned, currentExpanded }, '', location.href);
+  replaceCurrentState();
   render({ focus: false, announce: false });
 }
 
@@ -267,7 +303,7 @@ function navigateBack(depth) {
 }
 
 function commit(slug, direction) {
-  history.pushState({ notePath: slugs(), expandedDepth, expandedPinned, currentExpanded }, '', `./${slug}.html`);
+  history.pushState({ notePath: slugs(), expandedDepth, expandedPinned, currentExpanded }, '', stateURL(slug));
   app.dataset.direction = direction;
   render({ focus: true });
   if (!reduceMotion.matches) setTimeout(() => delete app.dataset.direction, 380);
