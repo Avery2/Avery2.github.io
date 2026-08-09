@@ -59,7 +59,15 @@ body.notes-page { background: var(--notes-paper); color: var(--notes-ink); overf
 .pane-label { width: var(--pane-exposure); height: 100%; padding: .8rem .35rem; overflow: hidden; color: var(--notes-ink); }
 .pane-label strong { display: block; overflow: hidden; font-family: Georgia, 'Times New Roman', serif; font-size: .98rem; line-height: 1.15; text-overflow: ellipsis; white-space: nowrap; }
 .history-depth { display: block; margin-bottom: .6rem; color: var(--notes-muted); font: 700 .6rem/1 sans-serif; letter-spacing: .08em; }
-.stack-pane--compact .pane-label strong { font-size: .7rem; }
+.stack-pane--compact .pane-label strong {
+  max-height: calc(100% - 2rem);
+  margin: 0 auto;
+  font-size: .72rem;
+  line-height: 1;
+  text-overflow: ellipsis;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
 .pane-make-current { position: sticky; z-index: 4; left: 100%; bottom: 1rem; float: right; margin: -4.2rem 1rem 1rem 0; padding: .45rem .7rem; border: 1px solid var(--notes-rule); border-radius: 2rem; background: var(--notes-paper); color: var(--notes-muted); font-size: .7rem; letter-spacing: .03em; }
 .pane-make-current:hover { color: var(--notes-accent); border-color: var(--notes-accent); }
 [data-direction="forward"] .stack-pane--active .note-article { animation: note-arrive 340ms cubic-bezier(.2,.8,.2,1); }
