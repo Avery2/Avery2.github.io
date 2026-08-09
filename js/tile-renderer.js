@@ -217,6 +217,7 @@ function clearExplicitPlacement(tiles) {
     tile.style.gridRowStart = '';
     delete tile.dataset.layoutGroup;
   });
+  document.querySelectorAll('.semantic-region-layer').forEach(layer => layer.remove());
   document.documentElement.removeAttribute('data-grouped-layout');
 }
 
@@ -313,6 +314,92 @@ function applyGroupedLayout(container, measurements) {
   });
   document.documentElement.dataset.groupedLayout = layoutMode();
   installLayoutDebugControls();
+  renderSemanticRegions(container);
+}
+
+const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+
+function svgElement(name, attributes = {}) {
+  const element = document.createElementNS(SVG_NAMESPACE, name);
+  Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, String(value)));
+  return element;
+}
+
+function renderSemanticRegions(container) {
+  const params = new URLSearchParams(window.location.search);
+  container.querySelector('.semantic-region-layer')?.remove();
+  if (params.get('layoutDebug') !== '1') return;
+
+  cancelAnimationFrame(container._semanticRegionFrame);
+  container._semanticRegionFrame = requestAnimationFrame(() => {
+    const containerRect = container.getBoundingClientRect();
+    const width = container.clientWidth;
+    const height = container.scrollHeight;
+    const groups = new Map();
+
+    container.querySelectorAll('.tile[data-layout-group]').forEach(tile => {
+      const group = tile.dataset.layoutGroup;
+      if (!groups.has(group)) groups.set(group, []);
+      const rect = tile.getBoundingClientRect();
+      groups.get(group).push({
+        x: rect.left - containerRect.left,
+        y: rect.top - containerRect.top,
+        width: rect.width,
+        height: rect.height
+      });
+    });
+
+    const svg = svgElement('svg', {
+      class: 'semantic-region-layer',
+      width,
+      height,
+      viewBox: `0 0 ${width} ${height}`,
+      'aria-hidden': 'true'
+    });
+    const definitions = svgElement('defs');
+    svg.appendChild(definitions);
+
+    [...groups.entries()].forEach(([group, rects], index) => {
+      const drawUnion = (spread, kind) => {
+        const maskId = `semantic-region-${kind}-${index}`;
+        const mask = svgElement('mask', {
+          id: maskId,
+          maskUnits: 'userSpaceOnUse',
+          x: -24,
+          y: -24,
+          width: width + 48,
+          height: height + 48
+        });
+        rects.forEach(rect => {
+          mask.appendChild(svgElement('rect', {
+            x: rect.x - spread,
+            y: rect.y - spread,
+            width: rect.width + spread * 2,
+            height: rect.height + spread * 2,
+            rx: 8 + spread,
+            fill: 'white'
+          }));
+        });
+        definitions.appendChild(mask);
+        svg.appendChild(svgElement('rect', {
+          class: `semantic-region semantic-region-${kind}`,
+          'data-layout-group': group,
+          x: -24,
+          y: -24,
+          width: width + 48,
+          height: height + 48,
+          mask: `url(#${maskId})`
+        }));
+      };
+
+      // A paper-colored outer union makes a small channel only where distinct
+      // semantic regions collide; the inner union remains seamless.
+      drawUnion(19, 'separator');
+      drawUnion(14, 'fill');
+    });
+
+    container.prepend(svg);
+  });
 }
 
 function installLayoutDebugControls() {

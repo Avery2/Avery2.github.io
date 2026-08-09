@@ -140,35 +140,49 @@
   text-underline-offset: 0.25rem;
 }
 
-html[data-layout-debug="true"] .grid-container { isolation: isolate; }
+html[data-layout-debug="true"] .grid-container {
+  position: relative;
+  isolation: isolate;
+}
 
 html[data-layout-debug="true"] .tile[data-layout-group] {
   position: relative;
-  /*
-   * The desktop grid gap is 20px. A 16px spread from both neighboring
-   * cards overlaps by 12px, so rounded silhouettes read as one region
-   * instead of merely meeting at a narrow seam.
-   */
-  box-shadow: 0 0 0 16px var(--layout-region-fill);
+  z-index: 1;
 }
 
-html[data-layout-debug="true"] .tile[data-layout-group="intro"] {
+.semantic-region-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.semantic-region {
+  fill: var(--layout-region-fill);
+}
+
+.semantic-region[data-layout-group="intro"] {
   --layout-region-fill: color-mix(in srgb, #ff7a1a 32%, var(--bg-primary));
 }
-html[data-layout-debug="true"] .tile[data-layout-group="writing"] {
+.semantic-region[data-layout-group="writing"] {
   --layout-region-fill: color-mix(in srgb, #b75cff 38%, var(--bg-primary));
 }
-html[data-layout-debug="true"] .tile[data-layout-group="experience"] {
+.semantic-region[data-layout-group="experience"] {
   --layout-region-fill: color-mix(in srgb, #28c7ad 36%, var(--bg-primary));
 }
-html[data-layout-debug="true"] .tile[data-layout-group="projects"] {
+.semantic-region[data-layout-group="projects"] {
   --layout-region-fill: color-mix(in srgb, #4d8cff 36%, var(--bg-primary));
 }
-html[data-layout-debug="true"] .tile[data-layout-group="links"] {
+.semantic-region[data-layout-group="links"] {
   --layout-region-fill: color-mix(in srgb, #f0b52f 36%, var(--bg-primary));
 }
-html[data-layout-debug="true"] .tile[data-layout-group="navigation"] {
+.semantic-region[data-layout-group="navigation"] {
   --layout-region-fill: color-mix(in srgb, #aaa 28%, var(--bg-primary));
+}
+
+.semantic-region.semantic-region-separator {
+  fill: var(--bg-primary);
 }
 
 @media (max-width: 900px) {
