@@ -190,11 +190,11 @@ export function calculateMasonryLayout(container) {
   });
 }
 
-const GROUP_ORDER = ['writing', 'experience', 'projects', 'links', 'navigation', 'other'];
+const GROUP_ORDER = ['intro', 'writing', 'experience', 'projects', 'links', 'navigation', 'other'];
 const LAYOUT_PRESETS = {
-  density: { groupDistance: 0.35, compactness: 0.03, holes: 0.4, readingOrder: 0.08, beamWidth: 80 },
-  balanced: { groupDistance: 2.2, compactness: 0.08, holes: 0.55, readingOrder: 0.15, beamWidth: 120 },
-  strong: { groupDistance: 8, compactness: 0.16, holes: 0.7, readingOrder: 0.25, beamWidth: 160 }
+  density: { groupDistance: 0.35, compactness: 0.03, holes: 0.4, readingOrder: 0.08, beamWidth: 80, requireConnected: false },
+  balanced: { groupDistance: 2.2, compactness: 0.08, holes: 0.55, readingOrder: 0.15, beamWidth: 120, requireConnected: true },
+  strong: { groupDistance: 8, compactness: 0.16, holes: 0.7, readingOrder: 0.25, beamWidth: 160, requireConnected: true }
 };
 
 function layoutMode() {
@@ -221,7 +221,7 @@ function clearExplicitPlacement(tiles) {
 }
 
 function semanticGroup(tile) {
-  if (tile.classList.contains('profile-tile')) return 'writing';
+  if (tile.classList.contains('profile-tile')) return 'intro';
   const type = tile.dataset.contentType;
   return GROUP_ORDER.includes(type) ? type : 'other';
 }
@@ -264,6 +264,7 @@ function placeGroup(initialHeights, cards, preset, existingRects = []) {
         const nearest = state.groupRects.length > 0
           ? Math.min(...state.groupRects.map(previous => cardDistance(rect, previous)))
           : 0;
+        if (preset.requireConnected && state.groupRects.length > 0 && nearest > 0) return;
         const previous = state.placements.at(-1) || state.groupRects.at(-1);
         const readingOrderCost = state.readingOrderCost + (previous && row < previous.row ? previous.row - row : 0);
         const heights = [...state.heights];

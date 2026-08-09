@@ -141,6 +141,7 @@
 }
 
 html[data-layout-debug="true"] .tile[data-layout-group="writing"] { outline: 2px solid #b46cff; }
+html[data-layout-debug="true"] .tile[data-layout-group="intro"] { outline: 2px solid #f07a24; }
 html[data-layout-debug="true"] .tile[data-layout-group="experience"] { outline: 2px solid #42b8a4; }
 html[data-layout-debug="true"] .tile[data-layout-group="projects"] { outline: 2px solid #5b8def; }
 html[data-layout-debug="true"] .tile[data-layout-group="links"] { outline: 2px solid #e0a83b; }
