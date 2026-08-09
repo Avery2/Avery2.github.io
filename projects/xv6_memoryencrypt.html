@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Xv6 Memoryencrypt - Avery</title>
   <meta name="description" content="Project for my OS class 537. Enables memory encryption for the xv6 operating system.">
+  <script>
+    try {
+      const override = sessionStorage.getItem('site-theme-override');
+      document.documentElement.dataset.theme = override || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    } catch (_) {}
+  </script>
+  <style>html {{ background: #fbfaf7; }} html[data-theme="dark"] {{ background: #1a1a1a; }}</style>
   <link rel="icon" href="../assets/images/profile/face.jpg" type="image/jpeg">
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/project-detail.css">
