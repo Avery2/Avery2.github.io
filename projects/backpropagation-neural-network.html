@@ -13,31 +13,31 @@
   </script>
   <style>html { background: #fbfaf7; } html[data-theme="dark"] { background: #1a1a1a; }</style>
   <link rel="icon" href="../assets/images/profile/face.jpg" type="image/jpeg">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/project-detail.css">
+  <link rel="stylesheet" href="/writing/assets/portfolio-foundation.css">
+  <link rel="stylesheet" href="/writing/notes/notes.css">
+  <link rel="stylesheet" href="/writing/assets/resume.css">
+  <link rel="stylesheet" href="/css/project-detail.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
-<body class="project-detail-page">
-  <header class="detail-site-header">
-    <a href="../" class="detail-brand">Avery</a>
-    <span class="detail-section">Projects</span>
-    <button id="theme-toggle" class="detail-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
+<body class="notes-page">
+  <header class="notes-site-header">
+    <a href="/" class="notes-brand">Avery</a>
+    <a href="/projects/index.html" class="notes-home">Projects</a>
+    <button id="theme-toggle" class="notes-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
   </header>
-  <main class="project-container">
-    <a class="project-back-link" href="../#projects-section">← Back to portfolio</a>
-    <div class="project-header">
-      <div class="project-kicker">Project</div>
-      <h1 class="project-title">Backpropagation Neural Network</h1>
-      <p class="project-tagline">A (bad) feed-forward neural network that learns with back propagation.</p>
-      <div class="project-stats"><span><i class="fas fa-code"></i> Java</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Apr 2021</span></div>
-      <div class="project-links">
-        <a class="project-link-btn" href="https://github.com/Avery2/Backpropagation-Neural-Network" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
-        
-      </div>
-    </div>
-    <div class="readme-content"><h1 dir="auto">Backpropagation-Nueral-Network</h1>
+  <main id="notes-app" class="notes-app" data-initial-note="backpropagation-neural-network" data-corpus="/data/projects.generated.mjs">
+    <div class="baseline-note">
+      <article class="note-article" data-note="backpropagation-neural-network">
+        <header class="note-header">
+          <div class="note-kicker">Project</div>
+          <h1 tabindex="-1">Backpropagation Neural Network</h1>
+          <p class="note-summary">A (bad) feed-forward neural network that learns with back propagation.</p>
+          <div class="project-stats"><span><i class="fas fa-code"></i> Java</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Apr 2021</span></div>
+          <div class="project-links"><a class="project-link-btn" href="https://github.com/Avery2/Backpropagation-Neural-Network" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a></div>
+        </header>
+        <div class="note-body readme-content"><h1 dir="auto">Backpropagation-Nueral-Network</h1>
 <p dir="auto">Wrote this program the summer after graduating high school. It was the cumulation of basic programming skills I had into my first big project.</p>
 <p dir="auto">This project was to make a neural network from scratch without libraries. It learned to classify handwritten digits from the MNIST database. I didn't know how to use git correctly so its currently broken. At some point it learned to have about 15-20% accurancy which is better than the 10% you would get from guessing but is still pretty bad.</p>
 <p dir="auto">I used the following sources to learn:</p>
@@ -47,11 +47,10 @@
 <li><a href="https://www.khanacademy.org/math/multivariable-calculus" rel="nofollow">Khan Acedemy Multivariable Calculus Class</a> (also taught by Grant Sanderson)</li>
 <li><a href="https://en.wikipedia.org/wiki/Neural_network" rel="nofollow">Wikipedia</a></li>
 </ul></div>
-    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+        <footer class="writing-source">README synced from <a href="https://github.com/Avery2/Backpropagation-Neural-Network">GitHub</a> on August 09, 2026.</footer>
+      </article>
+    </div>
   </main>
-  <script type="module">
-    import { initTheme } from '../js/theme.js';
-    initTheme();
-  </script>
+  <script type="module" src="/writing/notes/notes.js"></script>
 </body>
 </html>

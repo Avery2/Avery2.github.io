@@ -13,31 +13,31 @@
   </script>
   <style>html { background: #fbfaf7; } html[data-theme="dark"] { background: #1a1a1a; }</style>
   <link rel="icon" href="../assets/images/profile/face.jpg" type="image/jpeg">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/project-detail.css">
+  <link rel="stylesheet" href="/writing/assets/portfolio-foundation.css">
+  <link rel="stylesheet" href="/writing/notes/notes.css">
+  <link rel="stylesheet" href="/writing/assets/resume.css">
+  <link rel="stylesheet" href="/css/project-detail.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
-<body class="project-detail-page">
-  <header class="detail-site-header">
-    <a href="../" class="detail-brand">Avery</a>
-    <span class="detail-section">Projects</span>
-    <button id="theme-toggle" class="detail-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
+<body class="notes-page">
+  <header class="notes-site-header">
+    <a href="/" class="notes-brand">Avery</a>
+    <a href="/projects/index.html" class="notes-home">Projects</a>
+    <button id="theme-toggle" class="notes-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
   </header>
-  <main class="project-container">
-    <a class="project-back-link" href="../#projects-section">← Back to portfolio</a>
-    <div class="project-header">
-      <div class="project-kicker">Project</div>
-      <h1 class="project-title">Antibiotic Visualization</h1>
-      <p class="project-tagline">A static visualization that effectively communicates antibiotics data.</p>
-      <div class="project-stats"><span><i class="fas fa-code"></i> HTML</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Oct 2021</span></div>
-      <div class="project-links">
-        <a class="project-link-btn" href="https://github.com/Avery2/Antibiotic-Visualization" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
-        <a class="project-link-btn" href="https://www.averychan.site/Antibiotic-Visualization/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i> Live site</a>
-      </div>
-    </div>
-    <div class="readme-content"><p dir="auto">This is a static visualization that communicates this <a href="https://github.com/Avery2/Antibiotic-Visualization/blob/main/antibiotics_data.csv">antibiotics data</a>.</p>
+  <main id="notes-app" class="notes-app" data-initial-note="antibiotic-visualization" data-corpus="/data/projects.generated.mjs">
+    <div class="baseline-note">
+      <article class="note-article" data-note="antibiotic-visualization">
+        <header class="note-header">
+          <div class="note-kicker">Project</div>
+          <h1 tabindex="-1">Antibiotic Visualization</h1>
+          <p class="note-summary">A static visualization that effectively communicates antibiotics data.</p>
+          <div class="project-stats"><span><i class="fas fa-code"></i> HTML</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Oct 2021</span></div>
+          <div class="project-links"><a class="project-link-btn" href="https://github.com/Avery2/Antibiotic-Visualization" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a><a class="project-link-btn" href="https://www.averychan.site/Antibiotic-Visualization/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i> Live site</a></div>
+        </header>
+        <div class="note-body readme-content"><p dir="auto">This is a static visualization that communicates this <a href="https://github.com/Avery2/Antibiotic-Visualization/blob/main/antibiotics_data.csv">antibiotics data</a>.</p>
 <ul dir="auto">
 <li>View the final visualization <a href="http://www.averychan.site/Antibiotic-Visualization/img/Tableau-Antibiotics.pdf" rel="nofollow">here</a>.</li>
 <li>View an incomplete but dynamic version <a href="https://www.averychan.site/Antibiotic-Visualization/dynamic.html" rel="nofollow">here</a>.</li>
@@ -82,11 +82,10 @@
 <p dir="auto">The first bar chart was the visual that encoded the raw quantitative data of the MIC measure. On the y-axis with a log scale are the MIC scores (encoded through length). On the x-axis, the data is bacteria grouped by an antibiotic. I chose to encode the MIC measure in this way because length encodes quantitative data well. The bars have color according to a variable I created that represents the MIC needed for an antibiotic compared to the others with a value of <code class="notranslate">[1, 2, 3]</code> or equivalently <code class="notranslate">[Least, Middle, Most]</code>. Lastly, I added the total and average MIC for each antibiotic and sorted within each antibiotic group by MIC score.</p>
 <p dir="auto">The second visualization was a dot plot encoding the relative MIC variable (through position) on the y-axis and shared the x-axis with the first bar chart. The reason for encoding information already encoded in the color of the first chart is because position is a better channel than color to encode an ordinal variable. Also encoded here in symbols (checkmark or 'X') is the gram-straining. Note that the y-axis encodes the bacteria using symbols rather than words because each bacteria occurs three times, making it difficult to read particularly when oriented vertically. The third visual is a simple bar chart to summarize the count of this same variable.</p>
 <p dir="auto">The last visual is separate from the rest. It is a table of the bacteria names with three columns that correspond to each antibiotic. There is a symbol in each cell where an antibiotic is the best for a particular bacteria. This table also doubles as a key for the bacteria symbols. I chose to make this table because specific queries like "what antibiotic is best for bacteria X?" were hard to make using the first three visualizations. You would have to decode the bacteria symbol three times spread over the x-axis and compare the colors of the corresponding bars. This table does require decoding symbols since it doubles as a key and encodes the best antibiotic directly. Additionally, the gram staining information is encoded here for similar reasons.</p></div>
-    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+        <footer class="writing-source">README synced from <a href="https://github.com/Avery2/Antibiotic-Visualization">GitHub</a> on August 09, 2026.</footer>
+      </article>
+    </div>
   </main>
-  <script type="module">
-    import { initTheme } from '../js/theme.js';
-    initTheme();
-  </script>
+  <script type="module" src="/writing/notes/notes.js"></script>
 </body>
 </html>

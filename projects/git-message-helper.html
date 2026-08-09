@@ -13,31 +13,31 @@
   </script>
   <style>html { background: #fbfaf7; } html[data-theme="dark"] { background: #1a1a1a; }</style>
   <link rel="icon" href="../assets/images/profile/face.jpg" type="image/jpeg">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/project-detail.css">
+  <link rel="stylesheet" href="/writing/assets/portfolio-foundation.css">
+  <link rel="stylesheet" href="/writing/notes/notes.css">
+  <link rel="stylesheet" href="/writing/assets/resume.css">
+  <link rel="stylesheet" href="/css/project-detail.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
-<body class="project-detail-page">
-  <header class="detail-site-header">
-    <a href="../" class="detail-brand">Avery</a>
-    <span class="detail-section">Projects</span>
-    <button id="theme-toggle" class="detail-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
+<body class="notes-page">
+  <header class="notes-site-header">
+    <a href="/" class="notes-brand">Avery</a>
+    <a href="/projects/index.html" class="notes-home">Projects</a>
+    <button id="theme-toggle" class="notes-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
   </header>
-  <main class="project-container">
-    <a class="project-back-link" href="../#projects-section">← Back to portfolio</a>
-    <div class="project-header">
-      <div class="project-kicker">Project</div>
-      <h1 class="project-title">Git Message Helper</h1>
-      <p class="project-tagline">Generates text for PR descriptions that groups commits by file and makes it pretty.</p>
-      <div class="project-stats"><span><i class="fas fa-code"></i> Python</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Oct 2022</span></div>
-      <div class="project-links">
-        <a class="project-link-btn" href="https://github.com/Avery2/git-message-helper" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
-        
-      </div>
-    </div>
-    <div class="readme-content">
+  <main id="notes-app" class="notes-app" data-initial-note="git-message-helper" data-corpus="/data/projects.generated.mjs">
+    <div class="baseline-note">
+      <article class="note-article" data-note="git-message-helper">
+        <header class="note-header">
+          <div class="note-kicker">Project</div>
+          <h1 tabindex="-1">Git Message Helper</h1>
+          <p class="note-summary">Generates text for PR descriptions that groups commits by file and makes it pretty.</p>
+          <div class="project-stats"><span><i class="fas fa-code"></i> Python</span><span><i class="fas fa-star"></i> 0</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Oct 2022</span></div>
+          <div class="project-links"><a class="project-link-btn" href="https://github.com/Avery2/git-message-helper" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a></div>
+        </header>
+        <div class="note-body readme-content">
 <p dir="auto">Takes the output from <code class="notranslate">git log --name-only --oneline</code> (list of commits) and organizes the output by file. Then it styles the output for GitHub, optionally leveraging <a href="https://gist.github.com/scmx/eca72d44afee0113ceb0349dd54a84a2"><code class="notranslate">&lt;details&gt;</code> <code class="notranslate">&lt;summary&gt;</code></a> for expandable content. Works best with <a href="https://www.conventionalcommits.org/en/v1.0.0/" rel="nofollow">conventional commits</a>. It's like a bad <a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens" rel="nofollow">gitlens</a>.</p>
 <h2 dir="auto">How to run</h2>
 <p dir="auto">Command to take the last <code class="notranslate">n=10</code> commits, filtered for authors with <code class="notranslate">"avery"</code> in their name:</p>
@@ -136,11 +136,10 @@
 </details>
 <p dir="auto">The commit hashes will be styled in comments:</p>
 <p dir="auto"><a href="https://user-images.githubusercontent.com/53503018/193481457-3a8dc408-41d7-4c05-8847-72d80e476913.png" rel="noopener noreferrer nofollow" target="_blank"><img alt="image" loading="lazy" src="https://user-images.githubusercontent.com/53503018/193481457-3a8dc408-41d7-4c05-8847-72d80e476913.png" style="max-width: 100%;" width="931"/></a></p></div>
-    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+        <footer class="writing-source">README synced from <a href="https://github.com/Avery2/git-message-helper">GitHub</a> on August 09, 2026.</footer>
+      </article>
+    </div>
   </main>
-  <script type="module">
-    import { initTheme } from '../js/theme.js';
-    initTheme();
-  </script>
+  <script type="module" src="/writing/notes/notes.js"></script>
 </body>
 </html>

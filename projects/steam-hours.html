@@ -13,31 +13,31 @@
   </script>
   <style>html { background: #fbfaf7; } html[data-theme="dark"] { background: #1a1a1a; }</style>
   <link rel="icon" href="../assets/images/profile/face.jpg" type="image/jpeg">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/project-detail.css">
+  <link rel="stylesheet" href="/writing/assets/portfolio-foundation.css">
+  <link rel="stylesheet" href="/writing/notes/notes.css">
+  <link rel="stylesheet" href="/writing/assets/resume.css">
+  <link rel="stylesheet" href="/css/project-detail.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
-<body class="project-detail-page">
-  <header class="detail-site-header">
-    <a href="../" class="detail-brand">Avery</a>
-    <span class="detail-section">Projects</span>
-    <button id="theme-toggle" class="detail-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
+<body class="notes-page">
+  <header class="notes-site-header">
+    <a href="/" class="notes-brand">Avery</a>
+    <a href="/projects/index.html" class="notes-home">Projects</a>
+    <button id="theme-toggle" class="notes-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
   </header>
-  <main class="project-container">
-    <a class="project-back-link" href="../#projects-section">← Back to portfolio</a>
-    <div class="project-header">
-      <div class="project-kicker">Project</div>
-      <h1 class="project-title">Steam Hours</h1>
-      <p class="project-tagline">Analyzing data pulled from steam API to see how many hours I used to play.</p>
-      <div class="project-stats"><span><i class="fas fa-code"></i> HTML</span><span><i class="fas fa-star"></i> 1</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Jun 2021</span></div>
-      <div class="project-links">
-        <a class="project-link-btn" href="https://github.com/Avery2/steam-hours" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
-        
-      </div>
-    </div>
-    <div class="readme-content">
+  <main id="notes-app" class="notes-app" data-initial-note="steam-hours" data-corpus="/data/projects.generated.mjs">
+    <div class="baseline-note">
+      <article class="note-article" data-note="steam-hours">
+        <header class="note-header">
+          <div class="note-kicker">Project</div>
+          <h1 tabindex="-1">Steam Hours</h1>
+          <p class="note-summary">Analyzing data pulled from steam API to see how many hours I used to play.</p>
+          <div class="project-stats"><span><i class="fas fa-code"></i> HTML</span><span><i class="fas fa-star"></i> 1</span><span><i class="fas fa-code-branch"></i> 0</span><span><i class="fas fa-clock"></i> Updated Jun 2021</span></div>
+          <div class="project-links"><a class="project-link-btn" href="https://github.com/Avery2/steam-hours" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a></div>
+        </header>
+        <div class="note-body readme-content">
 <p dir="auto">Analyzing data pulled from steam API to see how many hours I've played.</p>
 <p dir="auto">Use python to do API requests and output a csv file. Read csv with the Rmd file to do analysis. Output to gh-pages.</p>
 <p dir="auto">Go to your steam profile and copy the number in the url. Replace the <code class="notranslate">steamid</code> variable in the python file to fetch your information.</p>
@@ -50,11 +50,10 @@
 <li><a href="https://partner.steamgames.com/doc/webapi/ISteamApps#GetAppList" rel="nofollow">https://partner.steamgames.com/doc/webapi/ISteamApps#GetAppList</a></li>
 <li><a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html" rel="nofollow">https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html</a></li>
 </ul></div>
-    <div class="project-footer">README synced from GitHub on August 09, 2026.</div>
+        <footer class="writing-source">README synced from <a href="https://github.com/Avery2/steam-hours">GitHub</a> on August 09, 2026.</footer>
+      </article>
+    </div>
   </main>
-  <script type="module">
-    import { initTheme } from '../js/theme.js';
-    initTheme();
-  </script>
+  <script type="module" src="/writing/notes/notes.js"></script>
 </body>
 </html>
