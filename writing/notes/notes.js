@@ -15,7 +15,7 @@ function enhance() {
   const statePath = validPath(history.state?.notePath) || [initialSlug];
   panes = statePath.map(makePane);
   app.classList.add('is-enhanced');
-  app.innerHTML = `<div class="stack-history" aria-label="Reading path"></div><section class="stack-current" aria-live="polite"></section>`;
+  app.innerHTML = `<div class="stack-viewport" aria-label="Reading path"><div class="stack-track"></div></div>`;
   render({ focus: false, announce: false });
   history.replaceState({ ...(history.state || {}), notePath: slugs() }, '', location.href);
   addEventListener('popstate', onPopState);
@@ -39,15 +39,15 @@ function computePresentation() {
   const history = panes.slice(0, -1);
   const viewport = app.clientWidth || innerWidth;
   const mobile = viewport < 640;
-  const currentMin = mobile ? Math.max(238, viewport - 104) : Math.min(720, Math.max(480, viewport * 0.55));
-  const historyBudget = Math.max(mobile ? 54 : 120, viewport - currentMin);
-  const compact = mobile ? 34 : 46;
+  const currentMin = mobile ? Math.max(260, viewport - 46) : Math.min(760, Math.max(540, viewport * 0.52));
+  const historyBudget = Math.max(mobile ? 38 : 140, viewport - currentMin);
+  const compact = mobile ? 38 : 54;
   const desired = history.map((_, index) => {
     const recency = history.length - index;
     if (mobile) return compact;
-    if (recency === 1) return 230;
-    if (recency === 2) return 150;
-    if (recency === 3) return 92;
+    if (recency === 1) return Math.min(520, viewport * .38);
+    if (recency === 2) return 240;
+    if (recency === 3) return 120;
     return compact;
   });
   const totalDesired = desired.reduce((sum, width) => sum + width, 0);
@@ -63,37 +63,45 @@ function computePresentation() {
   history.forEach((pane, index) => {
     pane.width = desired[index];
     pane.active = false;
-    pane.presentationMode = desired[index] <= compact + 4 ? 'compact' : desired[index] < 130 ? 'partial' : 'full';
+    pane.presentationMode = desired[index] <= compact + 4 ? 'compact' : desired[index] < 260 ? 'partial' : 'full';
   });
   const current = panes.at(-1);
   current.active = true;
   current.presentationMode = 'full';
   current.width = 0;
-  return { historyBudget: Math.min(historyBudget, desired.reduce((sum, width) => sum + width, 0)), mobile };
+  let offset = 0;
+  history.forEach((pane) => {
+    pane.offset = offset;
+    offset += pane.width;
+  });
+  current.offset = offset;
+  return { trackWidth: Math.max(viewport, offset + currentMin), mobile };
 }
 
 function render({ focus = false, announce = true } = {}) {
   panes.forEach((pane, index) => { pane.depth = index; });
-  const { historyBudget } = computePresentation();
-  const historyEl = app.querySelector('.stack-history');
-  const currentEl = app.querySelector('.stack-current');
-  historyEl.style.setProperty('--history-budget', `${historyBudget}px`);
-  historyEl.hidden = panes.length === 1;
-  historyEl.innerHTML = panes.slice(0, -1).map(historyPaneHTML).join('');
-  const active = panes.at(-1);
-  currentEl.innerHTML = articleHTML(noteBySlug.get(active.noteId), true);
+  const { trackWidth } = computePresentation();
+  const viewportEl = app.querySelector('.stack-viewport');
+  const trackEl = app.querySelector('.stack-track');
+  trackEl.style.width = `${trackWidth}px`;
+  trackEl.innerHTML = panes.map(paneHTML).join('');
   bindInteractions();
-  historyEl.scrollLeft = historyEl.scrollWidth;
+  const active = panes.at(-1);
+  viewportEl.scrollLeft = Math.max(0, active.offset + (trackWidth - active.offset) - viewportEl.clientWidth);
   document.title = `${noteBySlug.get(active.noteId).title} — Notes — Avery`;
-  if (focus) currentEl.querySelector('h1')?.focus({ preventScroll: true });
+  if (focus) trackEl.querySelector('.stack-pane--active h1')?.focus({ preventScroll: true });
   if (announce) announcePath();
 }
 
-function historyPaneHTML(pane) {
+function paneHTML(pane) {
   const note = noteBySlug.get(pane.noteId);
-  const body = pane.presentationMode === 'full'
-    ? `<span class="history-summary">${note.summary}</span>` : '';
-  return `<button class="history-pane history-pane--${pane.presentationMode}" style="--pane-width:${pane.width}px" data-depth="${pane.depth}" aria-label="Return to ${note.title}, step ${pane.depth + 1} of ${panes.length}"><span class="history-depth">${String(pane.depth + 1).padStart(2, '0')}</span><strong>${note.title}</strong>${body}</button>`;
+  const activeClass = pane.active ? ' stack-pane--active' : '';
+  const paneContent = pane.active || pane.presentationMode === 'full'
+    ? articleHTML(note)
+    : `<div class="pane-label"><span class="history-depth">${String(pane.depth + 1).padStart(2, '0')}</span><strong>${note.title}</strong>${pane.presentationMode === 'partial' ? `<span>${note.summary}</span>` : ''}</div>`;
+  const content = pane.active ? paneContent : `<div class="pane-inactive-content" aria-hidden="true">${paneContent}</div>`;
+  const returnControl = pane.active ? '' : `<button class="pane-return" data-depth="${pane.depth}" aria-label="Return to ${note.title}, step ${pane.depth + 1} of ${panes.length}"></button>`;
+  return `<section class="stack-pane stack-pane--${pane.presentationMode}${activeClass}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-z:${pane.depth + 1}" ${pane.active ? 'aria-current="page"' : ''}>${content}${returnControl}</section>`;
 }
 
 function articleHTML(note) {
@@ -109,13 +117,13 @@ function linkify(body = '') {
 }
 
 function bindInteractions() {
-  app.querySelectorAll('[data-depth]').forEach((button) => button.addEventListener('click', () => navigateBack(Number(button.dataset.depth))));
+  app.querySelectorAll('.pane-return[data-depth]').forEach((button) => button.addEventListener('click', () => navigateBack(Number(button.dataset.depth))));
   app.querySelectorAll('[data-note-link]').forEach((link) => link.addEventListener('click', (event) => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     openNote(link.dataset.noteLink);
   }));
-  app.querySelector('.stack-current')?.addEventListener('keydown', (event) => {
+  app.querySelector('.stack-pane--active')?.addEventListener('keydown', (event) => {
     if (event.altKey && event.key === 'ArrowLeft' && panes.length > 1) {
       event.preventDefault();
       navigateBack(panes.length - 2);
