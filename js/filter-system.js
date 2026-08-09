@@ -448,9 +448,14 @@ function fuzzyScoreFields(query, fields) {
  * @returns {{isMatch: boolean, score: number}} Whether it matches, and its search rank
  */
 function evaluateTile(tileData) {
-  // Intro/profile chrome isn't searchable content — it should stay pinned
-  // and undimmed no matter the query, not evaluated like a project tile.
+  // Intro/profile chrome isn't searchable content. While just browsing or
+  // tag-filtering it stays pinned and undimmed, but a text search means
+  // the user is looking for something specific — it isn't a result, so it
+  // gets hidden outright rather than dimmed alongside real non-matches.
   if (tileData.type === 'profile') {
+    if (activeFilters.search) {
+      return { isMatch: false, score: 0, hide: true };
+    }
     return { isMatch: true, score: Infinity };
   }
 
@@ -471,7 +476,8 @@ function evaluateTile(tileData) {
     const score = fuzzyScoreFields(activeFilters.search, [
       { text: tileData.title, weight: 3 },
       { text: [...(tileData.tags || []), ...(tileData.topics || [])].join(' '), weight: 2 },
-      { text: tileData.description, weight: 1 }
+      { text: tileData.description, weight: 1 },
+      { text: tileData.date, weight: 1 }
     ]);
 
     if (score < 0) return { isMatch: false, score: 0 };
@@ -593,8 +599,8 @@ function applyFilters() {
 
   const evaluated = tileElements.map(tileEl => {
     const data = getTileDataFromElement(tileEl);
-    const { isMatch, score } = evaluateTile(data);
-    return { tileEl, data, isMatch, score };
+    const { isMatch, score, hide } = evaluateTile(data);
+    return { tileEl, data, isMatch, score, hide: Boolean(hide) };
   });
 
   evaluated.sort((a, b) => {
@@ -603,16 +609,18 @@ function applyFilters() {
     return compareByActiveSort(a.data, b.data);
   });
 
-  evaluated.forEach(({ tileEl, isMatch }) => {
+  evaluated.forEach(({ tileEl, isMatch, hide }) => {
+    tileEl.style.display = hide ? 'none' : '';
     tileEl.dataset.filtered = isMatch ? 'false' : 'true';
-    tileEl.classList.toggle('tile-dimmed', !isMatch);
+    tileEl.classList.toggle('tile-dimmed', !isMatch && !hide);
     gridContainer.appendChild(tileEl);
   });
 
   const firstNonMatchIndex = evaluated.findIndex(({ isMatch }) => !isMatch);
-  const hasBothGroups = firstNonMatchIndex > 0 && firstNonMatchIndex < evaluated.length;
+  const firstVisibleNonMatch = evaluated.find(({ isMatch, hide }) => !isMatch && !hide);
+  const hasBothGroups = firstNonMatchIndex > 0 && Boolean(firstVisibleNonMatch);
   if (hasBothGroups) {
-    gridContainer.insertBefore(createDividerElement(), evaluated[firstNonMatchIndex].tileEl);
+    gridContainer.insertBefore(createDividerElement(), firstVisibleNonMatch.tileEl);
   }
 
   updateTagAffordances();
@@ -634,6 +642,7 @@ function getTileDataFromElement(tileEl) {
     type: tileEl.dataset.type,
     title: tileEl.querySelector('.tile-title')?.textContent || '',
     description: tileEl.querySelector('.tile-description')?.textContent || '',
+    date: tileEl.querySelector('.tile-created')?.textContent || '',
     language: tileEl.dataset.language,
     stars: parseInt(tileEl.dataset.stars || '0'),
     tags: JSON.parse(tileEl.dataset.tags || '[]'),

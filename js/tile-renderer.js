@@ -204,6 +204,7 @@ function applyCommonTileAttributes(element, tileData) {
   if (tileData.language) {
     element.dataset.language = tileData.language.toLowerCase();
   }
+  element.dataset.stars = tileData.stars || 0;
   if (tileData.topics) {
     element.dataset.topics = JSON.stringify(tileData.topics);
   }
@@ -272,10 +273,14 @@ function renderProjectTile(data) {
     languageLabel = 'Education';
   }
 
+  // Stars only get called out once a project has enough to mean something
+  const starsHTML = data.stars > 3
+    ? `<span class="tile-stars"><i class="fas fa-star"></i> ${data.stars}</span>`
+    : '';
+
   // Build metadata HTML — only rendered if there's actually something to show
   const metaItems = [
     languageLabel ? `<span class="tile-language">${languageLabel}</span>` : '',
-    data.stars ? `<span class="tile-stars"><i class="fas fa-star"></i> ${data.stars}</span>` : '',
     data.traffic && data.traffic.unique_visitors_14d
       ? `<span class="tile-visitors"><i class="fas fa-eye"></i> ${data.traffic.unique_visitors_14d}</span>`
       : ''
@@ -293,6 +298,11 @@ function renderProjectTile(data) {
        </div>`
     : '';
 
+  // Stars (if notable) and date share a single subtle corner note
+  const cornerNoteHTML = (starsHTML || dateHTML)
+    ? `<div class="tile-corner-note">${starsHTML}${dateHTML}</div>`
+    : '';
+
   tile.innerHTML = `
     <a href="${data.url}" class="tile-link" target="_blank" rel="noopener noreferrer">
       ${imageHTML}
@@ -301,7 +311,7 @@ function renderProjectTile(data) {
         ${descriptionHTML}
         ${metaHTML}
         ${topicsHTML}
-        ${dateHTML}
+        ${cornerNoteHTML}
       </div>
     </a>
   `;
