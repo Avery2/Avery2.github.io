@@ -7,6 +7,7 @@ import config from './config.js';
 import { calculateMasonryLayout } from './tile-renderer.js';
 
 let activeFilters = {
+  content_type: '',
   tags: [],
   search: '',
   sort: 'priority'
@@ -100,6 +101,8 @@ function renderFilterUI() {
     let filterHTML = '';
     if (filter.type === 'multi-select') {
       filterHTML = renderMultiSelectFilter(filter);
+    } else if (filter.type === 'single-select') {
+      filterHTML = renderContentTypeFilter(filter);
     } else if (filter.type === 'radio') {
       filterHTML = renderRadioFilter(filter);
     } else if (filter.type === 'search') {
@@ -119,6 +122,21 @@ function renderFilterUI() {
     ${searchHTML}
     <div class="filter-groups-row">
       ${otherFiltersHTML}
+    </div>
+  `;
+}
+
+function renderContentTypeFilter(filter) {
+  return `
+    <div class="filter-group filter-content-types" data-filter-id="${filter.id}">
+      <span class="filter-label">${filter.label}</span>
+      <div class="filter-options" role="group" aria-label="${filter.label}">
+        ${filter.options.map(opt => `
+          <button class="content-type-pill" data-value="${opt.value}" aria-pressed="false">
+            ${opt.label}
+          </button>
+        `).join('')}
+      </div>
     </div>
   `;
 }
@@ -278,6 +296,20 @@ function renderSearchFilter(filter) {
  * Set up event listeners for filter controls
  */
 function setupFilterEventListeners() {
+  document.querySelectorAll('.content-type-pill').forEach(pill => {
+    pill.addEventListener('click', (event) => {
+      event.preventDefault();
+      const nextValue = activeFilters.content_type === pill.dataset.value ? '' : pill.dataset.value;
+      activeFilters.content_type = nextValue;
+      document.querySelectorAll('.content-type-pill').forEach(option => {
+        const active = option.dataset.value === nextValue;
+        option.classList.toggle('active', active);
+        option.setAttribute('aria-pressed', String(active));
+      });
+      applyFilters();
+    });
+  });
+
   // Multi-select pill toggles
   document.querySelectorAll('.filter-pill').forEach(pill => {
     pill.addEventListener('click', (e) => {
@@ -470,10 +502,18 @@ function evaluateTile(tileData) {
   // the user is looking for something specific — it isn't a result, so it
   // gets hidden outright rather than dimmed alongside real non-matches.
   if (tileData.type === 'profile') {
-    if (activeFilters.search) {
+    if (activeFilters.search || activeFilters.content_type) {
       return { isMatch: false, score: 0, hide: true };
     }
     return { isMatch: true, score: Infinity };
+  }
+
+  if (tileData.filterOnly && activeFilters.content_type !== tileData.contentType) {
+    return { isMatch: false, score: 0, hide: true };
+  }
+
+  if (activeFilters.content_type && tileData.contentType !== activeFilters.content_type) {
+    return { isMatch: false, score: 0, hide: true };
   }
 
   // Tags filter (includes language, topics, and tags) — a categorical
@@ -667,6 +707,8 @@ function getTileDataFromElement(tileEl) {
     stars: parseInt(tileEl.dataset.stars || '0'),
     tags: JSON.parse(tileEl.dataset.tags || '[]'),
     topics: JSON.parse(tileEl.dataset.topics || '[]'),
+    contentType: tileEl.dataset.contentType || '',
+    filterOnly: tileEl.dataset.filterOnly === 'true',
     priority: parseInt(tileEl.dataset.priority || '0'),
     readmeWords: readmeWordsByTileId.get(tileEl.id)
   };
@@ -677,6 +719,7 @@ function getTileDataFromElement(tileEl) {
  */
 export function resetFilters() {
   activeFilters = {
+    content_type: '',
     tags: [],
     search: '',
     sort: 'priority'
@@ -684,6 +727,10 @@ export function resetFilters() {
 
   // Reset UI
   document.querySelectorAll('.filter-pill.active').forEach(pill => {
+    pill.classList.remove('active');
+    pill.setAttribute('aria-pressed', 'false');
+  });
+  document.querySelectorAll('.content-type-pill.active').forEach(pill => {
     pill.classList.remove('active');
     pill.setAttribute('aria-pressed', 'false');
   });

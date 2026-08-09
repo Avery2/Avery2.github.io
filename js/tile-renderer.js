@@ -193,7 +193,13 @@ function applyCommonTileAttributes(element, tileData) {
   element.dataset.spanColumns = tileData.span_columns || 1;
   element.dataset.spanRows = tileData.span_rows || 1;
   element.dataset.tags = JSON.stringify(tileData.tags || []);
+  element.dataset.contentType = tileData.content_type || inferContentType(tileData);
+  element.dataset.filterOnly = String(Boolean(tileData.filter_only));
   element.dataset.filtered = 'false';
+
+  if (tileData.filter_only) {
+    element.style.display = 'none';
+  }
 
   // Add featured flag
   if (tileData.featured) {
@@ -219,6 +225,14 @@ function applyCommonTileAttributes(element, tileData) {
       element.style.borderColor = tileData.style.border_color;
     }
   }
+}
+
+function inferContentType(tileData) {
+  if (tileData.type === 'project') return 'projects';
+  if (tileData.type === 'experience' || tileData.type === 'education') return 'experience';
+  if ((tileData.tags || []).includes('writing')) return 'writing';
+  if (tileData.type === 'link') return 'links';
+  return '';
 }
 
 /**
@@ -347,12 +361,18 @@ function renderLinkTile(data) {
     ? `<p class="tile-description">${data.description}</p>`
     : '';
 
+  const isWriting = data.content_type === 'writing' || (data.tags || []).includes('writing');
+  const readMoreHTML = isWriting ? '<span class="tile-read-more">Read more <span aria-hidden="true">→</span></span>' : '';
+  const cornerNoteHTML = isWriting ? '<div class="tile-corner-note"><span>Writing</span></div>' : '';
+
   tile.innerHTML = `
     <a href="${data.url}" class="tile-link" ${target}>
       ${imageHTML}
       <div class="tile-content">
         <h3 class="tile-title">${iconHTML}${data.title}</h3>
         ${descriptionHTML}
+        ${readMoreHTML}
+        ${cornerNoteHTML}
       </div>
     </a>
   `;

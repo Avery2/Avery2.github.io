@@ -61,7 +61,10 @@ function buildHelpOverlay() {
  * Get all tile links in DOM order
  */
 function getTileLinks() {
-  return Array.from(document.querySelectorAll('.tile-link'));
+  return Array.from(document.querySelectorAll('.tile-link')).filter(link => {
+    const tile = link.closest('.tile');
+    return tile && window.getComputedStyle(tile).display !== 'none';
+  });
 }
 
 /**

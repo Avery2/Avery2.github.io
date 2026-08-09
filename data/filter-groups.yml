@@ -2,6 +2,20 @@
 # Defines the filtering and sorting options for project tiles
 
 filters:
+  - id: "content_type"
+    label: "Show"
+    type: "single-select"
+    enabled: true
+    options:
+      - value: "writing"
+        label: "Writing"
+      - value: "experience"
+        label: "Experience & education"
+      - value: "projects"
+        label: "Projects"
+      - value: "links"
+        label: "Links"
+
   # Tags filter (includes topics + language)
   - id: "tags"
     label: "Tags"
@@ -34,7 +48,7 @@ filters:
     label: "Search"
     type: "search"
     enabled: true
-    placeholder: "Search projects..."
+    placeholder: "Search this portfolio..."
     search_fields: ["title", "description", "topics", "tags"]
 
   # Sort options

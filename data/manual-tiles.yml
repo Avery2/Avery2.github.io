@@ -21,6 +21,7 @@ tiles:
     url: "./writing/resume/full.html?from=portfolio"
     open_new_tab: false
     priority: 450
+    content_type: "experience"
     tags: ["professional"]
     style:
       border_color: "#6B7280"
@@ -28,10 +29,11 @@ tiles:
   - id: "linked-notes-demo"
     type: "link"
     title: "Notes"
-    description: "A connected space for writing that can grow over time, plus a clearly labeled example corpus for testing the reading experience. → Read the note"
+    description: "A connected space for writing that can grow over time, plus a clearly labeled example corpus for testing the reading experience."
     url: "./writing/notes/notes.html?from=portfolio"
     open_new_tab: false
     priority: 140
+    content_type: "writing"
     tags: ["writing", "design", "prototype"]
     style:
       border_color: "#6B7280"
@@ -45,16 +47,18 @@ tiles:
     url: "https://github.com/Avery2?tab=repositories&type=source"
     open_new_tab: true
     priority: -1
+    content_type: "links"
     tags: ["professional", "projects"]
 
   # Harm Reduction writing
   - id: "harm-reduction"
     type: "link"
     title: "Harm Reduction"
-    description: "A philosophy that honors dignity and autonomy. Harm reduction resonated deeply with me when I first learned about it during CASA training... → Read more"
+    description: "A philosophy that honors dignity and autonomy. Harm reduction resonated deeply with me when I first learned about it during CASA training."
     url: "./writing/notes/harm-reduction.html?from=portfolio"
     open_new_tab: false
     priority: 110
+    content_type: "writing"
     tags: ["philosophy", "writing"]
     style:
       border_color: "#6B7280"
@@ -68,7 +72,21 @@ tiles:
     url: "https://www.linkedin.com/in/avery2/"
     open_new_tab: true
     priority: 75
+    content_type: "links"
     tags: ["professional", "social"]
+
+  # Appears when the Projects content filter is active. The ordinary homepage
+  # already is the curated project view, so this overview need not duplicate it.
+  - id: "projects-overview"
+    type: "link"
+    title: "Projects"
+    description: "Browse the project collection as a linked reading list."
+    url: "./projects/index.html?path=projects&open=last&from=portfolio"
+    open_new_tab: false
+    priority: 500
+    content_type: "projects"
+    filter_only: true
+    tags: ["projects"]
 
   # Back to Top (absolute last tile)
   - id: "back-to-top"
@@ -79,6 +97,7 @@ tiles:
     url: "#"
     open_new_tab: false
     priority: -2
+    content_type: "navigation"
     tags: ["navigation"]
     style:
       border_color: "#DA7422"
