@@ -147,7 +147,7 @@ function paneHTML(pane) {
       ? `<button class="pane-close pane-close--expanded" data-collapse-depth="${pane.depth}" aria-label="Collapse ${note.title}"><span aria-hidden="true">×</span></button>`
       : `<button class="pane-close pane-close--compact" data-close-depth="${pane.depth}" aria-label="Close ${note.title} and all later notes"><span aria-hidden="true">×</span></button>`
     : '';
-  const condenseControl = pane.canCondenseHistory ? `<button class="pane-condense-history${pane.primaryCondense ? ' is-primary' : ''}" data-collapse-history aria-label="Condense history">Condense</button>` : '';
+  const condenseControl = pane.canCondenseHistory ? `<button class="pane-condense-history${pane.primaryCondense ? ' is-primary' : ''}" data-collapse-history aria-label="Condense history" title="Condense history"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 10h5m-2.5-3 3 3-3 3M17.5 10h-5m2.5-3-3 3 3 3"/></svg></button>` : '';
   return `<section class="stack-pane stack-pane--${pane.presentationMode}${activeClass}${pane.expanded ? ' stack-pane--expanded' : ''}" data-pane-depth="${pane.depth}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-width:${pane.width}px;--pane-z:${pane.depth + 1}" ${pane.active ? 'aria-current="page"' : ''}>${closeControl}${condenseControl}${content}${returnControl}</section>`;
 }
 
