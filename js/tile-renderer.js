@@ -197,10 +197,24 @@ const LAYOUT_PRESETS = {
   balanced: { groupDistance: 2.2, compactness: 0.08, holes: 0.55, readingOrder: 0.15, beamWidth: 120, requireConnected: true },
   strong: { groupDistance: 8, compactness: 0.16, holes: 0.7, readingOrder: 0.25, beamWidth: 160, requireConnected: true }
 };
+const BLOB_DEBUG_DEFAULTS = {
+  groupGap: 40,
+  halo: 21.33,
+  color: 90,
+  radius: 0,
+  dividerX: 0,
+  dividerY: 0,
+  cutout: 6,
+  cutoutEnd: 6,
+  cutoutRadius: 0,
+  blobBlur: 0,
+  grain: 0,
+  channelBlur: 0
+};
 
 function layoutMode() {
-  const mode = new URLSearchParams(window.location.search).get('layout') || 'balanced';
-  return ['masonry', ...Object.keys(LAYOUT_PRESETS)].includes(mode) ? mode : 'balanced';
+  const mode = new URLSearchParams(window.location.search).get('layout') || 'strong';
+  return ['masonry', ...Object.keys(LAYOUT_PRESETS)].includes(mode) ? mode : 'strong';
 }
 
 function shouldUseGroupedLayout(container) {
@@ -330,7 +344,6 @@ function applyGroupedLayout(container, measurements) {
     tile.style.gridRowEnd = `span ${height}`;
   });
   document.documentElement.dataset.groupedLayout = layoutMode();
-  installLayoutDebugControls();
   markGroupBoundaries(container);
 }
 
@@ -338,7 +351,7 @@ function markGroupBoundaries(container) {
   cancelAnimationFrame(container._groupBoundaryFrame);
   container._groupBoundaryFrame = requestAnimationFrame(() => {
     const gap = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || 20;
-    const halo = debugNumber(new URLSearchParams(window.location.search), 'halo', 9);
+    const halo = debugNumber(new URLSearchParams(window.location.search), 'halo', BLOB_DEBUG_DEFAULTS.halo);
     renderGroupEdgeDiagnostics(container, gap, halo);
   });
 }
@@ -363,8 +376,11 @@ function renderGroupEdgeDiagnostics(container, gap, halo) {
   container.querySelector('.group-halo-underlay-layer')?.remove();
   container.querySelector('.group-halo-corner-fill-layer')?.remove();
   const showEdges = document.documentElement.dataset.showGroupEdges === 'true';
+  const showJoins = document.documentElement.dataset.showGroupJoins === 'true';
   const params = new URLSearchParams(window.location.search);
-  const radius = debugNumber(params, 'radius', 8);
+  const radius = debugNumber(params, 'radius', BLOB_DEBUG_DEFAULTS.radius);
+  const cutout = debugNumber(params, 'cutout', BLOB_DEBUG_DEFAULTS.cutout);
+  const cutoutEnd = debugNumber(params, 'cutoutEnd', cutout);
 
   const containerRect = container.getBoundingClientRect();
   const rects = [...container.querySelectorAll('.tile[data-layout-group]')].map(tile => {
@@ -381,10 +397,13 @@ function renderGroupEdgeDiagnostics(container, gap, halo) {
   const layer = document.createElement('div');
   layer.className = 'group-edge-debug-layer';
   layer.dataset.showLines = String(showEdges);
+  layer.dataset.showJoins = String(showJoins);
   const underlayLayer = document.createElement('div');
   underlayLayer.className = 'group-halo-underlay-layer';
+  underlayLayer.setAttribute('aria-hidden', 'true');
   const cornerLayer = document.createElement('div');
   cornerLayer.className = 'group-halo-corner-fill-layer';
+  cornerLayer.setAttribute('aria-hidden', 'true');
   const addHaloFill = (left, top, width, height, color) => {
     if (width <= 0 || height <= 0) return;
     const fill = document.createElement('i');
@@ -420,11 +439,12 @@ function renderGroupEdgeDiagnostics(container, gap, halo) {
     if (end - start < 1) return;
     const line = document.createElement('i');
     const orientation = side === 'top' || side === 'bottom' ? 'horizontal' : 'vertical';
+    const endExtension = kind === 'internal' ? 0 : cutoutEnd;
     line.className = `group-edge-debug-segment group-edge-debug-segment-${kind} group-edge-debug-segment-${orientation}`;
     if (side === 'top' || side === 'bottom') {
-      Object.assign(line.style, { left: `${start}px`, top: `${fixed}px`, width: `${end - start}px` });
+      Object.assign(line.style, { left: `${start - endExtension}px`, top: `${fixed}px`, width: `${end - start + endExtension * 2}px` });
     } else {
-      Object.assign(line.style, { left: `${fixed}px`, top: `${start}px`, height: `${end - start}px` });
+      Object.assign(line.style, { left: `${fixed}px`, top: `${start - endExtension}px`, height: `${end - start + endExtension * 2}px` });
     }
     layer.appendChild(line);
   };
@@ -453,6 +473,9 @@ function renderGroupEdgeDiagnostics(container, gap, halo) {
     sides.forEach(({ side, fixed, start, end, covers }) => {
       const exposed = subtractIntervals(start, end, covers);
       exposedBySide[side] = exposed;
+      subtractIntervals(start, end, exposed).forEach(([segmentStart, segmentEnd]) => {
+        addSegment(side, fixed, segmentStart, segmentEnd, 'internal');
+      });
       exposed.forEach(([segmentStart, segmentEnd]) => {
         const kind = facesOtherGroup(rect, side, fixed, segmentStart, segmentEnd) ? 'intergroup' : 'external';
         if (kind === 'intergroup') {
@@ -529,23 +552,26 @@ function installLayoutDebugControls() {
   const controls = document.createElement('aside');
   controls.className = 'layout-debug-controls';
   controls.setAttribute('aria-label', 'Layout experiment');
-  const computedGap = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || 20;
+  const computedGap = BLOB_DEBUG_DEFAULTS.groupGap;
   controls.innerHTML = `
     <button class="layout-debug-collapse" type="button" aria-expanded="true">Hide controls</button>
     <div class="layout-debug-modes"><strong>Layout</strong><a data-mode="masonry">Original</a><a data-mode="density">Mostly masonry</a><a data-mode="balanced">Balanced</a><a data-mode="strong">Strong</a></div>
     <div class="layout-debug-tuners">
       <label><span><strong>Card gap</strong><output data-output="groupGap">${params.get('groupGap') || computedGap}px</output></span><input data-setting="groupGap" type="range" min="8" max="40" step="1" value="${params.get('groupGap') || computedGap}"><small>Base space between every masonry card.</small></label>
-      <label><span><strong>Halo spread</strong><output data-output="halo">${params.get('halo') || 9}px</output></span><input data-setting="halo" type="range" min="0" max="24" step="1" value="${params.get('halo') || 9}"><small>How far each card expands its group color.</small></label>
-      <label><span><strong>Halo radius</strong><output data-output="radius">${params.get('radius') || 8}px</output></span><input data-setting="radius" type="range" min="0" max="32" step="1" value="${params.get('radius') || 8}"><small>Corner radius of the current card-and-halo silhouette. Set to 0 to test fully square group geometry.</small></label>
+      <label><span><strong>Halo spread</strong><span class="layout-debug-number-wrap"><input class="layout-debug-number" data-number-setting="halo" type="number" min="0" max="32" step="0.01" value="${params.get('halo') || BLOB_DEBUG_DEFAULTS.halo}"><span>px</span></span></span><input data-setting="halo" type="range" min="0" max="32" step="0.01" value="${params.get('halo') || BLOB_DEBUG_DEFAULTS.halo}"><small>Per-card expansion. Half the card gap is exact contact; hundredth-pixel steps allow a microscopic seam overlap.</small></label>
+      <label><span><strong>Halo radius</strong><output data-output="radius">${params.get('radius') || BLOB_DEBUG_DEFAULTS.radius}px</output></span><input data-setting="radius" type="range" min="0" max="32" step="1" value="${params.get('radius') || BLOB_DEBUG_DEFAULTS.radius}"><small>Corner radius of the current card-and-halo silhouette. Set to 0 to test fully square group geometry.</small></label>
       <label><span><strong>Radius mode</strong></span><select data-setting="radiusMode"><option value="smart" ${params.get('radiusMode') !== 'uniform' ? 'selected' : ''}>Smart same-color contact</option><option value="uniform" ${params.get('radiusMode') === 'uniform' ? 'selected' : ''}>Uniform/manual</option></select><small>Smart squares a corner only when that exact halo corner touches another halo of the same color.</small></label>
-      <label><span><strong>Different-group horizontal padding</strong><output data-output="dividerX">${params.get('dividerX') || 1}px</output></span><input data-setting="dividerX" type="range" min="0" max="32" step="1" value="${params.get('dividerX') || 1}"><small>Real extra space shared by facing left/right card edges.</small></label>
-      <label><span><strong>Different-group vertical padding</strong><output data-output="dividerY">${params.get('dividerY') || 1}px</output></span><input data-setting="dividerY" type="range" min="0" max="32" step="1" value="${params.get('dividerY') || 1}"><small>Real extra space shared by facing top/bottom card edges.</small></label>
-      <label><span><strong>Perimeter cut</strong><output data-output="cutout">${params.get('cutout') || 5}px</output></span><input data-setting="cutout" type="range" min="0" max="16" step="1" value="${params.get('cutout') || 5}"><small>Background removed on each side of every group perimeter segment.</small></label>
-      <label><span><strong>Blob softness</strong><output data-output="blobBlur">${params.get('blobBlur') || 1.5}px</output></span><input data-setting="blobBlur" type="range" min="0" max="8" step="0.5" value="${params.get('blobBlur') || 1.5}"><small>Softens only the colored underlay and fuses tiny seams.</small></label>
-      <label><span><strong>Paper grain</strong><output data-output="grain">${params.get('grain') || 12}%</output></span><input data-setting="grain" type="range" min="0" max="40" step="1" value="${params.get('grain') || 12}"><small>Adds subtle texture to the colored regions, not the cards.</small></label>
-      <label><span><strong>Channel softness</strong><output data-output="channelBlur">${params.get('channelBlur') || 0.5}px</output></span><input data-setting="channelBlur" type="range" min="0" max="4" step="0.5" value="${params.get('channelBlur') || 0.5}"><small>Softens the rounded background cuts between group regions.</small></label>
-      <label><span><strong>Color</strong><output data-output="color">${params.get('color') || 42}%</output></span><input data-setting="color" type="range" min="10" max="90" step="1" value="${params.get('color') || 42}"><small>Debug color strength; it does not affect geometry.</small></label>
-      <label class="layout-debug-check"><input data-setting="edges" type="checkbox" ${params.get('edges') === '0' ? '' : 'checked'}><span><strong>Show group dividers</strong><small>Red lines mark only boundaries between different semantic groups.</small></span></label>
+      <label><span><strong>Different-group horizontal padding</strong><output data-output="dividerX">${params.get('dividerX') || BLOB_DEBUG_DEFAULTS.dividerX}px</output></span><input data-setting="dividerX" type="range" min="0" max="32" step="1" value="${params.get('dividerX') || BLOB_DEBUG_DEFAULTS.dividerX}"><small>Real extra space shared by facing left/right card edges.</small></label>
+      <label><span><strong>Different-group vertical padding</strong><output data-output="dividerY">${params.get('dividerY') || BLOB_DEBUG_DEFAULTS.dividerY}px</output></span><input data-setting="dividerY" type="range" min="0" max="32" step="1" value="${params.get('dividerY') || BLOB_DEBUG_DEFAULTS.dividerY}"><small>Real extra space shared by facing top/bottom card edges.</small></label>
+      <label><span><strong>Perimeter cut</strong><output data-output="cutout">${params.get('cutout') || BLOB_DEBUG_DEFAULTS.cutout}px</output></span><input data-setting="cutout" type="range" min="0" max="16" step="1" value="${params.get('cutout') || BLOB_DEBUG_DEFAULTS.cutout}"><small>Background removed on each side of every group perimeter segment.</small></label>
+      <label><span><strong>Perimeter end cut</strong><output data-output="cutoutEnd">${params.get('cutoutEnd') || params.get('cutout') || BLOB_DEBUG_DEFAULTS.cutoutEnd}px</output></span><input data-setting="cutoutEnd" type="range" min="0" max="24" step="1" value="${params.get('cutoutEnd') || params.get('cutout') || BLOB_DEBUG_DEFAULTS.cutoutEnd}"><small>Background removed beyond both endpoints of every perimeter segment.</small></label>
+      <label><span><strong>Cut radius</strong><output data-output="cutoutRadius">${params.get('cutoutRadius') || 0}px</output></span><input data-setting="cutoutRadius" type="range" min="0" max="16" step="1" value="${params.get('cutoutRadius') || 0}"><small>0 keeps square corners and endcaps; increase for rounded cuts.</small></label>
+      <label><span><strong>Blob softness</strong><output data-output="blobBlur">${params.get('blobBlur') || BLOB_DEBUG_DEFAULTS.blobBlur}px</output></span><input data-setting="blobBlur" type="range" min="0" max="8" step="0.5" value="${params.get('blobBlur') || BLOB_DEBUG_DEFAULTS.blobBlur}"><small>Softens only the colored underlay and fuses tiny seams.</small></label>
+      <label><span><strong>Paper grain</strong><output data-output="grain">${params.get('grain') || BLOB_DEBUG_DEFAULTS.grain}%</output></span><input data-setting="grain" type="range" min="0" max="40" step="1" value="${params.get('grain') || BLOB_DEBUG_DEFAULTS.grain}"><small>Adds subtle texture to the colored regions, not the cards.</small></label>
+      <label><span><strong>Channel softness</strong><output data-output="channelBlur">${params.get('channelBlur') || BLOB_DEBUG_DEFAULTS.channelBlur}px</output></span><input data-setting="channelBlur" type="range" min="0" max="4" step="0.5" value="${params.get('channelBlur') || BLOB_DEBUG_DEFAULTS.channelBlur}"><small>Softens the rounded background cuts between group regions.</small></label>
+      <label><span><strong>Color</strong><output data-output="color">${params.get('color') || BLOB_DEBUG_DEFAULTS.color}%</output></span><input data-setting="color" type="range" min="10" max="90" step="1" value="${params.get('color') || BLOB_DEBUG_DEFAULTS.color}"><small>Debug color strength; it does not affect geometry.</small></label>
+      <label class="layout-debug-check"><input data-setting="edges" type="checkbox" ${params.get('edges') === '1' ? 'checked' : ''}><span><strong>Show group dividers</strong><small>Red lines mark only boundaries between different semantic groups.</small></span></label>
+      <label class="layout-debug-check"><input data-setting="joins" type="checkbox" ${params.get('joins') === '1' ? 'checked' : ''}><span><strong>Show same-group joins</strong><small>Cyan lines mark internal edges where same-color halos overlap and fuse.</small></span></label>
     </div>
     <div class="layout-debug-math" aria-live="polite"></div>
     <button class="layout-debug-copy" type="button">Copy configuration URL</button>`;
@@ -567,20 +593,32 @@ function installLayoutDebugControls() {
     input.addEventListener('input', () => {
       const setting = input.dataset.setting;
       const value = input.type === 'checkbox' ? (input.checked ? '1' : '0') : input.value;
+      if (setting === 'halo') controls.querySelector('[data-number-setting="halo"]').value = value;
       const output = controls.querySelector(`[data-output="${setting}"]`);
       if (output) output.textContent = `${value}${setting === 'color' || setting === 'grain' ? '%' : 'px'}`;
       const url = new URL(window.location.href);
       url.searchParams.set(setting, value);
+      if (setting === 'cutout' && !url.searchParams.has('cutoutEnd')) {
+        url.searchParams.set('cutoutEnd', value);
+        const endInput = controls.querySelector('[data-setting="cutoutEnd"]');
+        endInput.value = value;
+        controls.querySelector('[data-output="cutoutEnd"]').textContent = `${value}px`;
+      }
       history.replaceState(history.state, '', url);
       applyLayoutDebugSettings();
       updateLayoutDebugMath(controls);
       if (setting === 'groupGap') {
         cancelAnimationFrame(relayoutFrame);
         relayoutFrame = requestAnimationFrame(() => calculateMasonryLayout(document.querySelector('.grid-container')));
-      } else if (setting === 'halo' || setting === 'radius' || setting === 'edges' || setting === 'dividerX' || setting === 'dividerY') {
+      } else if (setting === 'halo' || setting === 'radius' || setting === 'cutout' || setting === 'cutoutEnd' || setting === 'edges' || setting === 'joins' || setting === 'dividerX' || setting === 'dividerY') {
         markGroupBoundaries(document.querySelector('.grid-container'));
       }
     });
+  });
+  controls.querySelector('[data-number-setting="halo"]').addEventListener('input', event => {
+    const slider = controls.querySelector('[data-setting="halo"]');
+    slider.value = event.currentTarget.value;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
   });
   controls.querySelector('.layout-debug-copy').addEventListener('click', async event => {
     await navigator.clipboard.writeText(window.location.href);
@@ -598,26 +636,32 @@ function debugNumber(params, name, fallback) {
 
 function applyLayoutDebugSettings() {
   const params = new URLSearchParams(window.location.search);
-  if (params.get('layoutDebug') !== '1') return;
   const root = document.documentElement;
-  if (params.has('groupGap')) root.style.setProperty('--grid-gap', `${debugNumber(params, 'groupGap', 20)}px`);
-  root.style.setProperty('--debug-group-halo', `${debugNumber(params, 'halo', 9)}px`);
-  root.style.setProperty('--debug-halo-radius', `${debugNumber(params, 'radius', 8)}px`);
-  root.style.setProperty('--debug-divider-x', `${debugNumber(params, 'dividerX', 1)}px`);
-  root.style.setProperty('--debug-divider-y', `${debugNumber(params, 'dividerY', 1)}px`);
-  root.style.setProperty('--debug-perimeter-cutout', `${debugNumber(params, 'cutout', 5)}px`);
-  root.style.setProperty('--debug-blob-blur', `${debugNumber(params, 'blobBlur', 1.5)}px`);
-  root.style.setProperty('--debug-group-grain', `${debugNumber(params, 'grain', 12) / 100}`);
-  root.style.setProperty('--debug-channel-blur', `${debugNumber(params, 'channelBlur', 0.5)}px`);
-  root.style.setProperty('--debug-group-color-strength', `${debugNumber(params, 'color', 42)}%`);
-  root.dataset.showGroupEdges = params.get('edges') === '0' ? 'false' : 'true';
+  const isThreeColumnLayout = window.matchMedia('(min-width: 1201px) and (max-width: 1799px)').matches;
+  if (!isThreeColumnLayout && params.get('layoutDebug') !== '1') {
+    root.style.removeProperty('--grid-gap');
+    return;
+  }
+  root.style.setProperty('--grid-gap', `${debugNumber(params, 'groupGap', BLOB_DEBUG_DEFAULTS.groupGap)}px`);
+  root.style.setProperty('--debug-group-halo', `${debugNumber(params, 'halo', BLOB_DEBUG_DEFAULTS.halo)}px`);
+  root.style.setProperty('--debug-halo-radius', `${debugNumber(params, 'radius', BLOB_DEBUG_DEFAULTS.radius)}px`);
+  root.style.setProperty('--debug-divider-x', `${debugNumber(params, 'dividerX', BLOB_DEBUG_DEFAULTS.dividerX)}px`);
+  root.style.setProperty('--debug-divider-y', `${debugNumber(params, 'dividerY', BLOB_DEBUG_DEFAULTS.dividerY)}px`);
+  root.style.setProperty('--debug-perimeter-cutout', `${debugNumber(params, 'cutout', BLOB_DEBUG_DEFAULTS.cutout)}px`);
+  root.style.setProperty('--debug-cutout-radius', `${debugNumber(params, 'cutoutRadius', BLOB_DEBUG_DEFAULTS.cutoutRadius)}px`);
+  root.style.setProperty('--debug-blob-blur', `${debugNumber(params, 'blobBlur', BLOB_DEBUG_DEFAULTS.blobBlur)}px`);
+  root.style.setProperty('--debug-group-grain', `${debugNumber(params, 'grain', BLOB_DEBUG_DEFAULTS.grain) / 100}`);
+  root.style.setProperty('--debug-channel-blur', `${debugNumber(params, 'channelBlur', BLOB_DEBUG_DEFAULTS.channelBlur)}px`);
+  root.style.setProperty('--debug-group-color-strength', `${debugNumber(params, 'color', BLOB_DEBUG_DEFAULTS.color)}%`);
+  root.dataset.showGroupEdges = params.get('edges') === '1' ? 'true' : 'false';
+  root.dataset.showGroupJoins = params.get('joins') === '1' ? 'true' : 'false';
   root.dataset.haloRadiusMode = params.get('radiusMode') === 'uniform' ? 'uniform' : 'smart';
 }
 
 function updateLayoutDebugMath(controls) {
   const params = new URLSearchParams(window.location.search);
-  const gap = debugNumber(params, 'groupGap', parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || 20);
-  const halo = debugNumber(params, 'halo', 9);
+  const gap = debugNumber(params, 'groupGap', BLOB_DEBUG_DEFAULTS.groupGap);
+  const halo = debugNumber(params, 'halo', BLOB_DEBUG_DEFAULTS.halo);
   const sameDelta = halo * 2 - gap;
   controls.querySelector('.layout-debug-math').innerHTML = `Same-group halos: <strong>${sameDelta >= 0 ? `${sameDelta}px overlap` : `${Math.abs(sameDelta)}px gap`}</strong><br><strong class="debug-red-label">Red</strong> = boundary between groups`;
 }
