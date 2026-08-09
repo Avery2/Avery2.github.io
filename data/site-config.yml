@@ -67,6 +67,7 @@ curated_repos:
   - automate-exalidraw
   - Qbserve-Blocker
   - git-message-helper
+  - rdojowebapp
 
 # Featured repositories (manual override)
 # These repos will have featured styling regardless of star count
