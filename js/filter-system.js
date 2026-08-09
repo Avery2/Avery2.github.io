@@ -456,6 +456,12 @@ function fuzzyScoreFields(query, fields) {
  * @returns {{isMatch: boolean, score: number}} Whether it matches, and its search rank
  */
 function evaluateTile(tileData) {
+  // Intro/profile chrome isn't searchable content — it should stay pinned
+  // and undimmed no matter the query, not evaluated like a project tile.
+  if (tileData.type === 'profile') {
+    return { isMatch: true, score: Infinity };
+  }
+
   // Tags filter (includes language, topics, and tags) — a categorical
   // selection, so it stays a hard AND filter rather than fuzzy-scored.
   if (activeFilters.tags && activeFilters.tags.length > 0) {
@@ -504,12 +510,32 @@ function compareByActiveSort(dataA, dataB) {
 }
 
 /**
+ * Build the divider shown between matches and dimmed non-matches. Reuses
+ * the .tile class so the masonry layout pass sizes it like any other tile,
+ * but its own styles strip away all the card chrome.
+ * @returns {HTMLElement}
+ */
+function createDividerElement() {
+  const divider = document.createElement('div');
+  divider.className = 'tile grid-divider tile-visible';
+  divider.setAttribute('aria-hidden', 'true');
+  divider.innerHTML = '<span>Other results</span>';
+  return divider;
+}
+
+/**
  * Apply active filters to all tiles: matches are sorted to the top (by
  * search rank when searching, else by the active sort), non-matches are
- * dimmed and sink to the bottom but stay visible and in the grid flow.
+ * dimmed and sink to the bottom but stay visible and in the grid flow. A
+ * divider marks the boundary whenever both groups are present.
  */
 function applyFilters() {
   const gridContainer = document.querySelector('.grid-container');
+
+  // Drop any divider from a previous pass before re-querying tiles, so it
+  // never gets swept up and evaluated/sorted as if it were a tile.
+  gridContainer.querySelector('.grid-divider')?.remove();
+
   const tileElements = Array.from(gridContainer.querySelectorAll('.tile'));
 
   const evaluated = tileElements.map(tileEl => {
@@ -529,6 +555,12 @@ function applyFilters() {
     tileEl.classList.toggle('tile-dimmed', !isMatch);
     gridContainer.appendChild(tileEl);
   });
+
+  const firstNonMatchIndex = evaluated.findIndex(({ isMatch }) => !isMatch);
+  const hasBothGroups = firstNonMatchIndex > 0 && firstNonMatchIndex < evaluated.length;
+  if (hasBothGroups) {
+    gridContainer.insertBefore(createDividerElement(), evaluated[firstNonMatchIndex].tileEl);
+  }
 
   // Recalculate masonry layout after reordering (dimmed tiles stay in flow)
   setTimeout(() => {
