@@ -293,6 +293,31 @@
   background-color: var(--tile-bg);
 }
 
+.profile-tile.section-spotlight {
+  cursor: pointer;
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--accent-primary) 16%, transparent);
+}
+
+.profile-tile.section-spotlight .tile-link {
+  width: 100%;
+}
+
+.profile-tile.section-spotlight .tile-content,
+.profile-tile.section-spotlight .spotlight-content {
+  width: 100%;
+  padding: 0;
+}
+
+.profile-tile.section-spotlight .tile-title,
+.profile-tile.section-spotlight .profile-tile-title {
+  color: var(--accent-primary);
+}
+
+.profile-tile.section-spotlight[data-spotlight="links"] {
+  cursor: default;
+}
+
 .profile-tile-content {
   display: flex;
   align-items: center;

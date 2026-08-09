@@ -507,11 +507,17 @@ function evaluateTile(tileData) {
   // the user is looking for something specific — it isn't a result, so it
   // gets hidden outright rather than dimmed alongside real non-matches.
   if (tileData.type === 'profile') {
+    if (activeFilters.content_type) return { isMatch: true, score: Infinity };
     if (activeFilters.search) {
       return { isMatch: false, score: 0, hide: true };
     }
-    if (activeFilters.content_type) return { isMatch: false, score: 0 };
     return { isMatch: true, score: Infinity };
+  }
+
+  // The active section overview is promoted into the permanent profile slot,
+  // so its ordinary card leaves the grid until the section filter is cleared.
+  if (activeFilters.content_type && tileData.sectionHeader && tileData.contentTypes.includes(activeFilters.content_type)) {
+    return { isMatch: false, score: 0, hide: true };
   }
 
   if (tileData.filterOnly && activeFilters.content_type !== tileData.contentType) {
@@ -651,6 +657,7 @@ function updateTagAffordances() {
  */
 function applyFilters() {
   const gridContainer = document.querySelector('.grid-container');
+  updateProfileSpotlight(gridContainer);
 
   const tileElements = Array.from(gridContainer.querySelectorAll('.tile'));
 
@@ -680,6 +687,38 @@ function applyFilters() {
   setTimeout(() => {
     calculateMasonryLayout(gridContainer);
   }, 50);
+}
+
+function updateProfileSpotlight(gridContainer) {
+  const profile = gridContainer.querySelector('.profile-tile');
+  if (!profile) return;
+
+  if (!profile._originalHTML) profile._originalHTML = profile.innerHTML;
+
+  if (!activeFilters.content_type) {
+    profile.innerHTML = profile._originalHTML;
+    profile.classList.remove('section-spotlight');
+    delete profile.dataset.spotlight;
+    return;
+  }
+
+  const sectionOverview = Array.from(gridContainer.querySelectorAll('[data-section-header="true"]')).find(tile => {
+    const types = JSON.parse(tile.dataset.contentTypes || '[]');
+    return types.includes(activeFilters.content_type);
+  });
+
+  if (sectionOverview) {
+    profile.innerHTML = sectionOverview.innerHTML;
+  } else {
+    const sectionLabel = document.querySelector('.content-type-pill.active')?.textContent.trim() || 'Section';
+    const description = activeFilters.content_type === 'links'
+      ? 'Places to find me and my work.'
+      : `Browse ${sectionLabel.toLowerCase()}.`;
+    profile.innerHTML = `<div class="spotlight-content"><h1 class="profile-tile-title">${sectionLabel}</h1><p class="profile-tile-description">${description}</p></div>`;
+  }
+
+  profile.classList.add('section-spotlight');
+  profile.dataset.spotlight = activeFilters.content_type;
 }
 
 function updateSearchTriggerSummary() {
@@ -721,6 +760,7 @@ function getTileDataFromElement(tileEl) {
     contentType: tileEl.dataset.contentType || '',
     contentTypes: JSON.parse(tileEl.dataset.contentTypes || '[]'),
     filterOnly: tileEl.dataset.filterOnly === 'true',
+    sectionHeader: tileEl.dataset.sectionHeader === 'true',
     priority: parseInt(tileEl.dataset.priority || '0'),
     readmeWords: readmeWordsByTileId.get(tileEl.id)
   };

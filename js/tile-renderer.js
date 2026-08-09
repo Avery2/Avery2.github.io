@@ -162,20 +162,19 @@ export function calculateMasonryLayout(container) {
   const gapValue = computedStyle.getPropertyValue('--grid-gap').trim();
   const gap = parseInt(gapValue) || 20;
 
-  tiles.forEach(tile => {
-    // Skip hidden tiles
-    if (tile.style.display === 'none' || tile.dataset.filtered === 'true') {
-      tile.style.gridRowEnd = 'span 0';
-      return;
-    }
+  const visibleTiles = Array.from(tiles).filter(tile => tile.style.display !== 'none');
+  Array.from(tiles).filter(tile => tile.style.display === 'none').forEach(tile => {
+    tile.style.gridRowEnd = 'span 0';
+  });
 
-    const rect = tile.getBoundingClientRect();
-    const height = rect.height;
-
-    // Calculate how many 1px rows this tile should span
-    // Add the gap to account for spacing, then divide by row height
-    const rowSpan = Math.ceil((height + gap) / rowHeight);
-
+  // Clear stale spans as a group before measuring. Measuring and mutating one
+  // card at a time made later cards inherit geometry from the previous layout.
+  visibleTiles.forEach(tile => { tile.style.gridRowEnd = 'auto'; });
+  const measurements = visibleTiles.map(tile => ({
+    tile,
+    rowSpan: Math.ceil((tile.getBoundingClientRect().height + gap) / rowHeight)
+  }));
+  measurements.forEach(({ tile, rowSpan }) => {
     tile.style.gridRowEnd = `span ${rowSpan}`;
   });
 }

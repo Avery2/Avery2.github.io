@@ -1,7 +1,7 @@
 /* Header and Navigation Styles */
 
 .site-header {
-  background-color: transparent;
+  background-color: var(--header-bg);
   padding: 1rem 0;
   position: sticky;
   top: 0;

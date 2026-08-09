@@ -15,6 +15,7 @@
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-flow: dense;
   gap: var(--grid-gap);
   grid-auto-rows: 0;
   row-gap: 1px;
@@ -87,23 +88,6 @@
   .profile-tile {
     grid-column: span 1;
   }
-}
-
-/* Once a section is selected, its overview takes the lead position. The
-   dimmed profile becomes an ordinary masonry card instead of reserving a
-   two-column hole below the matches. */
-.profile-tile.tile-dimmed {
-  grid-column: span 1;
-  padding: 1.25rem;
-}
-
-.profile-tile.tile-dimmed .profile-tile-image {
-  width: 72px;
-  height: 72px;
-}
-
-.profile-tile.tile-dimmed .profile-tile-title {
-  font-size: 1.4rem;
 }
 
 /* Grid container states */
