@@ -25,19 +25,19 @@
   --tile-hover-bg: #FFFFFF;
 
   /* Soft semantic fields used by the grouped portfolio mosaic. */
-  --group-intro-color: #F2D8C5;
-  --group-writing-color: #E9E2F0;
-  --group-experience-color: #E1EBDD;
-  --group-projects-color: #F2E3D5;
-  --group-links-color: #DDE8EF;
-  --group-other-color: #ECE3E2;
-  --group-selection-color: #ECE3E2;
+  --group-intro-color: #F2BE98;
+  --group-writing-color: #DCC9EB;
+  --group-experience-color: #CFE2C8;
+  --group-projects-color: #F0C9AA;
+  --group-links-color: #C6DDEA;
+  --group-other-color: #E5CFD2;
+  --group-selection-color: #E5CFD2;
   --group-intro-ink: #F2672E;
-  --group-writing-ink: #765787;
-  --group-experience-ink: #55734F;
-  --group-projects-ink: #9B6038;
-  --group-links-ink: #4B6E82;
-  --group-other-ink: #75666B;
+  --group-writing-ink: #704183;
+  --group-experience-ink: #416C3A;
+  --group-projects-ink: #985225;
+  --group-links-ink: #356A86;
+  --group-other-ink: #7B5059;
 
   --header-bg: rgba(244, 241, 235, 0.95);
   --footer-bg: #EEEAE3;
@@ -73,19 +73,19 @@
   --tile-bg: #191B1E;
   --tile-hover-bg: #1E2024;
 
-  --group-intro-color: #38271F;
-  --group-writing-color: #2B2533;
-  --group-experience-color: #233028;
-  --group-projects-color: #332820;
-  --group-links-color: #222D35;
-  --group-other-color: #30262A;
-  --group-selection-color: #30262A;
+  --group-intro-color: #4B2F22;
+  --group-writing-color: #3B2A49;
+  --group-experience-color: #263D2D;
+  --group-projects-color: #493222;
+  --group-links-color: #253C49;
+  --group-other-color: #412B32;
+  --group-selection-color: #412B32;
   --group-intro-ink: #FF7840;
-  --group-writing-ink: #C3A5D2;
-  --group-experience-ink: #9CBC91;
-  --group-projects-ink: #D4A078;
-  --group-links-ink: #91B2C5;
-  --group-other-ink: #B99FA7;
+  --group-writing-ink: #D2A9E5;
+  --group-experience-ink: #A4D297;
+  --group-projects-ink: #E8A36F;
+  --group-links-ink: #91C2DD;
+  --group-other-ink: #D0A1AD;
 
   --header-bg: rgba(17, 18, 20, 0.95);
   --footer-bg: #17191C;
