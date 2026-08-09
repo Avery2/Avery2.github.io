@@ -1,20 +1,21 @@
 /* Theme System - Light and Dark Mode */
 
 :root {
+  --brand-primary: #F25B22;
   --site-shell-gutter: clamp(1.25rem, 4vw, 3rem);
   /* Light theme (default) */
-  --bg-primary: #F4F1EB;
-  --bg-secondary: #EEEAE3;
-  --bg-tertiary: #E5E0D7;
+  --bg-primary: #F4F1EA;
+  --bg-secondary: #EBE7DF;
+  --bg-tertiary: #E1DCD2;
 
-  --text-primary: #191817;
-  --text-secondary: #706C66;
-  --text-tertiary: #817C75;
+  --text-primary: #161616;
+  --text-secondary: #68655F;
+  --text-tertiary: #7B7770;
 
-  --accent-primary: #F2672E;
-  --accent-secondary: #4F5D8C;
+  --accent-primary: var(--brand-primary);
+  --accent-secondary: #5F6772;
 
-  --border-color: #D9D4CB;
+  --border-color: #D8D4CB;
   --shadow-color: rgb(20 15 10 / 0.07);
   --card-shadow: 0 2px 8px rgb(20 15 10 / 0.07);
   --card-shadow-hover: 0 6px 18px rgb(20 15 10 / 0.12);
@@ -23,24 +24,20 @@
 
   --tile-bg: #FFFEFB;
   --tile-hover-bg: #FFFFFF;
+  --intro-card-bg: var(--brand-primary);
+  --semantic-group-surface: color-mix(in oklab, var(--text-primary) 6%, var(--bg-primary));
 
-  /* Soft semantic fields used by the grouped portfolio mosaic. */
-  --group-intro-color: #F2BE98;
-  --group-writing-color: #DCC9EB;
-  --group-experience-color: #CFE2C8;
-  --group-projects-color: #F0C9AA;
-  --group-links-color: #C6DDEA;
-  --group-other-color: #E5CFD2;
-  --group-selection-color: #E5CFD2;
-  --group-intro-ink: #F2672E;
-  --group-writing-ink: #704183;
-  --group-experience-ink: #416C3A;
-  --group-projects-ink: #985225;
-  --group-links-ink: #356A86;
-  --group-other-ink: #7B5059;
+  /* Category labels remain neutral; only Writing and Links receive the one
+     shared semantic surface in the grouped masonry. */
+  --group-intro-ink: var(--text-primary);
+  --group-writing-ink: var(--text-primary);
+  --group-experience-ink: var(--text-primary);
+  --group-projects-ink: var(--text-primary);
+  --group-links-ink: var(--text-primary);
+  --group-other-ink: var(--text-primary);
 
-  --header-bg: rgba(244, 241, 235, 0.95);
-  --footer-bg: #EEEAE3;
+  --header-bg: rgba(244, 241, 234, 0.95);
+  --footer-bg: #EBE7DF;
 
   /* Grid configuration */
   --grid-min-tile-width: 280px;
@@ -62,8 +59,8 @@
   --text-secondary: #A5A19B;
   --text-tertiary: #918D87;
 
-  --accent-primary: #FF7840;
-  --accent-secondary: #8992C7;
+  --accent-primary: var(--brand-primary);
+  --accent-secondary: #7596EF;
 
   --border-color: #303238;
   --shadow-color: rgb(0 0 0 / 0.25);
@@ -72,20 +69,8 @@
 
   --tile-bg: #191B1E;
   --tile-hover-bg: #1E2024;
-
-  --group-intro-color: #4B2F22;
-  --group-writing-color: #3B2A49;
-  --group-experience-color: #263D2D;
-  --group-projects-color: #493222;
-  --group-links-color: #253C49;
-  --group-other-color: #412B32;
-  --group-selection-color: #412B32;
-  --group-intro-ink: #FF7840;
-  --group-writing-ink: #D2A9E5;
-  --group-experience-ink: #A4D297;
-  --group-projects-ink: #E8A36F;
-  --group-links-ink: #91C2DD;
-  --group-other-ink: #D0A1AD;
+  --intro-card-bg: var(--brand-primary);
+  --semantic-group-surface: color-mix(in oklab, var(--text-primary) 10%, var(--bg-primary));
 
   --header-bg: rgba(17, 18, 20, 0.95);
   --footer-bg: #17191C;
@@ -95,22 +80,23 @@
   --github-gray: #ffffff;
 }
 
-/* Smooth theme transitions */
-*,
-*::before,
-*::after {
+/* Theme transitions belong to visible surfaces, not every generated layout
+   node and pseudo-element on the page. */
+body,
+.site-header,
+.header-right,
+.social-link,
+.theme-toggle,
+.tile {
   transition-property: background-color, color, border-color;
   transition-duration: 0.3s;
   transition-timing-function: ease;
 }
 
-/* Disable transitions for specific elements */
 a,
 button,
-.tile,
 .filter-pill,
 .theme-toggle {
-  /* These have their own specific transitions */
   transition-property: transform, box-shadow, opacity, background-color, color, border-color;
 }
 

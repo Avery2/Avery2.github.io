@@ -229,44 +229,21 @@
 html[data-grouped-layout] .grid-container {
   position: relative;
   isolation: isolate;
-  margin-top: var(--group-region-spread, 9px);
-  margin-bottom: var(--group-region-spread, 9px);
+  margin-block: calc(var(--grid-gap) / 2);
 }
 
 html[data-grouped-layout] .tile[data-layout-group] {
+  --section-heading-surface: var(--bg-primary);
   position: relative;
   z-index: 1;
   width: auto;
   border: 1px solid var(--border-color) !important;
-  box-shadow:
-    1px 2px 0 color-mix(in srgb, var(--text-primary) 9%, transparent),
-    var(--card-shadow);
+  box-shadow: var(--card-shadow);
 }
 
 html[data-grouped-layout] .tile[data-layout-group].tile-visible:hover {
-  box-shadow:
-    2px 3px 0 color-mix(in srgb, var(--text-primary) 11%, transparent),
-    var(--card-shadow-hover);
+  box-shadow: var(--card-shadow-hover);
   transform: translateY(-2px);
-}
-
-/* Ordinary cards borrow a quieter version of the section-label language:
-   neutral paper and structure, with one small stroke of their region ink. */
-html[data-grouped-layout] .tile[data-layout-group]:not([data-section-header="true"]):not(.profile-tile):not(#tile-back-to-top) .tile-title::after {
-  content: '';
-  display: block;
-  width: 2.1rem;
-  height: 3px;
-  margin-top: 0.45rem;
-  border-radius: 1px;
-  background: color-mix(in srgb, var(--layout-region-ink) 68%, var(--border-color));
-  transform-origin: left center;
-  transition: width 160ms ease, background-color 160ms ease;
-}
-
-html[data-grouped-layout] .tile[data-layout-group]:not([data-section-header="true"]):not(.profile-tile):not(#tile-back-to-top):hover .tile-title::after {
-  width: 2.8rem;
-  background: var(--layout-region-ink);
 }
 
 /* Section anchors become labels sitting directly on their semantic paper
@@ -290,25 +267,36 @@ html[data-grouped-layout] .tile[data-section-header="true"] .tile-content {
   gap: 0.65rem;
 }
 
-html[data-grouped-layout] .tile[data-section-header="true"] .tile-title {
+html[data-grouped-layout] :is(
+  .tile[data-section-header="true"] .tile-title,
+  .profile-tile.section-spotlight .profile-tile-title
+) {
   display: inline-block;
+  width: fit-content;
   margin: 0;
   padding: 0.4rem 0.7rem 0.45rem;
   border: 1px solid var(--border-color);
   border-bottom: 4px solid var(--layout-region-ink);
   border-radius: 5px 5px 2px 2px;
-  background: var(--tile-bg);
+  background: var(--section-heading-surface);
   color: var(--layout-region-ink);
   box-shadow: 3px 3px 0 color-mix(in srgb, var(--layout-region-ink) 72%, transparent);
   font-size: clamp(1.45rem, 1.15rem + 0.8vw, 2rem);
+  font-weight: 700;
   line-height: 1.05;
   transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
 }
 
-html[data-grouped-layout] .tile[data-section-header="true"]:hover .tile-title,
-html[data-grouped-layout] .tile[data-section-header="true"]:focus-within .tile-title {
-  background: var(--tile-hover-bg);
-  box-shadow: 5px 5px 0 color-mix(in srgb, var(--layout-region-ink) 82%, transparent);
+html[data-grouped-layout] :is(
+  .tile[data-section-header="true"]:hover .tile-title,
+  .tile[data-section-header="true"]:focus-within .tile-title,
+  .profile-tile.section-spotlight:has(.spotlight-link):hover .profile-tile-title,
+  .profile-tile.section-spotlight:has(.spotlight-link):focus-within .profile-tile-title
+) {
+  border-bottom-color: var(--accent-primary);
+  background: color-mix(in srgb, var(--text-primary) 5%, var(--section-heading-surface));
+  color: var(--accent-primary);
+  box-shadow: 5px 5px 0 color-mix(in srgb, var(--accent-primary) 82%, transparent);
   transform: translate(-1px, -1px);
 }
 
@@ -323,10 +311,25 @@ html[data-grouped-layout] .tile[data-section-header="true"] .tile-description {
 
 html[data-grouped-layout] .profile-tile[data-layout-group="intro"],
 html[data-grouped-layout] .profile-tile[data-layout-group="intro"].tile-visible:hover {
-  border-color: transparent !important;
-  background: transparent;
-  box-shadow: none;
+  border-color: color-mix(in srgb, white 34%, transparent) !important;
+  background: var(--intro-card-bg);
+  box-shadow:
+    1px 2px 0 color-mix(in srgb, var(--text-primary) 9%, transparent),
+    var(--card-shadow);
   transform: none;
+}
+
+html[data-grouped-layout] .profile-tile[data-layout-group="intro"] .profile-tile-title,
+html[data-grouped-layout] .profile-tile[data-layout-group="intro"] .profile-tile-title .highlight-name {
+  color: #fff;
+}
+
+html[data-grouped-layout] .profile-tile[data-layout-group="intro"] .profile-tile-description {
+  color: rgb(255 255 255 / 0.82);
+}
+
+html[data-grouped-layout] .profile-tile[data-layout-group="intro"] .profile-tile-image {
+  border-color: rgb(255 255 255 / 0.58);
 }
 
 html[data-grouped-layout] .profile-tile.section-spotlight,
@@ -341,34 +344,41 @@ html[data-grouped-layout] .profile-tile.section-spotlight:has(.spotlight-link) {
   cursor: pointer;
 }
 
-html[data-grouped-layout] .profile-tile.section-spotlight .profile-tile-title {
-  display: inline-block;
-  width: fit-content;
-  margin: 0;
-  padding: 0.4rem 0.7rem 0.45rem;
-  border: 1px solid var(--border-color);
-  border-bottom: 4px solid var(--layout-region-ink);
-  border-radius: 5px 5px 2px 2px;
-  background: var(--tile-bg);
-  color: var(--layout-region-ink);
-  box-shadow: 3px 3px 0 color-mix(in srgb, var(--layout-region-ink) 72%, transparent);
-  font-size: clamp(1.45rem, 1.15rem + 0.8vw, 2rem);
-  font-weight: 700;
-  line-height: 1.05;
-  transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
-}
-
-html[data-grouped-layout] .profile-tile.section-spotlight:has(.spotlight-link):hover .profile-tile-title,
-html[data-grouped-layout] .profile-tile.section-spotlight:has(.spotlight-link):focus-within .profile-tile-title {
-  background: var(--tile-hover-bg);
-  box-shadow: 5px 5px 0 color-mix(in srgb, var(--layout-region-ink) 82%, transparent);
-  transform: translate(-1px, -1px);
-}
-
 html[data-grouped-layout] .profile-tile.section-spotlight .spotlight-content {
   display: grid;
   justify-items: start;
   gap: 0.8rem;
+}
+
+/* Writing and Links share one neutral semantic field rendered independently
+   behind their rounded cards. */
+html[data-grouped-layout] :is(
+  .tile[data-layout-group="writing"],
+  .tile[data-layout-group="links"]
+):not([data-section-header="true"]):not(.section-spotlight) {
+  box-shadow: var(--card-shadow);
+}
+
+html[data-grouped-layout] :is(
+  .tile[data-layout-group="writing"],
+  .tile[data-layout-group="links"]
+):not([data-section-header="true"]):not(.section-spotlight).tile-visible:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: none;
+}
+
+.semantic-region-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.semantic-region {
+  position: absolute;
+  display: block;
+  border-radius: 0;
+  background: var(--semantic-group-surface);
 }
 
 html[data-grouped-layout] .tile-link:focus-visible {
@@ -376,52 +386,31 @@ html[data-grouped-layout] .tile-link:focus-visible {
   outline-offset: -4px;
 }
 
-.group-halo-underlay-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.group-halo-underlay {
-  position: absolute;
-  display: block;
-}
-
 html[data-grouped-layout] .tile[data-layout-group="intro"] {
-  --layout-region-fill: color-mix(in srgb, var(--group-intro-color) var(--group-color-strength, 90%), var(--bg-primary));
   --layout-region-ink: var(--group-intro-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="writing"] {
-  --layout-region-fill: color-mix(in srgb, var(--group-writing-color) var(--group-color-strength, 90%), var(--bg-primary));
   --layout-region-ink: var(--group-writing-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="experience"] {
-  --layout-region-fill: color-mix(in srgb, var(--group-experience-color) var(--group-color-strength, 90%), var(--bg-primary));
   --layout-region-ink: var(--group-experience-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="projects"] {
-  --layout-region-fill: color-mix(in srgb, var(--group-projects-color) var(--group-color-strength, 90%), var(--bg-primary));
   --layout-region-ink: var(--group-projects-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="links"] {
-  --layout-region-fill: color-mix(in srgb, var(--group-links-color) var(--group-color-strength, 90%), var(--bg-primary));
   --layout-region-ink: var(--group-links-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="navigation"] {
-  --layout-region-fill: color-mix(in srgb, var(--group-other-color) var(--group-color-strength, 90%), var(--bg-primary));
   --layout-region-ink: var(--group-other-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="other"] {
-  --layout-region-fill: color-mix(in srgb, var(--group-other-color) var(--group-color-strength, 90%), var(--bg-primary));
   --layout-region-ink: var(--group-other-ink);
 }
 html[data-grouped-layout] .tile[data-layout-group="selection"] {
-  --layout-region-fill: color-mix(in srgb, var(--group-selection-color) var(--group-color-strength, 90%), var(--bg-primary));
-  --layout-region-ink: var(--accent-primary);
+  --layout-region-ink: var(--text-primary);
 }
 html[data-grouped-layout] .tile[data-layout-group="filtered"] {
-  --layout-region-fill: color-mix(in srgb, var(--text-tertiary) 10%, var(--bg-primary));
   --layout-region-ink: var(--text-secondary);
 }
 

@@ -150,15 +150,12 @@ const LAYOUT_PRESETS = {
   balanced: { groupDistance: 2.2, compactness: 0.08, holes: 0.55, readingOrder: 0.15, beamWidth: 120, requireConnected: true },
   strong: { groupDistance: 8, compactness: 0.16, holes: 0.7, readingOrder: 0.25, beamWidth: 160, requireConnected: true }
 };
-const REGION_DEFAULTS = {
-  groupGap: 30,
-  color: 90,
-};
+const LAYOUT_DEFAULTS = { groupGap: 30 };
 
 window.addEventListener('site-theme-change', () => {
   const container = document.querySelector('.grid-container');
   if (container && document.documentElement.hasAttribute('data-grouped-layout')) {
-    scheduleGroupRegions(container);
+    scheduleSemanticRegions(container);
   }
 });
 
@@ -184,7 +181,7 @@ function clearExplicitPlacement(tiles) {
     tile.style.gridRowStart = '';
     delete tile.dataset.layoutGroup;
   });
-  document.querySelectorAll('.group-halo-underlay-layer').forEach(layer => layer.remove());
+  document.querySelectorAll('.semantic-region-layer').forEach(layer => layer.remove());
   document.documentElement.removeAttribute('data-grouped-layout');
 }
 
@@ -281,7 +278,7 @@ function applyGroupedLayout(container, measurements) {
   if (cached) {
     applyPlacements(cached);
     document.documentElement.dataset.groupedLayout = layoutMode();
-    scheduleGroupRegions(container);
+    scheduleSemanticRegions(container);
     return;
   }
 
@@ -306,7 +303,7 @@ function applyGroupedLayout(container, measurements) {
     container._groupLayoutCache.delete(container._groupLayoutCache.keys().next().value);
   }
   document.documentElement.dataset.groupedLayout = layoutMode();
-  scheduleGroupRegions(container);
+  scheduleSemanticRegions(container);
 }
 
 function applyPlacements(placements) {
@@ -319,39 +316,39 @@ function applyPlacements(placements) {
   });
 }
 
-function scheduleGroupRegions(container) {
-  cancelAnimationFrame(container._groupRegionFrame);
-  container._groupRegionFrame = requestAnimationFrame(() => {
-    const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || REGION_DEFAULTS.groupGap;
-    renderGroupRegions(container, gap);
-  });
+function scheduleSemanticRegions(container) {
+  cancelAnimationFrame(container._semanticRegionFrame);
+  container._semanticRegionFrame = requestAnimationFrame(() => renderSemanticRegions(container));
 }
 
-function renderGroupRegions(container, gap) {
-  container.querySelectorAll('.group-halo-underlay-layer').forEach(layer => layer.remove());
+function renderSemanticRegions(container) {
+  container.querySelectorAll('.semantic-region-layer').forEach(layer => layer.remove());
+  const groupedTiles = container.querySelectorAll(
+    '.tile[data-layout-group="writing"], .tile[data-layout-group="links"]'
+  );
+  if (!groupedTiles.length) return;
 
-  const halo = gap / 2;
+  const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || LAYOUT_DEFAULTS.groupGap;
+  const spread = gap / 2;
   const containerRect = container.getBoundingClientRect();
-  const underlayLayer = document.createElement('div');
-  underlayLayer.className = 'group-halo-underlay-layer';
-  underlayLayer.setAttribute('aria-hidden', 'true');
+  const layer = document.createElement('div');
+  layer.className = 'semantic-region-layer';
+  layer.setAttribute('aria-hidden', 'true');
 
-  container.querySelectorAll('.tile[data-layout-group]').forEach(tile => {
-    if (tile.dataset.layoutGroup === 'utility') return;
+  groupedTiles.forEach(tile => {
     const rect = tile.getBoundingClientRect();
-    const underlay = document.createElement('i');
-    underlay.className = 'group-halo-underlay';
-    Object.assign(underlay.style, {
-      left: `${rect.left - containerRect.left - halo}px`,
-      top: `${rect.top - containerRect.top - halo}px`,
+    const region = document.createElement('i');
+    region.className = 'semantic-region';
+    Object.assign(region.style, {
+      left: `${rect.left - containerRect.left - spread}px`,
+      top: `${rect.top - containerRect.top - spread}px`,
       width: `${rect.width + gap}px`,
-      height: `${rect.height + gap}px`,
-      backgroundColor: getComputedStyle(tile).getPropertyValue('--layout-region-fill')
+      height: `${rect.height + gap}px`
     });
-    underlayLayer.appendChild(underlay);
+    layer.appendChild(region);
   });
 
-  container.appendChild(underlayLayer);
+  container.appendChild(layer);
 }
 
 function installLayoutDebugControls() {
@@ -368,8 +365,7 @@ function installLayoutDebugControls() {
     <button class="layout-debug-collapse" type="button" aria-expanded="true">Hide controls</button>
     <div class="layout-debug-modes"><strong>Layout</strong><a data-mode="masonry">Original</a><a data-mode="density">Mostly masonry</a><a data-mode="balanced">Balanced</a><a data-mode="strong">Strong</a></div>
     <div class="layout-debug-tuners">
-      <label><span><strong>Card gap</strong><output data-output="groupGap">${params.get('groupGap') || REGION_DEFAULTS.groupGap}px</output></span><input data-setting="groupGap" type="range" min="8" max="48" step="1" value="${params.get('groupGap') || REGION_DEFAULTS.groupGap}"><small>The colored underlay always extends by exactly half this gap.</small></label>
-      <label><span><strong>Color strength</strong><output data-output="color">${params.get('color') || REGION_DEFAULTS.color}%</output></span><input data-setting="color" type="range" min="0" max="100" step="1" value="${params.get('color') || REGION_DEFAULTS.color}"><small>Blends the semantic palette toward the page background.</small></label>
+      <label><span><strong>Card gap</strong><output data-output="groupGap">${params.get('groupGap') || LAYOUT_DEFAULTS.groupGap}px</output></span><input data-setting="groupGap" type="range" min="8" max="48" step="1" value="${params.get('groupGap') || LAYOUT_DEFAULTS.groupGap}"><small>Space between the outlined masonry cards.</small></label>
     </div>
     <div class="layout-debug-math" aria-live="polite"></div>
     <div class="layout-debug-actions"><button class="layout-debug-reset" type="button">Reset baseline</button><button class="layout-debug-copy" type="button">Copy configuration URL</button></div>`;
@@ -394,7 +390,7 @@ function installLayoutDebugControls() {
     input.addEventListener('input', () => {
       const setting = input.dataset.setting;
       const value = input.value;
-      controls.querySelector(`[data-output="${setting}"]`).textContent = `${value}${setting === 'color' ? '%' : 'px'}`;
+      controls.querySelector(`[data-output="${setting}"]`).textContent = `${value}px`;
       const url = new URL(window.location.href);
       url.searchParams.set(setting, value);
       history.replaceState(history.state, '', url);
@@ -404,8 +400,6 @@ function installLayoutDebugControls() {
       if (setting === 'groupGap') {
         cancelAnimationFrame(relayoutFrame);
         relayoutFrame = requestAnimationFrame(() => calculateMasonryLayout(document.querySelector('.grid-container')));
-      } else {
-        scheduleGroupRegions(document.querySelector('.grid-container'));
       }
     });
   });
@@ -440,20 +434,17 @@ function applyLayoutDebugSettings() {
   const isBaselineDesktop = window.matchMedia('(min-width: 1201px) and (max-width: 1799px)').matches;
 
   if (params.get('layoutDebug') === '1' || isBaselineDesktop) {
-    root.style.setProperty('--grid-gap', `${debugNumber(params, 'groupGap', REGION_DEFAULTS.groupGap)}px`);
+    root.style.setProperty('--grid-gap', `${debugNumber(params, 'groupGap', LAYOUT_DEFAULTS.groupGap)}px`);
   } else {
     root.style.removeProperty('--grid-gap');
   }
 
-  const gap = parseFloat(getComputedStyle(root).getPropertyValue('--grid-gap')) || REGION_DEFAULTS.groupGap;
-  root.style.setProperty('--group-region-spread', `${gap / 2}px`);
-  root.style.setProperty('--group-color-strength', `${debugNumber(params, 'color', REGION_DEFAULTS.color)}%`);
 }
 
 function updateLayoutDebugMath(controls) {
   const params = new URLSearchParams(window.location.search);
-  const gap = debugNumber(params, 'groupGap', REGION_DEFAULTS.groupGap);
-  controls.querySelector('.layout-debug-math').innerHTML = `Card gap: <strong>${gap}px</strong><br>Underlay spread: <strong>${gap / 2}px per side</strong>`;
+  const gap = debugNumber(params, 'groupGap', LAYOUT_DEFAULTS.groupGap);
+  controls.querySelector('.layout-debug-math').innerHTML = `Card gap: <strong>${gap}px</strong>`;
 }
 
 /**
