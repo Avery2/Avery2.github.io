@@ -144,32 +144,26 @@ html[data-layout-debug="true"] .grid-container { isolation: isolate; }
 
 html[data-layout-debug="true"] .tile[data-layout-group] {
   position: relative;
-  box-shadow: 0 0 0 12px var(--layout-region-fill), 0 0 0 13px var(--layout-region-line);
+  box-shadow: 0 0 0 11px var(--layout-region-fill);
 }
 
 html[data-layout-debug="true"] .tile[data-layout-group="intro"] {
-  --layout-region-line: rgba(240, 122, 36, 0.55);
-  --layout-region-fill: rgba(240, 122, 36, 0.08);
+  --layout-region-fill: color-mix(in srgb, #f07a24 14%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="writing"] {
-  --layout-region-line: rgba(180, 108, 255, 0.62);
-  --layout-region-fill: rgba(180, 108, 255, 0.12);
+  --layout-region-fill: color-mix(in srgb, #b46cff 18%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="experience"] {
-  --layout-region-line: rgba(66, 184, 164, 0.62);
-  --layout-region-fill: rgba(66, 184, 164, 0.12);
+  --layout-region-fill: color-mix(in srgb, #42b8a4 18%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="projects"] {
-  --layout-region-line: rgba(91, 141, 239, 0.62);
-  --layout-region-fill: rgba(91, 141, 239, 0.11);
+  --layout-region-fill: color-mix(in srgb, #5b8def 17%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="links"] {
-  --layout-region-line: rgba(224, 168, 59, 0.62);
-  --layout-region-fill: rgba(224, 168, 59, 0.11);
+  --layout-region-fill: color-mix(in srgb, #e0a83b 17%, var(--bg-primary));
 }
 html[data-layout-debug="true"] .tile[data-layout-group="navigation"] {
-  --layout-region-line: rgba(153, 153, 153, 0.55);
-  --layout-region-fill: rgba(153, 153, 153, 0.08);
+  --layout-region-fill: color-mix(in srgb, #999 14%, var(--bg-primary));
 }
 
 @media (max-width: 900px) {

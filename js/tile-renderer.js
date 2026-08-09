@@ -192,9 +192,9 @@ export function calculateMasonryLayout(container) {
 
 const GROUP_ORDER = ['intro', 'writing', 'experience', 'projects', 'links', 'navigation', 'other'];
 const LAYOUT_PRESETS = {
-  density: { groupDistance: 0.35, compactness: 0.03, holes: 0.4, readingOrder: 0.08, beamWidth: 80, requireConnected: false, regionClearance: 0 },
-  balanced: { groupDistance: 2.2, compactness: 0.08, holes: 0.55, readingOrder: 0.15, beamWidth: 120, requireConnected: true, regionClearance: 12 },
-  strong: { groupDistance: 8, compactness: 0.16, holes: 0.7, readingOrder: 0.25, beamWidth: 160, requireConnected: true, regionClearance: 20 }
+  density: { groupDistance: 0.35, compactness: 0.03, holes: 0.4, readingOrder: 0.08, beamWidth: 80, requireConnected: false },
+  balanced: { groupDistance: 2.2, compactness: 0.08, holes: 0.55, readingOrder: 0.15, beamWidth: 120, requireConnected: true },
+  strong: { groupDistance: 8, compactness: 0.16, holes: 0.7, readingOrder: 0.25, beamWidth: 160, requireConnected: true }
 };
 
 function layoutMode() {
@@ -250,26 +250,7 @@ function stateCost(state, preset) {
     state.readingOrderCost * preset.readingOrder + groupShapeCost(state.groupRects, preset);
 }
 
-function separatedRow(row, col, span, height, obstacles, clearance) {
-  if (!clearance || obstacles.length === 0) return row;
-  let nextRow = row;
-  let moved = true;
-  while (moved) {
-    moved = false;
-    obstacles.forEach(obstacle => {
-      const horizontallyAdjacent = col <= obstacle.col + obstacle.span && obstacle.col <= col + span;
-      const verticallyTooClose = nextRow < obstacle.row + obstacle.height + clearance &&
-        obstacle.row < nextRow + height + clearance;
-      if (horizontallyAdjacent && verticallyTooClose && obstacle.row + obstacle.height + clearance > nextRow) {
-        nextRow = obstacle.row + obstacle.height + clearance;
-        moved = true;
-      }
-    });
-  }
-  return nextRow;
-}
-
-function placeGroup(initialHeights, cards, preset, obstacles = []) {
+function placeGroup(initialHeights, cards, preset) {
   let beam = [{ heights: [...initialHeights], placements: [], groupRects: [], groupDistanceCost: 0, readingOrderCost: 0 }];
 
   cards.forEach(card => {
@@ -278,8 +259,7 @@ function placeGroup(initialHeights, cards, preset, obstacles = []) {
       const span = card.tile.classList.contains('profile-tile') ? 2 : 1;
       const starts = span === 2 ? [0] : [0, 1, 2];
       starts.forEach(col => {
-        const gravityRow = Math.max(...state.heights.slice(col, col + span));
-        const row = separatedRow(gravityRow, col, span, card.rowSpan, obstacles, preset.regionClearance);
+        const row = Math.max(...state.heights.slice(col, col + span));
         const rect = { tile: card.tile, col, span, row, height: card.rowSpan };
         const nearest = state.groupRects.length > 0
           ? Math.min(...state.groupRects.map(previous => cardDistance(rect, previous)))
@@ -317,7 +297,7 @@ function applyGroupedLayout(container, measurements) {
   for (const group of GROUP_ORDER) {
     const cards = groups.get(group);
     if (!cards?.length) continue;
-    const result = placeGroup(heights, cards, preset, placements);
+    const result = placeGroup(heights, cards, preset);
     heights = result.heights;
     result.placements.forEach(rect => {
       rect.tile.dataset.layoutGroup = group;
