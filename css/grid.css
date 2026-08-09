@@ -144,7 +144,7 @@ html[data-layout-debug="true"] .grid-container { isolation: isolate; }
 
 html[data-layout-debug="true"] .tile[data-layout-group] {
   position: relative;
-  box-shadow: 0 0 0 10px var(--layout-region-fill), 0 0 0 11px var(--layout-region-line);
+  box-shadow: 0 0 0 12px var(--layout-region-fill), 0 0 0 13px var(--layout-region-line);
 }
 
 html[data-layout-debug="true"] .tile[data-layout-group="intro"] {
