@@ -10,7 +10,7 @@ filters:
       - value: "writing"
         label: "Writing"
       - value: "experience"
-        label: "Experience & education"
+        label: "Experience"
       - value: "projects"
         label: "Projects"
       - value: "links"

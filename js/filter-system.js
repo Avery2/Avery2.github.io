@@ -94,6 +94,7 @@ function renderFilterUI() {
 
   let searchHTML = '';
   let otherFiltersHTML = '';
+  let contentTypeHTML = '';
 
   filterConfig.filters.forEach(filter => {
     if (!filter.enabled) return;
@@ -112,6 +113,8 @@ function renderFilterUI() {
     // Separate search from other filters
     if (filter.type === 'search') {
       searchHTML += filterHTML;
+    } else if (filter.type === 'single-select') {
+      contentTypeHTML += filterHTML;
     } else {
       otherFiltersHTML += filterHTML;
     }
@@ -124,13 +127,15 @@ function renderFilterUI() {
       ${otherFiltersHTML}
     </div>
   `;
+
+  const quickFilters = document.getElementById('header-quick-filters');
+  if (quickFilters) quickFilters.innerHTML = contentTypeHTML;
 }
 
 function renderContentTypeFilter(filter) {
   return `
-    <div class="filter-group filter-content-types" data-filter-id="${filter.id}">
-      <span class="filter-label">${filter.label}</span>
-      <div class="filter-options" role="group" aria-label="${filter.label}">
+    <div class="filter-content-types" data-filter-id="${filter.id}">
+      <div class="filter-options" role="group" aria-label="Portfolio section">
         ${filter.options.map(opt => `
           <button class="content-type-pill" data-value="${opt.value}" aria-pressed="false">
             ${opt.label}
@@ -502,9 +507,10 @@ function evaluateTile(tileData) {
   // the user is looking for something specific — it isn't a result, so it
   // gets hidden outright rather than dimmed alongside real non-matches.
   if (tileData.type === 'profile') {
-    if (activeFilters.search || activeFilters.content_type) {
+    if (activeFilters.search) {
       return { isMatch: false, score: 0, hide: true };
     }
+    if (activeFilters.content_type) return { isMatch: false, score: 0 };
     return { isMatch: true, score: Infinity };
   }
 
@@ -513,7 +519,7 @@ function evaluateTile(tileData) {
   }
 
   if (activeFilters.content_type && tileData.contentType !== activeFilters.content_type) {
-    return { isMatch: false, score: 0, hide: true };
+    return { isMatch: false, score: 0 };
   }
 
   // Tags filter (includes language, topics, and tags) — a categorical
@@ -629,31 +635,12 @@ function updateTagAffordances() {
 }
 
 /**
- * Build the divider shown between matches and dimmed non-matches. Reuses
- * the .tile class so the masonry layout pass sizes it like any other tile,
- * but its own styles strip away all the card chrome.
- * @returns {HTMLElement}
- */
-function createDividerElement() {
-  const divider = document.createElement('div');
-  divider.className = 'tile grid-divider tile-visible';
-  divider.setAttribute('aria-hidden', 'true');
-  divider.innerHTML = '<span>Other results</span>';
-  return divider;
-}
-
-/**
  * Apply active filters to all tiles: matches are sorted to the top (by
  * search rank when searching, else by the active sort), non-matches are
- * dimmed and sink to the bottom but stay visible and in the grid flow. A
- * divider marks the boundary whenever both groups are present.
+ * dimmed and sink to the bottom but stay visible in the grid flow.
  */
 function applyFilters() {
   const gridContainer = document.querySelector('.grid-container');
-
-  // Drop any divider from a previous pass before re-querying tiles, so it
-  // never gets swept up and evaluated/sorted as if it were a tile.
-  gridContainer.querySelector('.grid-divider')?.remove();
 
   const tileElements = Array.from(gridContainer.querySelectorAll('.tile'));
 
@@ -676,19 +663,33 @@ function applyFilters() {
     gridContainer.appendChild(tileEl);
   });
 
-  const firstNonMatchIndex = evaluated.findIndex(({ isMatch }) => !isMatch);
-  const firstVisibleNonMatch = evaluated.find(({ isMatch, hide }) => !isMatch && !hide);
-  const hasBothGroups = firstNonMatchIndex > 0 && Boolean(firstVisibleNonMatch);
-  if (hasBothGroups) {
-    gridContainer.insertBefore(createDividerElement(), firstVisibleNonMatch.tileEl);
-  }
-
   updateTagAffordances();
+  updateSearchTriggerSummary();
 
   // Recalculate masonry layout after reordering (dimmed tiles stay in flow)
   setTimeout(() => {
     calculateMasonryLayout(gridContainer);
   }, 50);
+}
+
+function updateSearchTriggerSummary() {
+  const label = document.querySelector('.filter-toggle-label');
+  if (!label) return;
+
+  const parts = [];
+  const activeSection = document.querySelector('.content-type-pill.active')?.textContent.trim();
+  if (activeSection) parts.push(activeSection);
+
+  const searchInput = document.querySelector('.search-input');
+  const query = searchInput?.value.trim();
+  if (query) parts.push(`“${query}”`);
+
+  if (activeFilters.tags.length > 0) {
+    parts.push(activeFilters.tags.length === 1 ? activeFilters.tags[0] : `${activeFilters.tags.length} tags`);
+  }
+
+  label.textContent = parts.length > 0 ? parts.join(' · ') : 'Search portfolio';
+  label.parentElement.title = parts.length > 0 ? `Active filters: ${parts.join(', ')}` : 'Search portfolio';
 }
 
 /**
