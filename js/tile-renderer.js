@@ -143,14 +143,15 @@ export function calculateMasonryLayout(container) {
   });
 }
 
-const GROUP_ORDER = ['intro', 'selection', 'writing', 'experience', 'links', 'projects', 'other', 'filtered', 'utility'];
+const CONTENT_GROUP_ORDER = ['writing', 'experience', 'links', 'projects'];
+const GROUP_ORDER = ['intro', 'selection', ...CONTENT_GROUP_ORDER, 'other', 'filtered', 'utility'];
 const LAYOUT_PRESETS = {
   density: { groupDistance: 0.35, compactness: 0.03, holes: 0.4, readingOrder: 0.08, beamWidth: 80, requireConnected: false },
   balanced: { groupDistance: 2.2, compactness: 0.08, holes: 0.55, readingOrder: 0.15, beamWidth: 120, requireConnected: true },
   strong: { groupDistance: 8, compactness: 0.16, holes: 0.7, readingOrder: 0.25, beamWidth: 160, requireConnected: true }
 };
 const LAYOUT_DEFAULTS = { groupGap: 30 };
-const SURFACED_GROUPS = new Set(['writing', 'links']);
+const SURFACED_GROUPS = new Set(CONTENT_GROUP_ORDER.filter((_, index) => index % 2 === 0));
 
 window.addEventListener('site-theme-change', () => {
   const container = document.querySelector('.grid-container');
@@ -321,32 +322,124 @@ function scheduleSemanticRegions(container) {
   container._semanticRegionFrame = requestAnimationFrame(() => renderSemanticRegions(container));
 }
 
+function coverRegionEdge(region, edge, overlapStart, overlapEnd, tolerance) {
+  region.neighbors[edge] = true;
+
+  if (edge === 'left' || edge === 'right') {
+    const topCorner = edge === 'left' ? 'topLeft' : 'topRight';
+    const bottomCorner = edge === 'left' ? 'bottomLeft' : 'bottomRight';
+    if (overlapStart <= region.top + tolerance) region.coveredCorners[topCorner] = true;
+    if (overlapEnd >= region.bottom - tolerance) region.coveredCorners[bottomCorner] = true;
+    return;
+  }
+
+  const leftCorner = edge === 'top' ? 'topLeft' : 'bottomLeft';
+  const rightCorner = edge === 'top' ? 'topRight' : 'bottomRight';
+  if (overlapStart <= region.left + tolerance) region.coveredCorners[leftCorner] = true;
+  if (overlapEnd >= region.right - tolerance) region.coveredCorners[rightCorner] = true;
+}
+
+function connectOverlappingRegions(regions, overlapEpsilon) {
+  const minimumSharedEdge = overlapEpsilon * 2 + 1;
+
+  for (let firstIndex = 0; firstIndex < regions.length; firstIndex += 1) {
+    for (let secondIndex = firstIndex + 1; secondIndex < regions.length; secondIndex += 1) {
+      const first = regions[firstIndex];
+      const second = regions[secondIndex];
+      if (first.group !== second.group) continue;
+
+      const overlapX = Math.min(first.right, second.right) - Math.max(first.left, second.left);
+      const overlapY = Math.min(first.bottom, second.bottom) - Math.max(first.top, second.top);
+      if (overlapX <= 0 || overlapY <= 0) continue;
+
+      /* The narrow overlap dimension crosses the card gap; the wider one is
+         the shared edge. Requiring a real shared edge prevents diagonally
+         touching corners from being treated as neighbors. */
+      if (overlapX < overlapY && overlapY > minimumSharedEdge) {
+        const firstIsLeft = first.centerX < second.centerX;
+        const overlapTop = Math.max(first.top, second.top);
+        const overlapBottom = Math.min(first.bottom, second.bottom);
+        coverRegionEdge(first, firstIsLeft ? 'right' : 'left', overlapTop, overlapBottom, overlapEpsilon);
+        coverRegionEdge(second, firstIsLeft ? 'left' : 'right', overlapTop, overlapBottom, overlapEpsilon);
+      } else if (overlapY < overlapX && overlapX > minimumSharedEdge) {
+        const firstIsAbove = first.centerY < second.centerY;
+        const overlapLeft = Math.max(first.left, second.left);
+        const overlapRight = Math.min(first.right, second.right);
+        coverRegionEdge(first, firstIsAbove ? 'bottom' : 'top', overlapLeft, overlapRight, overlapEpsilon);
+        coverRegionEdge(second, firstIsAbove ? 'top' : 'bottom', overlapLeft, overlapRight, overlapEpsilon);
+      }
+    }
+  }
+}
+
+function applyRegionCorners({ region, neighbors, coveredCorners }) {
+  const radius = 'var(--group-radius)';
+  const square = '0';
+  const topLeft = coveredCorners.topLeft ? square : radius;
+  const topRight = coveredCorners.topRight ? square : radius;
+  const bottomRight = coveredCorners.bottomRight ? square : radius;
+  const bottomLeft = coveredCorners.bottomLeft ? square : radius;
+
+  region.style.borderRadius = `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
+  region.dataset.neighbors = Object.entries(neighbors)
+    .filter(([, connected]) => connected)
+    .map(([edge]) => edge)
+    .join(' ');
+  region.dataset.coveredCorners = Object.entries(coveredCorners)
+    .filter(([, covered]) => covered)
+    .map(([corner]) => corner)
+    .join(' ');
+}
+
 function renderSemanticRegions(container) {
   container.querySelectorAll('.semantic-region-layer').forEach(layer => layer.remove());
+  // Alternating fields distinguish neighboring groups only on the complete
+  // homepage mosaic. A filtered single-section view has nothing to alternate.
+  if (container.dataset.filterGroup) return;
+
   const groupedTiles = Array.from(container.querySelectorAll('.tile[data-layout-group]'))
     .filter(tile => SURFACED_GROUPS.has(tile.dataset.layoutGroup));
   if (!groupedTiles.length) return;
 
   const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || LAYOUT_DEFAULTS.groupGap;
-  const spread = gap / 2;
+  const overlapEpsilon = 1;
+  const spread = gap / 2 + overlapEpsilon;
   const containerRect = container.getBoundingClientRect();
   const layer = document.createElement('div');
   layer.className = 'semantic-region-layer';
   layer.setAttribute('aria-hidden', 'true');
 
-  groupedTiles.forEach(tile => {
+  const regions = groupedTiles.map(tile => {
     const rect = tile.getBoundingClientRect();
     const region = document.createElement('i');
     region.className = 'semantic-region';
+    const left = rect.left - spread;
+    const top = rect.top - spread;
+    const right = rect.right + spread;
+    const bottom = rect.bottom + spread;
     Object.assign(region.style, {
-      left: `${rect.left - containerRect.left - spread}px`,
-      top: `${rect.top - containerRect.top - spread}px`,
-      width: `${rect.width + gap}px`,
-      height: `${rect.height + gap}px`
+      left: `${left - containerRect.left}px`,
+      top: `${top - containerRect.top}px`,
+      width: `${right - left}px`,
+      height: `${bottom - top}px`
     });
     layer.appendChild(region);
+    return {
+      region,
+      group: tile.dataset.layoutGroup,
+      left,
+      top,
+      right,
+      bottom,
+      centerX: rect.left + rect.width / 2,
+      centerY: rect.top + rect.height / 2,
+      neighbors: { top: false, right: false, bottom: false, left: false },
+      coveredCorners: { topLeft: false, topRight: false, bottomRight: false, bottomLeft: false }
+    };
   });
 
+  connectOverlappingRegions(regions, overlapEpsilon);
+  regions.forEach(applyRegionCorners);
   container.appendChild(layer);
 }
 

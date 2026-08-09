@@ -229,7 +229,10 @@
 html[data-grouped-layout] .grid-container {
   position: relative;
   isolation: isolate;
-  margin-block: calc(var(--grid-gap) / 2);
+  /* Generated group fields extend half a gap plus a 1px overlap beyond the
+     outermost cards. Keep a little extra air so their top/bottom radii and
+     shadows never sit flush against the masonry boundary. */
+  margin-block: calc(var(--grid-gap) / 2 + 6px);
 }
 
 html[data-grouped-layout] .tile[data-layout-group] {
@@ -278,11 +281,11 @@ html[data-grouped-layout] :is(
   margin: 0;
   padding: 0.4rem 0.7rem 0.45rem;
   border: 1px solid var(--border-color);
-  border-bottom: 4px solid var(--section-heading-ink);
+  border-bottom: 4px solid var(--section-heading-accent);
   border-radius: 5px 5px 2px 2px;
   background: var(--section-heading-surface);
   color: var(--section-heading-ink);
-  box-shadow: 3px 3px 0 color-mix(in srgb, var(--section-heading-ink) 72%, transparent);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--section-heading-accent) 72%, transparent);
   font-size: clamp(1.45rem, 1.15rem + 0.8vw, 2rem);
   font-weight: 700;
   line-height: 1.05;
