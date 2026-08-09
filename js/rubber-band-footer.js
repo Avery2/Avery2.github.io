@@ -24,7 +24,6 @@ export const TUNING = {
   curveExponent: 0.25, // progress = rawPull^curveExponent; 0.5 = sqrt (quick early give, resists near the end)
   springBackIdleMs: 130, // wheel has no "end" event — this long a pause with no progress means "let go"
   bottomEpsilon: 40, // generous — scrollHeight vs. true max scroll position can drift by ~20px
-  scrollTopDuration: 2000, // ms for the fast scroll-to-top animation
   referenceVelocity: 1.3, // px/ms — at or below this, ticks count fully; above it, damping kicks in
   momentumCurveExponent: 25, // how hard damping crushes ticks past referenceVelocity (higher = more brutal)
   minMomentumDamping: 0.02 // floor so a sustained fast train still creeps forward, just barely
@@ -104,47 +103,75 @@ function resetPullState(animate) {
 }
 
 /**
- * Lands exactly at scrollY 0, then double-checks shortly after. A wheel
- * gesture fast enough to arm the pull can still have momentum "in flight"
- * in the browser after our own scroll lands — this catches the residual
- * drift and corrects it once, without fighting the browser repeatedly.
+ * Corrects any residual drift and resets the pull visuals once the scroll
+ * has actually finished. A wheel gesture fast enough to arm the pull can
+ * still have real browser momentum "in flight" after our own scroll lands
+ * — this catches that and fixes it once, without fighting the browser
+ * repeatedly.
  */
-function settleAtTop() {
-  window.scrollTo({ top: 0, behavior: 'instant' });
-  setTimeout(() => {
-    if (window.scrollY !== 0) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-    isAnimatingScroll = false;
-    resetPullState(true);
-  }, 150);
+function finishScrollToTop() {
+  if (window.scrollY !== 0) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  isAnimatingScroll = false;
+  resetPullState(true);
 }
 
+/**
+ * Waits for scrollY to stop changing, for browsers without 'scrollend'
+ * (Safari < 17.4). Capped so it can't spin forever on some edge case.
+ */
+function pollUntilScrollSettles(callback, maxFrames = 240) {
+  let lastY = window.scrollY;
+  let stableFrames = 0;
+  let framesElapsed = 0;
+
+  function check() {
+    framesElapsed++;
+    const y = window.scrollY;
+    if (y === lastY) {
+      stableFrames++;
+    } else {
+      stableFrames = 0;
+      lastY = y;
+    }
+
+    if (stableFrames >= 3 || framesElapsed >= maxFrames) {
+      callback();
+      return;
+    }
+    requestAnimationFrame(check);
+  }
+
+  requestAnimationFrame(check);
+}
+
+/**
+ * Native smooth scroll instead of a hand-rolled easing loop — matches the
+ * feel of the site's plain "Back to Top" tile (data/manual-tiles.yml),
+ * which is just a bare `<a href="#">` relying entirely on the browser's
+ * own scroll-behavior:smooth. The browser's own animation is the same
+ * subsystem that owns any in-flight wheel momentum, so it doesn't fight
+ * itself the way our old rAF loop (a second, competing driver of scrollTop)
+ * sometimes did.
+ */
 function scrollToTopFast() {
   clearTimeout(idleTimer);
   isAnimatingScroll = true;
 
-  if (prefersReducedMotion) {
-    settleAtTop();
+  if (prefersReducedMotion || window.scrollY === 0) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    finishScrollToTop();
     return;
   }
 
-  const startY = window.scrollY;
-  const startTime = performance.now();
-
-  function step(now) {
-    const t = Math.min((now - startTime) / TUNING.scrollTopDuration, 1);
-    const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-    window.scrollTo({ top: startY * (1 - eased), behavior: 'instant' });
-
-    if (t < 1) {
-      requestAnimationFrame(step);
-    } else {
-      settleAtTop();
-    }
+  if ('onscrollend' in window) {
+    window.addEventListener('scrollend', finishScrollToTop, { once: true });
+  } else {
+    pollUntilScrollSettles(finishScrollToTop);
   }
 
-  requestAnimationFrame(step);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function scheduleIdleSpringBack() {
