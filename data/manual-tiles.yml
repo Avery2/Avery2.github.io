@@ -35,10 +35,20 @@ tiles:
     open_new_tab: false
     priority: 140
     content_type: "writing"
-    section_header: true
     tags: ["writing", "design", "prototype"]
     style:
       border_color: "#6B7280"
+
+  - id: "writing-overview"
+    type: "link"
+    title: "Writing"
+    description: "Public writing and connected notes."
+    url: "./writing/notes/writing.html?path=writing&open=last&from=portfolio"
+    open_new_tab: false
+    priority: 500
+    content_type: "writing"
+    section_header: true
+    tags: ["writing"]
 
   # More projects on GitHub (second-to-last tile)
   - id: "github-more"
@@ -76,6 +86,17 @@ tiles:
     priority: 75
     content_type: "links"
     tags: ["professional", "social"]
+
+  - id: "links-overview"
+    type: "link"
+    title: "Links"
+    description: "Places to find me and my work."
+    url: "./writing/notes/find-me.html?path=find-me&open=last&from=portfolio"
+    open_new_tab: false
+    priority: 500
+    content_type: "links"
+    section_header: true
+    tags: ["links", "professional"]
 
   - id: "experience-overview"
     type: "link"

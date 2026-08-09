@@ -707,15 +707,18 @@ function updateProfileSpotlight(gridContainer) {
     return types.includes(activeFilters.content_type);
   });
 
-  if (sectionOverview) {
-    profile.innerHTML = sectionOverview.innerHTML;
-  } else {
-    const sectionLabel = document.querySelector('.content-type-pill.active')?.textContent.trim() || 'Section';
-    const description = activeFilters.content_type === 'links'
-      ? 'Places to find me and my work.'
-      : `Browse ${sectionLabel.toLowerCase()}.`;
-    profile.innerHTML = `<div class="spotlight-content"><h1 class="profile-tile-title">${sectionLabel}</h1><p class="profile-tile-description">${description}</p></div>`;
-  }
+  const sectionCopy = {
+    writing: { title: 'Writing', description: 'Notes and longer-form writing.' },
+    links: { title: 'Links', description: 'Places to find me and my work.' }
+  }[activeFilters.content_type];
+  const sectionLink = sectionOverview?.querySelector('.tile-link');
+  const title = sectionCopy?.title || sectionOverview?.querySelector('.tile-title')?.textContent.trim() || 'Section';
+  const description = sectionCopy?.description || sectionOverview?.querySelector('.tile-description')?.textContent.trim() || '';
+  const content = `<div class="spotlight-content"><h1 class="profile-tile-title">${title}</h1><p class="profile-tile-description">${description}</p></div>`;
+
+  profile.innerHTML = sectionLink
+    ? `<a class="spotlight-link" href="${sectionLink.getAttribute('href')}">${content}</a>`
+    : content;
 
   profile.classList.add('section-spotlight');
   profile.dataset.spotlight = activeFilters.content_type;
