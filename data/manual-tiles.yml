@@ -18,8 +18,8 @@ tiles:
     type: "link"
     title: "View My Resume"
     description: "Full resume with experience and education"
-    url: "https://www.averychan.site/normal-resume/Justin_Avery_Chan_Resume.pdf#view=FitH"
-    open_new_tab: true
+    url: "./writing/resume/full.html"
+    open_new_tab: false
     priority: 450
     tags: ["professional"]
     style:
