@@ -16,14 +16,14 @@ tiles:
   # Resume link tile
   - id: "resume-tile"
     type: "link"
-    title: "View My Resume"
-    description: "Full resume with experience and education"
+    title: "View My Résumé"
+    description: "Full résumé with experience and education"
     url: "./writing/resume/full.html?from=portfolio"
     open_new_tab: false
     priority: 450
     tags: ["professional"]
     style:
-      border_color: "#DA7422"
+      border_color: "#6B7280"
 
   - id: "linked-notes-demo"
     type: "link"
