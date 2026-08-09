@@ -11,6 +11,7 @@ Usage:
 """
 
 import os
+import json
 import re
 import sys
 import requests
@@ -22,6 +23,8 @@ from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
+
+PROJECT_NODES: List[Dict[str, Any]] = []
 
 # Load .env file if it exists (for local development)
 try:
@@ -413,42 +416,41 @@ PROJECT_PAGE_TEMPLATE = Template('''<!DOCTYPE html>
   </script>
   <style>html { background: #fbfaf7; } html[data-theme="dark"] { background: #1a1a1a; }</style>
   <link rel="icon" href="../assets/images/profile/face.jpg" type="image/jpeg">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/project-detail.css">
+  <link rel="stylesheet" href="/writing/assets/portfolio-foundation.css">
+  <link rel="stylesheet" href="/writing/notes/notes.css">
+  <link rel="stylesheet" href="/writing/assets/resume.css">
+  <link rel="stylesheet" href="/css/project-detail.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
-<body class="project-detail-page">
-  <header class="detail-site-header">
-    <a href="../" class="detail-brand">Avery</a>
-    <span class="detail-section">Projects</span>
-    <button id="theme-toggle" class="detail-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
+<body class="notes-page">
+  <header class="notes-site-header">
+    <a href="/" class="notes-brand">Avery</a>
+    <a href="/projects/index.html" class="notes-home">Projects</a>
+    <button id="theme-toggle" class="notes-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
   </header>
-  <main class="project-container">
-    <a class="project-back-link" href="../#projects-section">← Back to portfolio</a>
-    <div class="project-header">
-      <div class="project-kicker">Project</div>
-      <h1 class="project-title">$title</h1>
-      $tagline
-      <div class="project-stats">$stats</div>
-      <div class="project-links">
-        <a class="project-link-btn" href="$repo_url" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
-        $homepage_link
-      </div>
+  <main id="notes-app" class="notes-app" data-initial-note="$slug" data-corpus="/data/projects.generated.mjs">
+    <div class="baseline-note">
+      <article class="note-article" data-note="$slug">
+        <header class="note-header">
+          <div class="note-kicker">Project</div>
+          <h1 tabindex="-1">$title</h1>
+          <p class="note-summary">$description</p>
+          <div class="project-stats">$stats</div>
+          $actions
+        </header>
+        <div class="note-body readme-content">$readme</div>
+        <footer class="writing-source">$provenance</footer>
+      </article>
     </div>
-    <div class="readme-content">$readme</div>
-    <div class="project-footer">README synced from GitHub on $synced_on.</div>
   </main>
-  <script type="module">
-    import { initTheme } from '../js/theme.js';
-    initTheme();
-  </script>
+  <script type="module" src="/writing/notes/notes.js"></script>
 </body>
 </html>''')
 
 
-def build_project_page(repo: Dict[str, Any], title: str, repo_root: str) -> Tuple[Optional[str], Optional[str]]:
+def build_project_page(repo: Dict[str, Any], title: str, repo_root: str, priority: int = 0) -> Tuple[Optional[str], Optional[str]]:
     """
     Generate a static README page for a repository.
 
@@ -494,19 +496,45 @@ def build_project_page(repo: Dict[str, Any], title: str, repo_root: str) -> Tupl
         f'<i class="fas fa-arrow-up-right-from-square"></i> Live site</a>'
         if homepage else ''
     )
+    slug = slugify_repo(repo_name)
+    synced_on = datetime.now(timezone.utc).strftime('%B %d, %Y')
+    stats_html = ''.join(stats)
+    actions_html = (
+        f'<div class="project-links"><a class="project-link-btn" href="{escape_html(repo["html_url"])}" target="_blank" rel="noopener noreferrer">'
+        f'<i class="fab fa-github"></i> View on GitHub</a>{homepage_link}</div>'
+    )
+
+    PROJECT_NODES.append({
+        'slug': slug,
+        'title': title,
+        'summary': description,
+        'status': 'published',
+        'visibility': 'unlisted',
+        'kind': 'project',
+        'url': f'/projects/{slug}.html',
+        'repo_url': repo['html_url'],
+        'body': readme_html,
+        'project_stats_html': f'<div class="project-stats">{stats_html}</div>',
+        'project_actions_html': actions_html,
+        'synced_on': synced_on,
+        'unavailable': False,
+        'priority': priority
+    })
 
     html = PROJECT_PAGE_TEMPLATE.safe_substitute(
+        slug=slug,
         title=escape_html(title),
         description=escape_html(description),
         tagline=f'<p class="project-tagline">{escape_html(description)}</p>' if description else '',
-        stats=''.join(stats),
+        stats=stats_html,
         repo_url=escape_html(repo['html_url']),
         homepage_link=homepage_link,
+        actions=actions_html,
+        provenance=f'README synced from <a href="{escape_html(repo["html_url"])}">GitHub</a> on {synced_on}.',
         readme=readme_html,
-        synced_on=datetime.now(timezone.utc).strftime('%B %d, %Y')
+        synced_on=synced_on
     )
 
-    slug = slugify_repo(repo_name)
     pages_dir = os.path.join(repo_root, PROJECT_PAGE_DIR)
     os.makedirs(pages_dir, exist_ok=True)
 
@@ -567,7 +595,7 @@ def transform_repo_to_tile(
 
     # Generate the on-site README page. Repos without a usable README keep
     # linking straight out to GitHub.
-    page_path, search_excerpt = build_project_page(repo, title, repo_root)
+    page_path, search_excerpt = build_project_page(repo, title, repo_root, priority)
     if search_excerpt and search_index is not None:
         search_index[repo_name] = search_excerpt
 
@@ -577,7 +605,7 @@ def transform_repo_to_tile(
         'name': repo_name,
         'title': title,
         'description': repo.get('description') or '',
-        'url': page_path or repo['html_url'],
+        'url': f'{page_path}?path=projects~{slugify_repo(repo_name)}&open=last&from=portfolio' if page_path else repo['html_url'],
         'repo_url': repo['html_url'],
         'homepage': repo.get('homepage'),
         'image': image,
@@ -725,6 +753,56 @@ def write_search_index(repo_root: str, search_index: Dict[str, str]):
     print(f"   Indexed READMEs: {len(search_index)}")
 
 
+def write_project_reading_graph(repo_root: str):
+    """Emit the project corpus and aggregate node consumed by the shared writing stack."""
+    ordered = sorted(PROJECT_NODES, key=lambda node: (-node.get('priority', 0), node['title']))
+    project_links = ''.join(
+        f'<li><a href="{node["url"]}" data-note-link="{node["slug"]}">{escape_html(node["title"])}</a>'
+        f' — {escape_html(node["summary"]) if node.get("summary") else ""}</li>'
+        for node in ordered
+    )
+    aggregate = {
+        'slug': 'projects',
+        'title': 'Projects',
+        'summary': 'A generated reading view of projects from my portfolio.',
+        'status': 'published',
+        'visibility': 'unlisted',
+        'kind': 'projects',
+        'url': '/projects/index.html',
+        'repo_url': 'https://github.com/Avery2/Avery2.github.io',
+        'body': f'<p>This is the same project collection as the portfolio grid, arranged as a linked reading list.</p><ul>{project_links}</ul>',
+        'project_stats_html': '',
+        'project_actions_html': '<div class="project-links"><a class="project-link-btn" href="/#projects-section">Portfolio grid</a></div>',
+        'provenance_html': 'Generated from the portfolio’s curated project data.',
+        'unavailable': False,
+        'priority': 10_000
+    }
+    graph = [aggregate, *ordered]
+    corpus_path = os.path.join(repo_root, 'data', 'projects.generated.mjs')
+    with open(corpus_path, 'w', encoding='utf-8') as f:
+        f.write('// Generated by fetch-github-data.py. Do not edit directly.\n')
+        f.write(f'export const notes = {json.dumps(graph, ensure_ascii=False, indent=2)};\n')
+        f.write('export const noteBySlug = new Map(notes.map((note) => [note.slug, note]));\n')
+
+    synced_on = datetime.now(timezone.utc).strftime('%B %d, %Y')
+    index_html = PROJECT_PAGE_TEMPLATE.safe_substitute(
+        slug='projects',
+        title='Projects',
+        description='A generated reading view of projects from my portfolio.',
+        stats='',
+        actions='<div class="project-links"><a class="project-link-btn" href="/#projects-section">Portfolio grid</a></div>',
+        readme=aggregate['body'],
+        repo_url='https://github.com/Avery2/Avery2.github.io',
+        homepage_link='',
+        tagline='',
+        synced_on=synced_on,
+        provenance='Generated from the portfolio’s curated project data.'
+    )
+    with open(os.path.join(repo_root, PROJECT_PAGE_DIR, 'index.html'), 'w', encoding='utf-8') as f:
+        f.write(index_html)
+    print(f"✅ Generated project reading graph: {len(graph)} nodes")
+
+
 def main():
     """Main execution."""
     # Fetch repos
@@ -762,6 +840,7 @@ def main():
 
     prune_stale_pages(repo_root, [slugify_repo(name) for name in search_index])
     write_search_index(repo_root, search_index)
+    write_project_reading_graph(repo_root)
 
     if IS_GITHUB_ACTIONS:
         print(f"\nRunning in GitHub Actions - changes will be committed automatically")
