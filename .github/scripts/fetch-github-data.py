@@ -419,6 +419,7 @@ PROJECT_PAGE_TEMPLATE = Template('''<!DOCTYPE html>
     <button id="theme-toggle" class="detail-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
   </header>
   <main class="project-container">
+    <a class="project-back-link" href="../#projects-section">← Back to portfolio</a>
     <div class="project-header">
       <div class="project-kicker">Project</div>
       <h1 class="project-title">$title</h1>
