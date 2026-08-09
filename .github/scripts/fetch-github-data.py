@@ -772,7 +772,7 @@ def write_project_reading_graph(repo_root: str):
         'repo_url': 'https://github.com/Avery2/Avery2.github.io',
         'body': f'<p>This is the same project collection as the portfolio grid, arranged as a linked reading list.</p><ul>{project_links}</ul>',
         'project_stats_html': '',
-        'project_actions_html': '<div class="project-links"><a class="project-link-btn" href="/#projects-section">Portfolio grid</a></div>',
+        'project_actions_html': '',
         'provenance_html': 'Generated from the portfolio’s curated project data.',
         'unavailable': False,
         'priority': 10_000
@@ -790,7 +790,7 @@ def write_project_reading_graph(repo_root: str):
         title='Projects',
         description='A generated reading view of projects from my portfolio.',
         stats='',
-        actions='<div class="project-links"><a class="project-link-btn" href="/#projects-section">Portfolio grid</a></div>',
+        actions='',
         readme=aggregate['body'],
         repo_url='https://github.com/Avery2/Avery2.github.io',
         homepage_link='',
