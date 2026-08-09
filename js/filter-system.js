@@ -518,7 +518,7 @@ function evaluateTile(tileData) {
     return { isMatch: false, score: 0, hide: true };
   }
 
-  if (activeFilters.content_type && tileData.contentType !== activeFilters.content_type) {
+  if (activeFilters.content_type && !tileData.contentTypes.includes(activeFilters.content_type)) {
     return { isMatch: false, score: 0 };
   }
 
@@ -569,8 +569,18 @@ function compareByActiveSort(dataA, dataB) {
       return dataA.title.localeCompare(dataB.title);
     case 'priority':
     default:
-      return dataB.priority - dataA.priority;
+      return compareByPortfolioOrder(dataA, dataB);
   }
+}
+
+function compareByPortfolioOrder(dataA, dataB) {
+  const sectionOrder = { writing: 1, experience: 2, links: 3, projects: 4, navigation: 5 };
+  const rank = data => {
+    if (data.type === 'profile') return 0;
+    if (data.priority < 0) return 99;
+    return sectionOrder[data.contentType] || 50;
+  };
+  return rank(dataA) - rank(dataB) || dataB.priority - dataA.priority;
 }
 
 /**
@@ -709,6 +719,7 @@ function getTileDataFromElement(tileEl) {
     tags: JSON.parse(tileEl.dataset.tags || '[]'),
     topics: JSON.parse(tileEl.dataset.topics || '[]'),
     contentType: tileEl.dataset.contentType || '',
+    contentTypes: JSON.parse(tileEl.dataset.contentTypes || '[]'),
     filterOnly: tileEl.dataset.filterOnly === 'true',
     priority: parseInt(tileEl.dataset.priority || '0'),
     readmeWords: readmeWordsByTileId.get(tileEl.id)

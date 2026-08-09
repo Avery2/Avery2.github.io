@@ -194,6 +194,7 @@ function applyCommonTileAttributes(element, tileData) {
   element.dataset.spanRows = tileData.span_rows || 1;
   element.dataset.tags = JSON.stringify(tileData.tags || []);
   element.dataset.contentType = tileData.content_type || inferContentType(tileData);
+  element.dataset.contentTypes = JSON.stringify(tileData.content_types || [element.dataset.contentType].filter(Boolean));
   element.dataset.filterOnly = String(Boolean(tileData.filter_only));
   element.dataset.filtered = 'false';
 
@@ -204,6 +205,9 @@ function applyCommonTileAttributes(element, tileData) {
   // Add featured flag
   if (tileData.featured) {
     element.dataset.featured = 'true';
+  }
+  if (tileData.section_header) {
+    element.dataset.sectionHeader = 'true';
   }
 
   // Add metadata for filtering

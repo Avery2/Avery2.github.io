@@ -95,8 +95,25 @@ export function mergeData(githubProjects, manualTiles, resumeTiles = []) {
     ...(resumeTiles || []).map(r => ({ ...r, source: 'resume' }))
   ];
 
-  // Sort by priority (descending) - higher priority appears first
-  allTiles.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+  // Keep the mixed masonry legible as a set of loose sections. The two
+  // negative-priority utility tiles remain pinned at the absolute end.
+  const sectionOrder = { writing: 1, experience: 2, links: 3, projects: 4, navigation: 5 };
+  const sectionFor = tile => {
+    if (tile.type === 'profile') return 0;
+    if ((tile.priority || 0) < 0) return 99;
+    if (tile.content_type) return sectionOrder[tile.content_type] || 50;
+    if (tile.type === 'experience' || tile.type === 'education') return sectionOrder.experience;
+    if (tile.type === 'project') return sectionOrder.projects;
+    if ((tile.tags || []).includes('writing')) return sectionOrder.writing;
+    if (tile.type === 'link') return sectionOrder.links;
+    return 50;
+  };
+
+  allTiles.sort((a, b) => {
+    const sectionDifference = sectionFor(a) - sectionFor(b);
+    if (sectionDifference !== 0) return sectionDifference;
+    return (b.priority || 0) - (a.priority || 0);
+  });
 
   return allTiles;
 }

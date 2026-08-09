@@ -22,6 +22,7 @@ tiles:
     open_new_tab: false
     priority: 450
     content_type: "experience"
+    content_types: ["experience", "links"]
     tags: ["professional"]
     style:
       border_color: "#6B7280"
@@ -34,6 +35,7 @@ tiles:
     open_new_tab: false
     priority: 140
     content_type: "writing"
+    section_header: true
     tags: ["writing", "design", "prototype"]
     style:
       border_color: "#6B7280"
@@ -75,17 +77,28 @@ tiles:
     content_type: "links"
     tags: ["professional", "social"]
 
+  - id: "experience-overview"
+    type: "link"
+    title: "Experience"
+    description: "Experience and education."
+    url: "./writing/resume.html?path=resume&open=last&from=portfolio"
+    open_new_tab: false
+    priority: 500
+    content_type: "experience"
+    section_header: true
+    tags: ["experience", "education", "professional"]
+
   # Appears when the Projects content filter is active. The ordinary homepage
   # already is the curated project view, so this overview need not duplicate it.
   - id: "projects-overview"
     type: "link"
     title: "Projects"
-    description: "Browse the project collection as a linked reading list."
+    description: "Browse the project collection."
     url: "./projects/index.html?path=projects&open=last&from=portfolio"
     open_new_tab: false
     priority: 500
     content_type: "projects"
-    filter_only: true
+    section_header: true
     tags: ["projects"]
 
   # Back to Top (absolute last tile)

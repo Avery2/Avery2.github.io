@@ -246,6 +246,12 @@
   box-shadow: 0 4px 8px var(--shadow-color);
 }
 
+/* Section anchors organize the masonry without turning it into a rigid list. */
+.tile[data-section-header="true"] {
+  border-color: var(--accent-primary);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-primary) 12%, transparent);
+}
+
 /* Keep title text default color - don't color it */
 
 /* Brand-colored icons */
