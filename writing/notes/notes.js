@@ -66,13 +66,17 @@ function computePresentation() {
     pane.presentationMode = pane.expanded ? 'full' : 'compact';
     pane.groupEnd = null;
     pane.canCondenseHistory = false;
+    pane.primaryCondense = false;
     pane.width = pane.expanded ? 0 : compact;
   });
 
   if (!historyExpanded) condenseCompactRuns(compact);
   if (historyExpanded) {
     const compactPanes = panes.filter((pane) => !pane.expanded);
-    if (compactPanes.length > 3) compactPanes[Math.floor(compactPanes.length / 2)].canCondenseHistory = true;
+    if (compactPanes.length > 3) {
+      compactPanes.forEach((pane) => { pane.canCondenseHistory = true; });
+      compactPanes[Math.floor(compactPanes.length / 2)].primaryCondense = true;
+    }
   }
   const compactWidth = panes.reduce((sum, pane) => sum + (pane.expanded ? 0 : pane.width), 0);
   const minimumReader = mobile ? Math.max(280, viewport - compact) : 440;
@@ -143,7 +147,7 @@ function paneHTML(pane) {
       ? `<button class="pane-close pane-close--expanded" data-collapse-depth="${pane.depth}" aria-label="Collapse ${note.title}"><span aria-hidden="true">×</span></button>`
       : `<button class="pane-close pane-close--compact" data-close-depth="${pane.depth}" aria-label="Close ${note.title} and all later notes"><span aria-hidden="true">×</span></button>`
     : '';
-  const condenseControl = pane.canCondenseHistory ? `<button class="pane-condense-history" data-collapse-history aria-label="Condense history"><span aria-hidden="true">›‹</span></button>` : '';
+  const condenseControl = pane.canCondenseHistory ? `<button class="pane-condense-history${pane.primaryCondense ? ' is-primary' : ''}" data-collapse-history aria-label="Condense history">Condense</button>` : '';
   return `<section class="stack-pane stack-pane--${pane.presentationMode}${activeClass}${pane.expanded ? ' stack-pane--expanded' : ''}" data-pane-depth="${pane.depth}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-width:${pane.width}px;--pane-z:${pane.depth + 1}" ${pane.active ? 'aria-current="page"' : ''}>${closeControl}${condenseControl}${content}${returnControl}</section>`;
 }
 
@@ -162,8 +166,8 @@ function linkify(body = '') {
 
 function bindInteractions() {
   app.querySelectorAll('.pane-return[data-depth]').forEach((button) => button.addEventListener('click', () => expandPane(Number(button.dataset.depth))));
-  app.querySelector('[data-expand-history]')?.addEventListener('click', expandHistory);
-  app.querySelector('[data-collapse-history]')?.addEventListener('click', collapseHistory);
+  app.querySelectorAll('[data-expand-history]').forEach((button) => button.addEventListener('click', expandHistory));
+  app.querySelectorAll('[data-collapse-history]').forEach((button) => button.addEventListener('click', collapseHistory));
   app.querySelectorAll('[data-collapse-depth]').forEach((button) => button.addEventListener('click', () => collapsePane(Number(button.dataset.collapseDepth))));
   app.querySelectorAll('[data-close-depth]').forEach((button) => {
     const depth = Number(button.dataset.closeDepth);

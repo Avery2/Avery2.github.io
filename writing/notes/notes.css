@@ -68,6 +68,7 @@ body.notes-page { background: var(--notes-paper); color: var(--notes-ink); overf
   writing-mode: vertical-rl;
   text-orientation: mixed;
 }
+.stack-pane--compact:hover { z-index: 90; overflow: visible; }
 .stack-pane--group .pane-label { display: flex; flex-direction: column; align-items: center; }
 .stack-pane--group .pane-label strong { margin-top: auto; margin-bottom: auto; font: 700 1.1rem/1 sans-serif; }
 .stack-pane--hidden { pointer-events: none; box-shadow: none; }
@@ -79,11 +80,13 @@ body.notes-page { background: var(--notes-paper); color: var(--notes-ink); overf
 .pane-close--expanded { position: sticky; top: .8rem; left: calc(100% - 2.5rem); width: 1.8rem; height: 1.8rem; margin-top: .8rem; margin-bottom: -2.6rem; background: color-mix(in srgb, var(--notes-paper) 92%, transparent); }
 .pane-close--compact { position: absolute; right: 50%; bottom: .65rem; width: 1.45rem; height: 1.45rem; transform: translateX(50%); }
 .pane-close--compact:hover, .pane-close--compact:focus-visible { transform: translateX(50%) scale(1.08); }
-.pane-condense-history { position: absolute; z-index: 11; top: 50%; left: 50%; display: grid; width: 1.75rem; height: 2.5rem; place-items: center; transform: translate(-50%, -50%); border-radius: 1rem; background: var(--notes-paper); box-shadow: 0 1px 8px rgba(29, 27, 22, .16); color: var(--notes-muted); font: 700 .78rem/1 sans-serif; opacity: 0; pointer-events: none; transition: opacity 140ms ease, color 140ms ease, transform 140ms ease; }
+.pane-condense-history { position: absolute; z-index: 11; top: 50%; left: 50%; display: grid; width: max-content; height: 2rem; padding: 0 .7rem; place-items: center; transform: translate(-50%, -50%); border: 1px solid var(--notes-rule); border-radius: 1rem; background: var(--notes-paper); box-shadow: 0 1px 8px rgba(29, 27, 22, .16); color: var(--notes-muted); font: 700 .68rem/1 sans-serif; letter-spacing: .02em; opacity: 0; pointer-events: none; transition: opacity 140ms ease, color 140ms ease, transform 140ms ease; }
 .stack-pane:hover > .pane-condense-history, .pane-condense-history:focus-visible { opacity: 1; pointer-events: auto; }
 .pane-condense-history:hover, .pane-condense-history:focus-visible { color: var(--notes-accent); transform: translate(-50%, -50%) scale(1.08); }
 @media (hover: none) {
   .pane-close, .pane-condense-history { opacity: 1; pointer-events: auto; }
+  .pane-condense-history:not(.is-primary) { display: none; }
+  .stack-pane--compact:has(.pane-condense-history.is-primary) { z-index: 90; overflow: visible; }
 }
 [data-direction="forward"] .stack-pane--active .note-article { animation: note-arrive 340ms cubic-bezier(.2,.8,.2,1); }
 [data-direction="back"] .stack-pane--active .note-article { animation: note-reveal 260ms ease-out; }
