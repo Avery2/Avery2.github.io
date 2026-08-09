@@ -5,6 +5,7 @@ const app = document.querySelector('#notes-app');
 const initialSlug = app?.dataset.initialNote;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let panes = [];
+let expandedDepth = 0;
 let resizeFrame;
 
 initTheme();
@@ -14,10 +15,11 @@ if (app && noteBySlug.has(initialSlug)) enhance();
 function enhance() {
   const statePath = validPath(history.state?.notePath) || [initialSlug];
   panes = statePath.map(makePane);
+  expandedDepth = validExpandedDepth(history.state?.expandedDepth, panes.length);
   app.classList.add('is-enhanced');
   app.innerHTML = `<div class="stack-viewport" aria-label="Reading path"><div class="stack-track"></div></div>`;
   render({ focus: false, announce: false });
-  history.replaceState({ ...(history.state || {}), notePath: slugs() }, '', location.href);
+  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth }, '', location.href);
   addEventListener('popstate', onPopState);
   addEventListener('resize', () => {
     cancelAnimationFrame(resizeFrame);
@@ -29,53 +31,41 @@ function validPath(path) {
   return Array.isArray(path) && path.length && path.every((slug) => noteBySlug.has(slug)) ? path : null;
 }
 
+function validExpandedDepth(depth, length) {
+  if (length < 2) return 0;
+  return Number.isInteger(depth) && depth >= 0 && depth < length - 1 ? depth : length - 2;
+}
+
 function slugs() { return panes.map((pane) => pane.noteId); }
 
 function makePane(noteId, depth = 0) {
-  return { noteId, depth, active: false, presentationMode: 'full', width: 0 };
+  return { noteId, depth, active: false, expanded: false, presentationMode: 'compact', width: 0, offset: 0 };
 }
 
 function computePresentation() {
-  const history = panes.slice(0, -1);
   const viewport = app.clientWidth || innerWidth;
   const mobile = viewport < 640;
-  const currentMin = mobile ? Math.max(260, viewport - 46) : Math.min(760, Math.max(540, viewport * 0.52));
-  const historyBudget = Math.max(mobile ? 38 : 140, viewport - currentMin);
-  const compact = mobile ? 38 : 54;
-  const desired = history.map((_, index) => {
-    const recency = history.length - index;
-    if (mobile) return compact;
-    if (recency === 1) return Math.min(520, viewport * .38);
-    if (recency === 2) return 240;
-    if (recency === 3) return 120;
-    return compact;
+  const compact = mobile ? 34 : 40;
+  const currentIndex = panes.length - 1;
+  expandedDepth = validExpandedDepth(expandedDepth, panes.length);
+  const hasPair = panes.length > 1 && !mobile;
+  const compactCount = hasPair ? Math.max(0, panes.length - 2) : Math.max(0, panes.length - 1);
+  const minimumReader = mobile ? Math.max(280, viewport - compact) : 440;
+  const availableForReaders = viewport - compactCount * compact;
+  const readerWidth = hasPair ? Math.max(minimumReader, availableForReaders / 2) : Math.max(minimumReader, viewport - compactCount * compact);
+
+  panes.forEach((pane, index) => {
+    pane.active = index === currentIndex;
+    pane.expanded = pane.active || (hasPair && index === expandedDepth);
+    pane.presentationMode = pane.expanded ? 'full' : 'compact';
+    pane.width = pane.expanded ? readerWidth : compact;
   });
-  const totalDesired = desired.reduce((sum, width) => sum + width, 0);
-  if (totalDesired > historyBudget) {
-    let excess = totalDesired - historyBudget;
-    for (let i = 0; i < desired.length && excess > 0; i++) {
-      const reducible = Math.max(0, desired[i] - compact);
-      const reduction = Math.min(reducible, excess);
-      desired[i] -= reduction;
-      excess -= reduction;
-    }
-  }
-  history.forEach((pane, index) => {
-    pane.width = desired[index];
-    pane.active = false;
-    pane.presentationMode = desired[index] <= compact + 4 ? 'compact' : desired[index] < 260 ? 'partial' : 'full';
-  });
-  const current = panes.at(-1);
-  current.active = true;
-  current.presentationMode = 'full';
-  current.width = 0;
   let offset = 0;
-  history.forEach((pane) => {
+  panes.forEach((pane) => {
     pane.offset = offset;
     offset += pane.width;
   });
-  current.offset = offset;
-  return { trackWidth: Math.max(viewport, offset + currentMin), mobile };
+  return { trackWidth: Math.max(viewport, offset), mobile };
 }
 
 function render({ focus = false, announce = true } = {}) {
@@ -87,7 +77,7 @@ function render({ focus = false, announce = true } = {}) {
   trackEl.innerHTML = panes.map(paneHTML).join('');
   bindInteractions();
   const active = panes.at(-1);
-  viewportEl.scrollLeft = Math.max(0, active.offset + (trackWidth - active.offset) - viewportEl.clientWidth);
+  viewportEl.scrollLeft = Math.max(0, active.offset + active.width - viewportEl.clientWidth);
   document.title = `${noteBySlug.get(active.noteId).title} — Notes — Avery`;
   if (focus) trackEl.querySelector('.stack-pane--active h1')?.focus({ preventScroll: true });
   if (announce) announcePath();
@@ -96,12 +86,13 @@ function render({ focus = false, announce = true } = {}) {
 function paneHTML(pane) {
   const note = noteBySlug.get(pane.noteId);
   const activeClass = pane.active ? ' stack-pane--active' : '';
-  const paneContent = pane.active || pane.presentationMode === 'full'
+  const paneContent = pane.expanded
     ? articleHTML(note)
-    : `<div class="pane-label"><span class="history-depth">${String(pane.depth + 1).padStart(2, '0')}</span><strong>${note.title}</strong>${pane.presentationMode === 'partial' ? `<span>${note.summary}</span>` : ''}</div>`;
-  const content = pane.active ? paneContent : `<div class="pane-inactive-content" aria-hidden="true">${paneContent}</div>`;
-  const returnControl = pane.active ? '' : `<button class="pane-return" data-depth="${pane.depth}" aria-label="Return to ${note.title}, step ${pane.depth + 1} of ${panes.length}"></button>`;
-  return `<section class="stack-pane stack-pane--${pane.presentationMode}${activeClass}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-z:${pane.depth + 1}" ${pane.active ? 'aria-current="page"' : ''}>${content}${returnControl}</section>`;
+    : `<div class="pane-label"><span class="history-depth">${String(pane.depth + 1).padStart(2, '0')}</span><strong>${note.title}</strong></div>`;
+  const content = pane.expanded ? paneContent : `<div class="pane-inactive-content" aria-hidden="true">${paneContent}</div>`;
+  const returnControl = pane.expanded ? '' : `<button class="pane-return" data-depth="${pane.depth}" aria-label="Open ${note.title} beside the current note, step ${pane.depth + 1} of ${panes.length}"></button>`;
+  const branchControl = pane.expanded && !pane.active ? `<button class="pane-make-current" data-truncate-depth="${pane.depth}">Continue from here</button>` : '';
+  return `<section class="stack-pane stack-pane--${pane.presentationMode}${activeClass}${pane.expanded ? ' stack-pane--expanded' : ''}" style="--pane-left:${pane.offset}px;--pane-exposure:${pane.width}px;--pane-width:${pane.width}px;--pane-z:${pane.depth + 1}" ${pane.active ? 'aria-current="page"' : ''}>${content}${returnControl}${branchControl}</section>`;
 }
 
 function articleHTML(note) {
@@ -118,11 +109,13 @@ function linkify(body = '') {
 }
 
 function bindInteractions() {
-  app.querySelectorAll('.pane-return[data-depth]').forEach((button) => button.addEventListener('click', () => navigateBack(Number(button.dataset.depth))));
+  app.querySelectorAll('.pane-return[data-depth]').forEach((button) => button.addEventListener('click', () => expandPane(Number(button.dataset.depth))));
+  app.querySelectorAll('[data-truncate-depth]').forEach((button) => button.addEventListener('click', () => navigateBack(Number(button.dataset.truncateDepth))));
   app.querySelectorAll('[data-note-link]').forEach((link) => link.addEventListener('click', (event) => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
-    openNote(link.dataset.noteLink);
+    const sourceDepth = Number(link.closest('.stack-pane')?.style.getPropertyValue('--pane-z')) - 1;
+    openNote(link.dataset.noteLink, sourceDepth);
   }));
   app.querySelector('.stack-pane--active')?.addEventListener('keydown', (event) => {
     if (event.altKey && event.key === 'ArrowLeft' && panes.length > 1) {
@@ -132,21 +125,34 @@ function bindInteractions() {
   });
 }
 
-function openNote(slug) {
+function openNote(slug, sourceDepth = panes.length - 1) {
   if (!noteBySlug.has(slug)) return;
+  if (Number.isInteger(sourceDepth) && sourceDepth >= 0 && sourceDepth < panes.length - 1) {
+    panes = panes.slice(0, sourceDepth + 1);
+  }
   panes.push(makePane(slug, panes.length));
+  expandedDepth = Math.max(0, panes.length - 2);
   commit(slug, 'forward');
+}
+
+function expandPane(depth) {
+  if (!panes[depth] || depth === panes.length - 1) return;
+  expandedDepth = depth;
+  history.replaceState({ ...(history.state || {}), notePath: slugs(), expandedDepth }, '', location.href);
+  render({ focus: false, announce: false });
+  app.querySelector(`.stack-pane[style*="--pane-z:${depth + 1}"] h1`)?.focus({ preventScroll: true });
 }
 
 function navigateBack(depth) {
   const target = panes[depth];
   if (!target) return;
   panes = panes.slice(0, depth + 1);
+  expandedDepth = Math.max(0, panes.length - 2);
   commit(target.noteId, 'back');
 }
 
 function commit(slug, direction) {
-  history.pushState({ notePath: slugs() }, '', `./${slug}.html`);
+  history.pushState({ notePath: slugs(), expandedDepth }, '', `./${slug}.html`);
   app.dataset.direction = direction;
   render({ focus: true });
   if (!reduceMotion.matches) setTimeout(() => delete app.dataset.direction, 380);
@@ -156,6 +162,7 @@ function onPopState(event) {
   const path = validPath(event.state?.notePath);
   const slug = location.pathname.split('/').pop().replace('.html', '') || initialSlug;
   panes = (path || [noteBySlug.has(slug) ? slug : initialSlug]).map(makePane);
+  expandedDepth = validExpandedDepth(event.state?.expandedDepth, panes.length);
   app.dataset.direction = 'back';
   render({ focus: true });
 }
