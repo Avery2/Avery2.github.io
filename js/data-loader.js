@@ -97,7 +97,7 @@ export function mergeData(githubProjects, manualTiles, resumeTiles = []) {
 
   // Keep the mixed masonry legible as a set of loose sections. The two
   // negative-priority utility tiles remain pinned at the absolute end.
-  const sectionOrder = { writing: 1, experience: 2, links: 3, projects: 4, navigation: 5 };
+  const sectionOrder = { writing: 1, experience: 2, projects: 3, links: 4, navigation: 5 };
   const sectionFor = tile => {
     if (tile.type === 'profile') return 0;
     if ((tile.priority || 0) < 0) return 99;

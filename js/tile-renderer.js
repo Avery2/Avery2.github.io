@@ -256,6 +256,14 @@ function cardFooterHTML(trailingHTML = '') {
   </div>`;
 }
 
+function formatEditorialDate(value) {
+  if (!value) return '';
+  const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return String(value);
+  const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
 /**
  * Render a project tile (GitHub repository)
  * @param {Object} data - Project data
@@ -348,6 +356,8 @@ function renderLinkTile(data) {
   const descriptionHTML = data.description
     ? `<p class="tile-description">${data.description}</p>`
     : '';
+  const dateHTML = data.date ? `<span class="tile-created">${formatEditorialDate(data.date)}</span>` : '';
+  const footerHTML = cardFooterHTML(dateHTML);
 
   tile.innerHTML = `
     <a href="${data.url}" class="tile-link" ${target}>
@@ -355,6 +365,7 @@ function renderLinkTile(data) {
       <div class="tile-content">
         <h3 class="tile-title">${iconHTML}${data.title}</h3>
         ${descriptionHTML}
+        ${footerHTML}
       </div>
     </a>
   `;

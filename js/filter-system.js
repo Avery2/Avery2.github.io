@@ -580,7 +580,7 @@ function compareByActiveSort(dataA, dataB) {
 }
 
 function compareByPortfolioOrder(dataA, dataB) {
-  const sectionOrder = { writing: 1, experience: 2, links: 3, projects: 4, navigation: 5 };
+  const sectionOrder = { writing: 1, experience: 2, projects: 3, links: 4, navigation: 5 };
   const rank = data => {
     if (data.type === 'profile') return 0;
     if (data.priority < 0) return 99;

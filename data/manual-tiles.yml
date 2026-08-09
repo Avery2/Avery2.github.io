@@ -20,8 +20,8 @@ tiles:
     description: "Full résumé with experience and education"
     url: "./writing/resume/full.html?from=portfolio"
     open_new_tab: false
-    priority: 450
-    content_type: "experience"
+    priority: 0
+    content_type: "links"
     content_types: ["experience", "links"]
     tags: ["professional"]
     style:
@@ -35,6 +35,7 @@ tiles:
     open_new_tab: false
     priority: 140
     content_type: "writing"
+    date: "2026-08-09"
     tags: ["writing", "design", "prototype"]
     style:
       border_color: "#6B7280"
@@ -71,6 +72,7 @@ tiles:
     open_new_tab: false
     priority: 110
     content_type: "writing"
+    date: "2026-08-08"
     tags: ["philosophy", "writing"]
     style:
       border_color: "#6B7280"
