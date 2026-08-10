@@ -64,7 +64,7 @@
   --tile-bg: #1E1B17;
   --tile-hover-bg: #25211C;
   --intro-card-bg: var(--brand-primary);
-  --featured-group-surface: var(--bg-secondary);
+  --featured-group-surface: var(--bg-tertiary);
 
   --header-bg: rgba(21, 19, 16, 0.95);
   --footer-bg: #1C1916;
