@@ -8,7 +8,7 @@ projects:
   name: things3notionscript
   title: Things3Notionscript
   description: Script that migrates todos in Things3 to Notion page or block.
-  url: ./projects/things3notionscript.html?path=projects~things3notionscript&open=last&from=portfolio
+  url: ./projects/things3notionscript.html?path=projects~things3notionscript&open=last
   repo_url: https://github.com/Avery2/things3notionscript
   homepage: ''
   image: ./assets/images/projects/things3notionscript.jpg
@@ -34,7 +34,7 @@ projects:
   name: Qbserve-data
   title: Qbserve Data
   description: Personal data of app usage recorded by Qbserve.
-  url: ./projects/qbserve-data.html?path=projects~qbserve-data&open=last&from=portfolio
+  url: ./projects/qbserve-data.html?path=projects~qbserve-data&open=last
   repo_url: https://github.com/Avery2/Qbserve-data
   homepage: http://www.averychan.site/Qbserve-data/
   image: ./assets/images/projects/Qbserve-data.jpg
@@ -62,7 +62,7 @@ projects:
   name: sun-calendar
   title: Sun Calendar
   description: isc calendar with sunrise and sunset times ☀️🗓️
-  url: ./projects/sun-calendar.html?path=projects~sun-calendar&open=last&from=portfolio
+  url: ./projects/sun-calendar.html?path=projects~sun-calendar&open=last
   repo_url: https://github.com/Avery2/sun-calendar
   homepage: https://www.averychan.site/sun-calendar/
   image: ''
@@ -92,7 +92,7 @@ projects:
   name: Avery2.github.io
   title: Avery2.Github.Io
   description: My personal website.
-  url: ./projects/avery2.github.io.html?path=projects~avery2.github.io&open=last&from=portfolio
+  url: ./projects/avery2.github.io.html?path=projects~avery2.github.io&open=last
   repo_url: https://github.com/Avery2/Avery2.github.io
   homepage: http://www.averychan.site/
   image: ./assets/images/projects/Avery2.github.io.jpg
@@ -116,7 +116,7 @@ projects:
   name: rdojowebapp
   title: Rdojowebapp
   description: To track fights
-  url: ./projects/rdojowebapp.html?path=projects~rdojowebapp&open=last&from=portfolio
+  url: ./projects/rdojowebapp.html?path=projects~rdojowebapp&open=last
   repo_url: https://github.com/Avery2/rdojowebapp
   homepage: http://www.averychan.site/rdojowebapp/
   image: ''
@@ -138,7 +138,7 @@ projects:
   name: normal-resume
   title: Normal Resume
   description: Version control for my resume
-  url: ./projects/normal-resume.html?path=projects~normal-resume&open=last&from=portfolio
+  url: ./projects/normal-resume.html?path=projects~normal-resume&open=last
   repo_url: https://github.com/Avery2/normal-resume
   homepage: https://www.averychan.site/normal-resume/
   image: ''
@@ -162,7 +162,7 @@ projects:
   name: Toggl-Analysis
   title: Toggl Analysis
   description: I tracked all my worked hours for over a year.
-  url: ./projects/toggl-analysis.html?path=projects~toggl-analysis&open=last&from=portfolio
+  url: ./projects/toggl-analysis.html?path=projects~toggl-analysis&open=last
   repo_url: https://github.com/Avery2/Toggl-Analysis
   homepage: https://www.averychan.site/Toggl-Analysis/
   image: ./assets/images/projects/Toggl-Analysis.jpg
@@ -190,7 +190,7 @@ projects:
   name: things3-mcp-tools
   title: Things3 Mcp Tools
   description: Things3 MCP server and automation toolkit.
-  url: ./projects/things3-mcp-tools.html?path=projects~things3-mcp-tools&open=last&from=portfolio
+  url: ./projects/things3-mcp-tools.html?path=projects~things3-mcp-tools&open=last
   repo_url: https://github.com/Avery2/things3-mcp-tools
   homepage: ''
   image: ''
@@ -218,7 +218,7 @@ projects:
   name: wordle-helper
   title: Wordle Helper
   description: Wordle is too hard for me
-  url: ./projects/wordle-helper.html?path=projects~wordle-helper&open=last&from=portfolio
+  url: ./projects/wordle-helper.html?path=projects~wordle-helper&open=last
   repo_url: https://github.com/Avery2/wordle-helper
   homepage: ''
   image: ./assets/images/projects/wordle-helper.jpg
@@ -243,7 +243,7 @@ projects:
   title: Text To Spooch
   description: A command-line app that creates audio from text like those charlie
     brown adults but they're aliens (which is to say badly)
-  url: ./projects/text-to-spooch.html?path=projects~text-to-spooch&open=last&from=portfolio
+  url: ./projects/text-to-spooch.html?path=projects~text-to-spooch&open=last
   repo_url: https://github.com/Avery2/text-to-spooch
   homepage: ''
   image: ''
@@ -269,7 +269,7 @@ projects:
   name: slack-duck-message-generator
   title: Slack Duck Message Generator
   description: it makes a string you can copy paste into slack
-  url: ./projects/slack-duck-message-generator.html?path=projects~slack-duck-message-generator&open=last&from=portfolio
+  url: ./projects/slack-duck-message-generator.html?path=projects~slack-duck-message-generator&open=last
   repo_url: https://github.com/Avery2/slack-duck-message-generator
   homepage: ''
   image: ./assets/images/projects/slack-duck-message-generator.gif
@@ -298,7 +298,7 @@ projects:
   title: Steam Hours
   description: Analyzing data pulled from steam API to see how many hours I used to
     play.
-  url: ./projects/steam-hours.html?path=projects~steam-hours&open=last&from=portfolio
+  url: ./projects/steam-hours.html?path=projects~steam-hours&open=last
   repo_url: https://github.com/Avery2/steam-hours
   homepage: ''
   image: ./assets/images/projects/steam-hours.jpg
@@ -325,7 +325,7 @@ projects:
   title: Onetab To Csv
   description: Takes raw text export from OneTab (an extension for browser tab aggregation)
     into csv format.
-  url: ./projects/onetab-to-csv.html?path=projects~onetab-to-csv&open=last&from=portfolio
+  url: ./projects/onetab-to-csv.html?path=projects~onetab-to-csv&open=last
   repo_url: https://github.com/Avery2/OneTab-to-CSV
   homepage: ''
   image: ''
@@ -347,7 +347,7 @@ projects:
   name: life-to-24h
   title: Life To 24H
   description: Map Lifetime to 24-hour Day
-  url: ./projects/life-to-24h.html?path=projects~life-to-24h&open=last&from=portfolio
+  url: ./projects/life-to-24h.html?path=projects~life-to-24h&open=last
   repo_url: https://github.com/Avery2/life-to-24h
   homepage: https://www.averychan.site/life-to-24h/
   image: ''
@@ -371,7 +371,7 @@ projects:
   name: rename-contacts
   title: Rename Contacts
   description: renames all your contacts by adding nickname field
-  url: ./projects/rename-contacts.html?path=projects~rename-contacts&open=last&from=portfolio
+  url: ./projects/rename-contacts.html?path=projects~rename-contacts&open=last
   repo_url: https://github.com/Avery2/rename-contacts
   image: ''
   language: Rich Text Format
@@ -393,7 +393,7 @@ projects:
   title: Personalvisualization
   description: Visualization of time tracking data for 2020. I will NOT do any stats
     on this.
-  url: ./projects/personalvisualization.html?path=projects~personalvisualization&open=last&from=portfolio
+  url: ./projects/personalvisualization.html?path=projects~personalvisualization&open=last
   repo_url: https://github.com/Avery2/PersonalVisualization
   homepage: https://www.averychan.site/PersonalVisualization/
   image: ./assets/images/projects/PersonalVisualization.jpg
@@ -424,7 +424,7 @@ projects:
   title: Controller Input Canvas
   description: I made this with ChatGPT. Controller input skeleton + simple html and
     js
-  url: ./projects/controller-input-canvas.html?path=projects~controller-input-canvas&open=last&from=portfolio
+  url: ./projects/controller-input-canvas.html?path=projects~controller-input-canvas&open=last
   repo_url: https://github.com/Avery2/controller-input-canvas
   image: ''
   language: JavaScript
@@ -446,7 +446,7 @@ projects:
   title: Xv6 Memoryencrypt
   description: Project for my OS class 537. Enables memory encryption for the xv6
     operating system.
-  url: ./projects/xv6_memoryencrypt.html?path=projects~xv6_memoryencrypt&open=last&from=portfolio
+  url: ./projects/xv6_memoryencrypt.html?path=projects~xv6_memoryencrypt&open=last
   repo_url: https://github.com/Avery2/xv6_memoryencrypt
   homepage: ''
   image: ''
@@ -474,7 +474,7 @@ projects:
   name: netflix-data-clean
   title: Netflix Data Clean
   description: Just looking at netflix data.
-  url: ./projects/netflix-data-clean.html?path=projects~netflix-data-clean&open=last&from=portfolio
+  url: ./projects/netflix-data-clean.html?path=projects~netflix-data-clean&open=last
   repo_url: https://github.com/Avery2/netflix-data-clean
   homepage: ''
   image: ./assets/images/projects/netflix-data-clean.jpg
@@ -501,7 +501,7 @@ projects:
   title: Git Message Helper
   description: Generates text for PR descriptions that groups commits by file and
     makes it pretty.
-  url: ./projects/git-message-helper.html?path=projects~git-message-helper&open=last&from=portfolio
+  url: ./projects/git-message-helper.html?path=projects~git-message-helper&open=last
   repo_url: https://github.com/Avery2/git-message-helper
   homepage: ''
   image: ./assets/images/projects/git-message-helper.jpg
@@ -530,7 +530,7 @@ projects:
   title: Qbserve Blocker
   description: Query local Qbserve database to check usage of app. Hopefully able
     to then block the app?
-  url: ./projects/qbserve-blocker.html?path=projects~qbserve-blocker&open=last&from=portfolio
+  url: ./projects/qbserve-blocker.html?path=projects~qbserve-blocker&open=last
   repo_url: https://github.com/Avery2/Qbserve-Blocker
   homepage: ''
   image: ''
@@ -556,7 +556,7 @@ projects:
   name: automate-exalidraw
   title: Automate Exalidraw
   description: overengineering
-  url: ./projects/automate-exalidraw.html?path=projects~automate-exalidraw&open=last&from=portfolio
+  url: ./projects/automate-exalidraw.html?path=projects~automate-exalidraw&open=last
   repo_url: https://github.com/Avery2/automate-exalidraw
   homepage: ''
   image: ./assets/images/projects/automate-exalidraw.gif
@@ -582,7 +582,7 @@ projects:
   name: Just-Read-Less-Features
   title: Just Read Less Features
   description: Fork of just read made simple
-  url: ./projects/just-read-less-features.html?path=projects~just-read-less-features&open=last&from=portfolio
+  url: ./projects/just-read-less-features.html?path=projects~just-read-less-features&open=last
   repo_url: https://github.com/Avery2/Just-Read-Less-Features
   homepage: https://justread.link/
   image: ''
@@ -608,7 +608,7 @@ projects:
   name: 639-Final-Project
   title: 639 Final Project
   description: Interactive data visualization of global data.
-  url: ./projects/639-final-project.html?path=projects~639-final-project&open=last&from=portfolio
+  url: ./projects/639-final-project.html?path=projects~639-final-project&open=last
   repo_url: https://github.com/Avery2/639-Final-Project
   homepage: https://www.averychan.site/639-Final-Project/
   image: ''
@@ -636,7 +636,7 @@ projects:
   name: Antibiotic-Visualization
   title: Antibiotic Visualization
   description: A static visualization that effectively communicates antibiotics data.
-  url: ./projects/antibiotic-visualization.html?path=projects~antibiotic-visualization&open=last&from=portfolio
+  url: ./projects/antibiotic-visualization.html?path=projects~antibiotic-visualization&open=last
   repo_url: https://github.com/Avery2/Antibiotic-Visualization
   homepage: https://www.averychan.site/Antibiotic-Visualization/
   image: ./assets/images/projects/Antibiotic-Visualization.jpg
@@ -668,7 +668,7 @@ projects:
   name: SpotifyDataAnalysis
   title: Spotifydataanalysis
   description: Analyzing Spotify data from Kaggle. Created with R Markdown.
-  url: ./projects/spotifydataanalysis.html?path=projects~spotifydataanalysis&open=last&from=portfolio
+  url: ./projects/spotifydataanalysis.html?path=projects~spotifydataanalysis&open=last
   repo_url: https://github.com/Avery2/SpotifyDataAnalysis
   homepage: ''
   image: ./assets/images/projects/SpotifyDataAnalysis.jpg
@@ -697,7 +697,7 @@ projects:
   title: Classifyterms
   description: Classifying terms (from my google search data) with the Google Cloud
     Natural Language API
-  url: ./projects/classifyterms.html?path=projects~classifyterms&open=last&from=portfolio
+  url: ./projects/classifyterms.html?path=projects~classifyterms&open=last
   repo_url: https://github.com/Avery2/ClassifyTerms
   homepage: ''
   image: ''
@@ -723,7 +723,7 @@ projects:
   name: Backpropagation-Neural-Network
   title: Backpropagation Neural Network
   description: A (bad) feed-forward neural network that learns with back propagation.
-  url: ./projects/backpropagation-neural-network.html?path=projects~backpropagation-neural-network&open=last&from=portfolio
+  url: ./projects/backpropagation-neural-network.html?path=projects~backpropagation-neural-network&open=last
   repo_url: https://github.com/Avery2/Backpropagation-Neural-Network
   homepage: ''
   image: ''
@@ -749,7 +749,7 @@ projects:
   name: SimpleReadme
   title: Simplereadme
   description: A template for a clean README (the special repository).
-  url: ./projects/simplereadme.html?path=projects~simplereadme&open=last&from=portfolio
+  url: ./projects/simplereadme.html?path=projects~simplereadme&open=last
   repo_url: https://github.com/Avery2/SimpleReadme
   homepage: ''
   image: ./assets/images/projects/SimpleReadme.jpg
@@ -775,7 +775,7 @@ projects:
   name: graffiti-template-generator
   title: Graffiti Template Generator
   description: ''
-  url: ./projects/graffiti-template-generator.html?path=projects~graffiti-template-generator&open=last&from=portfolio
+  url: ./projects/graffiti-template-generator.html?path=projects~graffiti-template-generator&open=last
   repo_url: https://github.com/Avery2/graffiti-template-generator
   homepage: http://www.averychan.site/graffiti-template-generator/
   image: ''

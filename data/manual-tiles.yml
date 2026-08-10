@@ -18,7 +18,7 @@ tiles:
     type: "link"
     title: "View My Résumé"
     description: "Full résumé with experience and education"
-    url: "./writing/resume/full.html?from=portfolio"
+    url: "./writing/resume/full.html"
     open_new_tab: false
     priority: 0
     content_type: "links"
@@ -31,7 +31,7 @@ tiles:
     type: "link"
     title: "Notes"
     description: "A connected space for writing that can grow over time."
-    url: "./writing/notes/notes.html?from=portfolio"
+    url: "./writing/notes/notes.html"
     open_new_tab: false
     priority: 140
     content_type: "writing"
@@ -44,7 +44,7 @@ tiles:
     type: "link"
     title: "Writing"
     description: "Public writing and connected notes."
-    url: "./writing/notes/writing.html?path=writing&open=last&from=portfolio"
+    url: "./writing/notes/writing.html?path=writing&open=last"
     open_new_tab: false
     priority: 500
     content_type: "writing"
@@ -68,7 +68,7 @@ tiles:
     type: "link"
     title: "Harm Reduction"
     description: "A philosophy that honors dignity and autonomy."
-    url: "./writing/notes/harm-reduction.html?from=portfolio"
+    url: "./writing/notes/harm-reduction.html"
     open_new_tab: false
     priority: 110
     content_type: "writing"
@@ -93,7 +93,7 @@ tiles:
     type: "link"
     title: "Links"
     description: "Places to find me and my work."
-    url: "./writing/notes/find-me.html?path=find-me&open=last&from=portfolio"
+    url: "./writing/notes/find-me.html?path=find-me&open=last"
     open_new_tab: false
     priority: 500
     content_type: "links"
@@ -104,7 +104,7 @@ tiles:
     type: "link"
     title: "Experience"
     description: "Experience and education."
-    url: "./writing/resume.html?path=resume&open=last&from=portfolio"
+    url: "./writing/resume.html?path=resume&open=last"
     open_new_tab: false
     priority: 500
     content_type: "experience"
@@ -117,7 +117,7 @@ tiles:
     type: "link"
     title: "Projects"
     description: "Browse the project collection."
-    url: "./projects/index.html?path=projects&open=last&from=portfolio"
+    url: "./projects/index.html?path=projects&open=last"
     open_new_tab: false
     priority: 500
     content_type: "projects"

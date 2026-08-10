@@ -426,14 +426,8 @@ PROJECT_PAGE_TEMPLATE = Template('''<!DOCTYPE html>
 </head>
 <body class="notes-page">
   <header class="notes-site-header">
-    <a href="/" class="notes-brand">Avery</a>
-    <nav class="site-section-nav" aria-label="Portfolio sections">
-      <a href="/" data-section="home">Home</a>
-      <a href="/writing/notes/writing.html?path=writing&amp;open=last&amp;from=portfolio" data-section="writing">Writing</a>
-      <a href="/writing/resume.html?path=resume&amp;open=last&amp;from=portfolio" data-section="experience">Experience</a>
-      <a href="/writing/notes/find-me.html?path=find-me&amp;open=last&amp;from=portfolio" data-section="links">Links</a>
-      <a href="/projects/index.html" data-section="projects" aria-current="page">Projects</a>
-    </nav>
+    <a href="/projects/index.html" class="notes-brand">Avery’s Projects</a>
+    <a href="/" class="notes-mode-link">Portfolio</a>
     <button id="theme-toggle" class="notes-theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
   </header>
   <main id="notes-app" class="notes-app" data-initial-note="$slug" data-corpus="/data/projects.generated.mjs">
@@ -611,7 +605,7 @@ def transform_repo_to_tile(
         'name': repo_name,
         'title': title,
         'description': repo.get('description') or '',
-        'url': f'{page_path}?path=projects~{slugify_repo(repo_name)}&open=last&from=portfolio' if page_path else repo['html_url'],
+        'url': f'{page_path}?path=projects~{slugify_repo(repo_name)}&open=last' if page_path else repo['html_url'],
         'repo_url': repo['html_url'],
         'homepage': repo.get('homepage'),
         'image': image,
