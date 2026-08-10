@@ -26,8 +26,8 @@
   --tile-bg: #FFFEFB;
   --tile-hover-bg: #FFFFFF;
   --intro-card-bg: var(--brand-primary);
-  /* A muted secondary surface keeps grouped portfolio regions behind the cards. */
-  --featured-group-surface: #E3E8E9;
+  /* A secondary cream keeps grouped portfolio regions behind the cards. */
+  --featured-group-surface: var(--bg-secondary);
 
   --header-bg: rgba(247, 241, 227, 0.95);
   --footer-bg: #EEE6D8;
