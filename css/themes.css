@@ -26,7 +26,8 @@
   --tile-bg: #FFFEFB;
   --tile-hover-bg: #FFFFFF;
   --intro-card-bg: var(--brand-primary);
-  --featured-group-surface: var(--accent-secondary);
+  /* A muted secondary surface keeps grouped portfolio regions behind the cards. */
+  --featured-group-surface: #AEBECD;
 
   --header-bg: rgba(247, 241, 227, 0.95);
   --footer-bg: #EEE6D8;
@@ -63,7 +64,7 @@
   --tile-bg: #1E1B17;
   --tile-hover-bg: #25211C;
   --intro-card-bg: var(--brand-primary);
-  --featured-group-surface: var(--accent-secondary);
+  --featured-group-surface: #293B4D;
 
   --header-bg: rgba(21, 19, 16, 0.95);
   --footer-bg: #1C1916;
