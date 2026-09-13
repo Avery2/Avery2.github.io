@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-09-06T01:41:15.880742+00:00'
+  generated_at: '2026-09-13T01:49:06.911753+00:00'
   source_api: https://api.github.com/users/Avery2/repos
   total_repos: 30
 projects:
@@ -75,8 +75,8 @@ projects:
   - sunrise
   - sunset
   created_at: '2023-10-29T18:23:07Z'
-  updated_at: '2026-09-01T03:26:59Z'
-  pushed_at: '2026-09-01T03:26:56Z'
+  updated_at: '2026-09-10T02:58:10Z'
+  pushed_at: '2026-09-10T02:58:06Z'
   priority: 26
   tags:
   - python
@@ -102,8 +102,8 @@ projects:
   topics:
   - github-pages
   created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2026-08-30T02:08:21Z'
-  pushed_at: '2026-08-30T02:07:54Z'
+  updated_at: '2026-09-06T01:41:21Z'
+  pushed_at: '2026-09-06T01:41:17Z'
   priority: 20
   tags:
   - javascript
@@ -127,7 +127,7 @@ projects:
   created_at: '2025-12-30T19:44:02Z'
   updated_at: '2026-08-09T02:53:14Z'
   pushed_at: '2026-08-09T02:53:10Z'
-  priority: 19
+  priority: 18
   tags:
   - javascript
   featured: false
@@ -342,6 +342,29 @@ projects:
   featured: false
   span_columns: 1
   span_rows: 1
+- id: controller-input-canvas
+  type: project
+  name: controller-input-canvas
+  title: Controller Input Canvas
+  description: I made this with ChatGPT. Controller input skeleton + simple html and
+    js
+  url: ./projects/controller-input-canvas.html?path=projects~controller-input-canvas&open=last
+  repo_url: https://github.com/Avery2/controller-input-canvas
+  homepage: https://www.averychan.site/controller-input-canvas/
+  image: ''
+  language: JavaScript
+  stars: 0
+  forks: 0
+  topics: []
+  created_at: '2023-06-29T07:12:06Z'
+  updated_at: '2026-09-08T03:21:50Z'
+  pushed_at: '2023-06-29T07:17:58Z'
+  priority: 1
+  tags:
+  - javascript
+  featured: false
+  span_columns: 1
+  span_rows: 1
 - id: life-to-24h
   type: project
   name: life-to-24h
@@ -415,28 +438,6 @@ projects:
   - d3-visualization
   - d3js
   - r
-  featured: false
-  span_columns: 1
-  span_rows: 1
-- id: controller-input-canvas
-  type: project
-  name: controller-input-canvas
-  title: Controller Input Canvas
-  description: I made this with ChatGPT. Controller input skeleton + simple html and
-    js
-  url: ./projects/controller-input-canvas.html?path=projects~controller-input-canvas&open=last
-  repo_url: https://github.com/Avery2/controller-input-canvas
-  image: ''
-  language: JavaScript
-  stars: 0
-  forks: 0
-  topics: []
-  created_at: '2023-06-29T07:12:06Z'
-  updated_at: '2023-06-29T07:12:23Z'
-  pushed_at: '2023-06-29T07:17:58Z'
-  priority: 1
-  tags:
-  - javascript
   featured: false
   span_columns: 1
   span_rows: 1
