@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-10-04T03:12:34.517825+00:00'
+  generated_at: '2026-10-11T02:38:46.114931+00:00'
   total_entries: 30
 readmes:
   639-Final-Project: Link to interactive website source To run software run
@@ -246,7 +246,15 @@ readmes:
     your match - you can refresh without losing anything On mobile, scores and timer
     stay visible at the top while scrolling Customize round durations and points in
     if needed Support For rule details, see the official Rdojo Kombat rulebook PDF.'
-  rename-contacts: To just copy the code go to 🪤.app/Contents/Resources/Scripts
+  rename-contacts: Eggify Contacts The script gives the 🥚 nickname to contacts whose
+    nickname is empty. When one of those contacts also has no photo, it adds the egg
+    image. Existing nicknames, photos, and contact notes are left untouched. Before
+    making changes, the script shows exactly how many nicknames and photos it will
+    add. Run it In Contacts, make a backup with File → Export → Contacts Archive .
+    Open in Script Editor and click Run . Select when prompted and allow access to
+    Contacts if macOS asks. Review the counts in the confirmation dialog, then click
+    Continue . The script and image are both stored at the repository root. View this
+    media on GitHub View this media on GitHub
   slack-duck-message-generator: Screen.Recording.2022-09-26.at.5.46.11.PM.mov See
     folder for raw files to add to Slack as custom emojis. Some emojis made with pixilart.com
     .
