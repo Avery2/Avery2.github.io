@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-10-11T02:38:46.497420+00:00'
+  generated_at: '2026-10-18T01:54:18.786310+00:00'
   source: resume
   total_tiles: 4
 tiles:
@@ -16,7 +16,7 @@ tiles:
     company: Amplitude
     title: Senior Software Engineer
     location: San Francisco, CA
-    dates: May 2022 – Present
+    dates: May 2022 – October 2026
   priority: 100
   featured: true
   span_columns: 1
