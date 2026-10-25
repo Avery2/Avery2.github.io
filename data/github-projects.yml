@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-10-18T01:54:18.454260+00:00'
+  generated_at: '2026-10-25T02:05:06.433440+00:00'
   source_api: https://api.github.com/users/Avery2/repos
   total_repos: 30
 projects:
@@ -75,8 +75,8 @@ projects:
   - sunrise
   - sunset
   created_at: '2023-10-29T18:23:07Z'
-  updated_at: '2026-10-16T03:01:13Z'
-  pushed_at: '2026-10-16T03:01:10Z'
+  updated_at: '2026-10-22T03:11:08Z'
+  pushed_at: '2026-10-22T03:11:04Z'
   priority: 26
   tags:
   - python
@@ -85,6 +85,30 @@ projects:
   - sunrise
   - sunset
   featured: false
+  span_columns: 1
+  span_rows: 1
+- id: Avery2.github.io
+  type: project
+  name: Avery2.github.io
+  title: Avery2.Github.Io
+  description: My personal website.
+  url: ./projects/avery2.github.io.html?path=projects~avery2.github.io&open=last
+  repo_url: https://github.com/Avery2/Avery2.github.io
+  homepage: http://www.averychan.site/
+  image: ./assets/images/projects/Avery2.github.io.jpg
+  language: JavaScript
+  stars: 0
+  forks: 1
+  topics:
+  - github-pages
+  created_at: '2019-12-06T06:16:24Z'
+  updated_at: '2026-10-18T01:54:23Z'
+  pushed_at: '2026-10-18T01:54:20Z'
+  priority: 20
+  tags:
+  - javascript
+  - github-pages
+  featured: true
   span_columns: 1
   span_rows: 1
 - id: normal-resume
@@ -104,34 +128,10 @@ projects:
   created_at: '2021-08-11T02:36:49Z'
   updated_at: '2026-10-18T00:02:11Z'
   pushed_at: '2026-10-18T00:33:31Z'
-  priority: 21
+  priority: 20
   tags:
   - html
   - resume
-  featured: true
-  span_columns: 1
-  span_rows: 1
-- id: Avery2.github.io
-  type: project
-  name: Avery2.github.io
-  title: Avery2.Github.Io
-  description: My personal website.
-  url: ./projects/avery2.github.io.html?path=projects~avery2.github.io&open=last
-  repo_url: https://github.com/Avery2/Avery2.github.io
-  homepage: http://www.averychan.site/
-  image: ./assets/images/projects/Avery2.github.io.jpg
-  language: JavaScript
-  stars: 0
-  forks: 1
-  topics:
-  - github-pages
-  created_at: '2019-12-06T06:16:24Z'
-  updated_at: '2026-10-11T02:38:51Z'
-  pushed_at: '2026-10-11T02:38:47Z'
-  priority: 20
-  tags:
-  - javascript
-  - github-pages
   featured: true
   span_columns: 1
   span_rows: 1
@@ -172,7 +172,7 @@ projects:
   created_at: '2025-12-30T19:44:02Z'
   updated_at: '2026-08-09T02:53:14Z'
   pushed_at: '2026-08-09T02:53:10Z'
-  priority: 16
+  priority: 15
   tags:
   - javascript
   featured: false
@@ -197,7 +197,7 @@ projects:
   created_at: '2021-05-30T06:32:18Z'
   updated_at: '2026-03-21T02:19:09Z'
   pushed_at: '2026-03-21T02:19:06Z'
-  priority: 10
+  priority: 9
   tags:
   - html
   - data-science
@@ -276,7 +276,7 @@ projects:
   created_at: '2025-11-17T06:13:48Z'
   updated_at: '2026-03-26T20:40:00Z'
   pushed_at: '2026-01-07T16:17:45Z'
-  priority: 5
+  priority: 4
   tags:
   - python
   - mcp
